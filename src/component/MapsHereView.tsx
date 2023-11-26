@@ -42,13 +42,9 @@ const RCTMapsHereView =
         throw new Error(LINKING_ERROR);
       };
 
-const MapsHereView: React.FC<MapsHereViewProps> = function (props) {
-  return <RCTMapsHereView {...props} />;
+export const MapsHereView: React.FC<MapsHereViewProps> = function (props) {
+  const { mapScheme = 'NORMAL_DAY', zoomKind = 'ZOOM_LEVEL' } = props;
+  return (
+    <RCTMapsHereView mapScheme={mapScheme} zoomKind={zoomKind} {...props} />
+  );
 };
-
-MapsHereView.defaultProps = {
-  mapScheme: 'NORMAL_DAY',
-  zoomKind: 'ZOOM_LEVEL',
-};
-
-export default MapsHereView;

@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { StyleSheet, View } from 'react-native';
-import MapsHereView from '../../src/component/MapsHereView';
+import { MapsHereView } from 'react-native-maps-here';
 
 export default function App() {
   return (
