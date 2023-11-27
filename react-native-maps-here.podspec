@@ -22,8 +22,8 @@ Pod::Spec.new do |s|
     install_modules_dependencies(s)
   else
   
-  s.dependency "React-Core"
-  s.vendored_frameworks "example/ios/Frameworks/heresdk.xcframework"
+  s.dependency = "React-Core"
+  s.vendored_frameworks = "ios/Frameworks/heresdk.xcframework"
 
   # Don't install the dependencies when we run `pod install` in the old architecture.
   if ENV['RCT_NEW_ARCH_ENABLED'] == '1' then

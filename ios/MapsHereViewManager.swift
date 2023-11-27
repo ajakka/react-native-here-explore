@@ -3,7 +3,7 @@ import heresdk
 @objc(MapsHereViewManager)
 class MapsHereViewManager: RCTViewManager {
 
-  override func view() -> (MapsHereView) {
+    @objc override func view() -> (MapsHereView) {
     return MapsHereView()
   }
 
@@ -12,7 +12,7 @@ class MapsHereViewManager: RCTViewManager {
   }
 }
 
-class MapsHereView : UIView {
+class MapsHereView : MapView {
 
   @objc var color: String = "" {
     didSet {
