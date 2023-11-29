@@ -45,6 +45,9 @@ target 'MapsHereExample' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
+  # TODO: HERE Map framework loaded locally
+  pod 'heresdk', :path => 'Frameworks'
+
   target 'MapsHereExampleTests' do
     inherit! :complete
     # Pods for testing

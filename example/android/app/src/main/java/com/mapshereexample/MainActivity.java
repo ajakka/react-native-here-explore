@@ -46,7 +46,7 @@ public class MainActivity extends ReactActivity {
     String accessKeyID = "YOUR_ACCESS_KEY_ID";
 
     // TODO: YOUR_ACCESS_KEY_SECRET
-    String accessKeySecret = "YOUR_ACCESS_KEY_ID";
+    String accessKeySecret = "YOUR_ACCESS_KEY_SECRET";
 
     SDKOptions options = new SDKOptions(accessKeyID, accessKeySecret);
     try {
