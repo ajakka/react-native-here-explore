@@ -124,25 +124,26 @@ open your `MainActivity.java` file located in `your-project/android/app/src/java
 
 and edit the following:
 
-<pre><code class="java">package com.your_project;
+```diff
+package com.your_project;
 
-<span style="color: green;">import android.os.Bundle;</span>
++import android.os.Bundle;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactActivityDelegate;
-<span style="color: green;">import com.here.sdk.core.engine.SDKNativeEngine;</span>
-<span style="color: green;">import com.here.sdk.core.engine.SDKOptions;</span>
-<span style="color: green;">import com.here.sdk.core.errors.InstantiationErrorException;</span>
++import com.here.sdk.core.engine.SDKNativeEngine;
++import com.here.sdk.core.engine.SDKOptions;
++import com.here.sdk.core.errors.InstantiationErrorException;
 
 public class MainActivity extends ReactActivity {
 
-<span style="color: green;">  @Override</span>
-<span style="color: green;">  protected void onCreate(Bundle savedInstanceState) {</span>
-<span style="color: green;">    super.onCreate(savedInstanceState);</span>
-<span style="color: green;">    initializeHERESDK();</span>
-<span style="color: green;">  }</span>
++  @Override
++  protected void onCreate(Bundle savedInstanceState) {
++    super.onCreate(savedInstanceState);
++    initializeHERESDK();
++  }
 
   /**
    * Returns the name of the main component registered from JavaScript. This is used to schedule
@@ -167,21 +168,22 @@ public class MainActivity extends ReactActivity {
         DefaultNewArchitectureEntryPoint.getFabricEnabled());
   }
 
-<span style="color: green;">  private void initializeHERESDK() {</span>
-<span style="color: green;">    // TODO: YOUR_ACCESS_KEY_ID</span>
-<span style="color: green;">    String accessKeyID = "YOUR_ACCESS_KEY_ID";</span>
-<span style="color: green;"></span>
-<span style="color: green;">    // TODO: YOUR_ACCESS_KEY_SECRET</span>
-<span style="color: green;">    String accessKeySecret = "YOUR_ACCESS_KEY_SECRET";</span>
-<span style="color: green;"></span>
-<span style="color: green;">    SDKOptions options = new SDKOptions(accessKeyID, accessKeySecret);</span>
-<span style="color: green;">    try {</span>
-<span style="color: green;">      SDKNativeEngine.makeSharedInstance(this, options);</span>
-<span style="color: green;">    } catch (InstantiationErrorException e) {</span>
-<span style="color: green;">      throw new RuntimeException("Initialization of HERE SDK failed: " <span style="color: green;</span>"> e.error.name());</span>
-<span style="color: green;">    }</span>
-<span style="color: green;">  }</span>
-}</code></pre>
++  private void initializeHERESDK() {
++    // TODO: YOUR_ACCESS_KEY_ID
++    String accessKeyID = "YOUR_ACCESS_KEY_ID";
++
++    // TODO: YOUR_ACCESS_KEY_SECRET
++    String accessKeySecret = "YOUR_ACCESS_KEY_SECRET";
++
++    SDKOptions options = new SDKOptions(accessKeyID, accessKeySecret);
++    try {
++      SDKNativeEngine.makeSharedInstance(this, options);
++    } catch (InstantiationErrorException e) {
++      throw new RuntimeException("Initialization of HERE SDK failed: " + e.error.name());
++    }
++  }
+}
+```
 
 Replace YOUR_ACCESS_KEY_ID with your `here.access.key.id` that you got earlier
 
@@ -241,34 +243,37 @@ the word **YourProject** should be the folder name of where your AppDelegate.h e
 
 The result should look like this:
 
-<pre><code class="objc">#import <RCTAppDelegate.h>
+```diff
+#import <RCTAppDelegate.h>
 #import <UIKit/UIKit.h>
-<span style="color: green;">#import "MapsHereExample-Swift.h"</span>
++#import "MapsHereExample-Swift.h"
 
 @interface AppDelegate : RCTAppDelegate
 
-@end</code></pre>
+@end
+```
 
 Finally edit the following on your `AppDelegate.mm`:
 
-<pre><code class="objc">#import "AppDelegate.h"
+```diff
+#import "AppDelegate.h"
 
 #import <React/RCTBundleURLProvider.h>
 
 @implementation AppDelegate
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+ - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   self.moduleName = @"MapsHereExample";
   // You can add your custom initial props in the dictionary below.
   // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};
 
-<span style="color: green;">  [[HERESDKManager shared] initializeHERESDK];</span>
++  [[HERESDKManager shared] initializeHERESDK];
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
 
-- (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
+ - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
 {
 #if DEBUG
   return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index"];
@@ -277,13 +282,13 @@ Finally edit the following on your `AppDelegate.mm`:
 #endif
 }
 
-<span style="color: green;">- (void)applicationWillTerminate:(UIApplication *)application {</span>
-<span style="color: green;">    // Dispose HERE SDK</span>
-<span style="color: green;">    [[HERESDKManager shared] disposeHERESDK];</span>
-<span style="color: green;">}</span>
++- (void)applicationWillTerminate:(UIApplication *)application {
++    // Dispose HERE SDK
++    [[HERESDKManager shared] disposeHERESDK];
++}
 
 @end
-</code></pre>
+```
 
 And that is it. If all done correctly, you should have HERE Maps working
 
