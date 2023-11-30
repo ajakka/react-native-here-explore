@@ -2,6 +2,8 @@
 
 react-native-maps-here library aims to bring HERE Maps SDKs into React Native
 
+<img src="assets/screenshot.png" alt="Screenshoot" title="Screenshoot" width="50%">
+
 ## Installation
 
 ```sh
