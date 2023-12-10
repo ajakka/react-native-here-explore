@@ -8,16 +8,13 @@ import com.here.sdk.core.engine.SDKNativeEngine
 import com.here.sdk.core.engine.SDKOptions
 import com.here.sdk.core.errors.InstantiationErrorException
 
-
 class MapsHereConfigModule internal constructor(context: ReactApplicationContext) :
-  MapsHereConfigSpec(context) {
+    MapsHereConfigSpec(context) {
 
   override fun getName() = NAME
 
-  /**
-   * FIXME: Initializing Here SDK from a module doesn't seem to work
-   */
-  @ReactMethod(isBlockingSynchronousMethod = true)
+  /** FIXME: Initializing Here SDK from a module doesn't seem to work */
+  @ReactMethod
   override fun initializeHereSDK(accessKeyID: String, accessKeySecret: String, promise: Promise) {
     Log.d(TAG, "initializeHERESDK: started")
     val options = SDKOptions(accessKeyID, accessKeySecret)

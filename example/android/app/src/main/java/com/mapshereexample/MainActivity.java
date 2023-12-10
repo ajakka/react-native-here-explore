@@ -6,16 +6,12 @@ import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactActivityDelegate;
-import com.here.sdk.core.engine.SDKNativeEngine;
-import com.here.sdk.core.engine.SDKOptions;
-import com.here.sdk.core.errors.InstantiationErrorException;
 
 public class MainActivity extends ReactActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    initializeHERESDK();
   }
 
   /**
@@ -39,20 +35,5 @@ public class MainActivity extends ReactActivity {
         getMainComponentName(),
         // If you opted-in for the New Architecture, we enable the Fabric Renderer.
         DefaultNewArchitectureEntryPoint.getFabricEnabled());
-  }
-
-  private void initializeHERESDK() {
-    // TODO: YOUR_ACCESS_KEY_ID
-    String accessKeyID = "YOUR_ACCESS_KEY_ID";
-
-    // TODO: YOUR_ACCESS_KEY_SECRET
-    String accessKeySecret = "YOUR_ACCESS_KEY_SECRET";
-
-    SDKOptions options = new SDKOptions(accessKeyID, accessKeySecret);
-    try {
-      SDKNativeEngine.makeSharedInstance(this, options);
-    } catch (InstantiationErrorException e) {
-      throw new RuntimeException("Initialization of HERE SDK failed: " + e.error.name());
-    }
   }
 }

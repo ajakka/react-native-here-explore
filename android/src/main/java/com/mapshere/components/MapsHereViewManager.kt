@@ -9,13 +9,20 @@ import com.here.sdk.core.GeoCoordinates
 import com.here.sdk.mapview.MapMeasure
 import com.here.sdk.mapview.MapScheme
 
+
 @ReactModule(name = MapsHereViewManager.NAME)
 class MapsHereViewManager :
   MapsHereViewManagerSpec<MapsHereView>() {
 
+  // MapMeasure
   private var zoomKind: MapMeasure.Kind = MapMeasure.Kind.ZOOM_LEVEL
   private var zoomValue: Double = 5.0
-  private var coordinates = GeoCoordinates(0.0, 0.0)
+
+  // GeoCoordinates
+  private var latitude = 0.0
+  private var longitude = 0.0
+
+  //
   private var mapScheme = MapScheme.NORMAL_DAY
 
   override fun getName(): String {
@@ -27,6 +34,7 @@ class MapsHereViewManager :
     mapsHereView.onCreate(null)
     loadCameraView(mapsHereView)
     return mapsHereView
+
   }
 
   @ReactProp(name = "mapScheme")
@@ -75,9 +83,8 @@ class MapsHereViewManager :
   override fun setCoordinates(view: MapsHereView?, value: ReadableMap?) {
     Log.d(TAG, "setCoordinates: $value")
 
-    val latitude = value?.getDouble("lat") ?: 0.0
-    val longitude = value?.getDouble("lon") ?: 0.0
-    coordinates = GeoCoordinates(latitude, longitude)
+    latitude = value?.getDouble("lat") ?: 0.0
+    longitude = value?.getDouble("lon") ?: 0.0
 
     updateCameraView(view)
   }
@@ -85,7 +92,10 @@ class MapsHereViewManager :
   private fun loadCameraView(view: MapsHereView?) {
     view?.mapScene?.loadScene(mapScheme) { mapError ->
       if (mapError == null) {
-        view.camera.lookAt(coordinates, MapMeasure(zoomKind, zoomValue))
+        view.camera.lookAt(
+          GeoCoordinates(latitude, longitude),
+          MapMeasure(zoomKind, zoomValue)
+        )
       } else {
         Log.d(TAG, "Loading map failed: mapError" + mapError.name)
       }
@@ -93,7 +103,10 @@ class MapsHereViewManager :
   }
 
   private fun updateCameraView(view: MapsHereView?) {
-    view?.camera?.lookAt(coordinates, MapMeasure(zoomKind, zoomValue))
+    view?.camera?.lookAt(
+      GeoCoordinates(latitude, longitude),
+      MapMeasure(zoomKind, zoomValue)
+    )
   }
 
   companion object {

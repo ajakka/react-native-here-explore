@@ -118,9 +118,6 @@ dependencies {
     } else {
         implementation jscFlavor
     }
-
-    // TODO: HERE Map library loaded locally
-    implementation fileTree(dir: 'libs', include: ['*.aar', '*.jar'])
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)

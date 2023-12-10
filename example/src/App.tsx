@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import { MapsHereView } from 'react-native-maps-here';
 
 export default function App() {
   return (
+    // <Text>hello</Text>
     <MapsHereView
       style={styles.box}
       mapScheme="NORMAL_NIGHT"

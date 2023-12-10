@@ -1,6 +1,8 @@
 import { NativeModules } from 'react-native';
 import { LINKING_ERROR } from './constants';
 
+import { MapsHereView } from './component/MapsHereView';
+
 // @ts-expect-error
 const isTurboModuleEnabled = global.__turboModuleProxy != null;
 
@@ -19,7 +21,7 @@ const RCTMapsHere = MapsHereModule
       }
     );
 
-const MapsHere = {
+const MapsHereConfig = {
   initializeHereSDK: function (
     accessKeyID: string,
     accessKeySecret: string
@@ -28,6 +30,4 @@ const MapsHere = {
   },
 };
 
-export default MapsHere;
-
-export * from './component/MapsHereView';
+export { MapsHereConfig, MapsHereView };
