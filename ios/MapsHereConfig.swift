@@ -1,7 +1,7 @@
 import heresdk
 
-@objc(MapsHereConfigModule)
-class MapsHereConfigModule: NSObject {
+@objc(MapsHereConfig)
+class MapsHereConfig: NSObject {
     
     @objc(initializeHereSDK:withAccessKeySecret:withResolver:withRejecter:)
     func initializeHereSDK(
@@ -9,7 +9,6 @@ class MapsHereConfigModule: NSObject {
         accessKeySecret: String,
         resolve: RCTPromiseResolveBlock,
         reject: RCTPromiseRejectBlock) -> Void {
-            
             let options = SDKOptions(
                 accessKeyId: accessKeyID,
                 accessKeySecret: accessKeySecret)
@@ -19,7 +18,7 @@ class MapsHereConfigModule: NSObject {
                 print("SDKOptions engine started")
                 resolve("Here SDK initialized")
             } catch let error {
-                reject(error)
+                reject("", "", error)
             }
         }
 }

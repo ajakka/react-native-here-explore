@@ -1,6 +1,6 @@
 #import <React/RCTBridgeModule.h>
 
-@interface RCT_EXTERN_MODULE(MapsHereConfigModule, NSObject)
+@interface RCT_EXTERN_MODULE(MapsHereConfig, NSObject)
 
 RCT_EXTERN_METHOD(initializeHereSDK:(NSString *)accessKeyID
                   withAccessKeySecret:(NSString *)accessKeySecret
