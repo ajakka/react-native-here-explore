@@ -7,5 +7,5 @@ import com.facebook.react.bridge.Promise
 abstract class MapsHereConfigSpec internal constructor(context: ReactApplicationContext) :
   ReactContextBaseJavaModule(context) {
 
-  abstract fun initializeHereSDK(accessKeyID: String, accessKeySecret: String, promise: Promise)
+  abstract fun initializeHereSDK(accessKeyID: String, accessKeySecret: String): String
 }
