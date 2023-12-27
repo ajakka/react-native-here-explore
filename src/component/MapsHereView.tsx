@@ -5,7 +5,7 @@ import {
   UIManager,
   type ViewProps,
 } from 'react-native';
-import { LINKING_ERROR } from '../constants';
+import { LINKING_ERROR } from '../Constant';
 
 export type ZoomKind = 'DISTANCE' | 'ZOOM_LEVEL' | 'SCALE';
 

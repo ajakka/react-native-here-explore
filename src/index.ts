@@ -1,5 +1,5 @@
 import { NativeModules } from 'react-native';
-import { LINKING_ERROR } from './constants';
+import { LINKING_ERROR } from './Constant';
 
 import { MapsHereView } from './component/MapsHereView';
 
