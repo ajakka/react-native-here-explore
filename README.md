@@ -120,6 +120,16 @@ Finaly in your terminal run `pod install`
 
 After setting up the SDKs on both platforms, we should do one last step that is to authenticate.
 
+on Version 0.3.0 just go to your index.ts file and add this before the `AppRegistry.registerComponent(appName, () => App)`:
+
+```typescript
+import { MapsHereConfig } from 'react-native-maps-here';
+
+MapsHereConfig.initializeHereSDK('YOUR_ACCESS_KEY_ID', 'YOUR_ACCESS_KEY_SECRET');
+```
+
+on version < 0.3.0:
+
 ### - Android
 
 open your `MainActivity.java` file located in `your-project/android/app/src/java/com/your_project/MainActivity.java`
