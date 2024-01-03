@@ -1,0 +1,82 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXFileReference section */
+		ACD7D14A2B2FB73300ABB01B /* MapsHereViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MapsHereViewManager.swift; path = ../MapsHereViewManager.swift; sourceTree = "<group>"; };
+		ACD7D14B2B2FB73300ABB01B /* MapsHereConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MapsHereConfig.swift; path = ../MapsHereConfig.swift; sourceTree = "<group>"; };
+		ACD7D14C2B2FB73300ABB01B /* MapsHereConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MapsHereConfig.m; path = ../MapsHereConfig.m; sourceTree = "<group>"; };
+		ACD7D14D2B2FB73300ABB01B /* MapsHere-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MapsHere-Bridging-Header.h"; path = "../MapsHere-Bridging-Header.h"; sourceTree = "<group>"; };
+		ACD7D14E2B2FB73300ABB01B /* MapsHereViewManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MapsHereViewManager.m; path = ../MapsHereViewManager.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		ACD7D1432B2FB6FD00ABB01B = {
+			isa = PBXGroup;
+			children = (
+				ACD7D14D2B2FB73300ABB01B /* MapsHere-Bridging-Header.h */,
+				ACD7D14C2B2FB73300ABB01B /* MapsHereConfig.m */,
+				ACD7D14B2B2FB73300ABB01B /* MapsHereConfig.swift */,
+				ACD7D14E2B2FB73300ABB01B /* MapsHereViewManager.m */,
+				ACD7D14A2B2FB73300ABB01B /* MapsHereViewManager.swift */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXProject section */
+		ACD7D1442B2FB6FD00ABB01B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1430;
+			};
+			buildConfigurationList = ACD7D1472B2FB6FD00ABB01B /* Build configuration list for PBXProject "MapsHere" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = ACD7D1432B2FB6FD00ABB01B;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		ACD7D1482B2FB6FD00ABB01B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		ACD7D1492B2FB6FD00ABB01B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		ACD7D1472B2FB6FD00ABB01B /* Build configuration list for PBXProject "MapsHere" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ACD7D1482B2FB6FD00ABB01B /* Debug */,
+				ACD7D1492B2FB6FD00ABB01B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = ACD7D1442B2FB6FD00ABB01B /* Project object */;
+}

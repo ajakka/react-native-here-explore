@@ -4,25 +4,11 @@ import type {
   Double,
   WithDefault,
 } from 'react-native/Libraries/Types/CodegenTypes';
+import type { Coordinates } from '../types/Coordinates';
+import type { MapScheme } from '../types/MapScheme';
+import type { ZoomKind } from '../types/ZoomKind';
 
-export type ZoomKind = 'DISTANCE' | 'ZOOM_LEVEL' | 'SCALE';
-
-export type MapScheme =
-  | 'NORMAL_DAY'
-  | 'NORMAL_NIGHT'
-  | 'SATELLITE'
-  | 'HYBRID_DAY'
-  | 'HYBRID_NIGHT'
-  | 'LITE_DAY'
-  | 'LITE_NIGHT'
-  | 'LITE_HYBRID_DAY'
-  | 'LITE_HYBRID_NIGHT'
-  | 'LOGISTICS_DAY';
-
-export interface Coordinates {
-  lat: Double;
-  lon: Double;
-}
+const COMPONENT_NAME = 'MapsHereView';
 
 interface NativeProps extends ViewProps {
   mapScheme?: WithDefault<MapScheme, 'NORMAL_DAY'>;
@@ -31,4 +17,4 @@ interface NativeProps extends ViewProps {
   coordinates: Coordinates;
 }
 
-export default codegenNativeComponent<NativeProps>('MapsHereView');
+export default codegenNativeComponent<NativeProps>(COMPONENT_NAME);

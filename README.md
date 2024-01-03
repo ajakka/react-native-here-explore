@@ -2,6 +2,8 @@
 
 react-native-maps-here library aims to bring HERE Maps SDKs into React Native
 
+<img src="assets/screenshot.png" alt="Screenshoot" title="Screenshoot" width="50%">
+
 ## Installation
 
 ```sh
@@ -118,7 +120,19 @@ Finaly in your terminal run `pod install`
 
 After setting up the SDKs on both platforms, we should do one last step that is to authenticate.
 
-### - Android
+### on version >= 0.3.0 
+
+just go to your index.ts file and add this before the `AppRegistry.registerComponent(appName, () => App)`:
+
+```typescript
+import { MapsHereConfig } from 'react-native-maps-here';
+
+MapsHereConfig.initializeHereSDK('YOUR_ACCESS_KEY_ID', 'YOUR_ACCESS_KEY_SECRET');
+```
+
+### on version < 0.3.0:
+
+#### - Android
 
 open your `MainActivity.java` file located in `your-project/android/app/src/java/com/your_project/MainActivity.java`
 
@@ -189,7 +203,7 @@ Replace YOUR_ACCESS_KEY_ID with your `here.access.key.id` that you got earlier
 
 Replace YOUR_ACCESS_KEY_SECRET with your `here.access.key.secret` that you got earlier
 
-### - iOS
+#### - iOS
 
 Open up your .xcworkspace in XCode and create a Swift file named `HERESDKManager.swift`.
 

@@ -1,6 +1,7 @@
 package com.mapshere.components
 
 import android.util.Log
+import android.view.View
 import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.module.annotations.ReactModule
 import com.facebook.react.uimanager.ThemedReactContext
@@ -8,96 +9,65 @@ import com.facebook.react.uimanager.annotations.ReactProp
 import com.here.sdk.core.GeoCoordinates
 import com.here.sdk.mapview.MapMeasure
 import com.here.sdk.mapview.MapScheme
+import com.mapshere.components.polyline.PolylineView
+import com.mapshere.utils.mapSchemes
+import com.mapshere.utils.zoomKinds
 
-@ReactModule(name = MapsHereViewManager.NAME)
+
+@ReactModule(name = MapsHereViewManager.TAG)
 class MapsHereViewManager :
   MapsHereViewManagerSpec<MapsHereView>() {
 
-  private var zoomKind: MapMeasure.Kind = MapMeasure.Kind.ZOOM_LEVEL
-  private var zoomValue: Double = 5.0
-  private var coordinates = GeoCoordinates(0.0, 0.0)
-  private var mapScheme = MapScheme.NORMAL_DAY
-
-  override fun getName(): String {
-    return NAME
+  companion object {
+    const val TAG = "MapsHereView"
   }
+
+  override fun getName() = TAG
 
   public override fun createViewInstance(context: ThemedReactContext): MapsHereView {
     val mapsHereView = MapsHereView(context)
     mapsHereView.onCreate(null)
-    loadCameraView(mapsHereView)
+    mapsHereView.loadCameraView()
     return mapsHereView
   }
 
-  @ReactProp(name = "mapScheme")
-  override fun setMapScheme(view: MapsHereView?, value: String?) {
-    Log.d(TAG, "setMapScheme: $value")
-
-    mapScheme = when {
-      value?.uppercase().equals("NORMAL_DAY") -> MapScheme.NORMAL_DAY
-      value?.uppercase().equals("NORMAL_NIGHT") -> MapScheme.NORMAL_NIGHT
-      value?.uppercase().equals("SATELLITE") -> MapScheme.SATELLITE
-      value?.uppercase().equals("HYBRID_DAY") -> MapScheme.HYBRID_DAY
-      value?.uppercase().equals("HYBRID_NIGHT") -> MapScheme.HYBRID_NIGHT
-      value?.uppercase().equals("LITE_DAY") -> MapScheme.LITE_DAY
-      value?.uppercase().equals("LITE_NIGHT") -> MapScheme.LITE_NIGHT
-      value?.uppercase().equals("LITE_HYBRID_DAY") -> MapScheme.LITE_HYBRID_DAY
-      value?.uppercase().equals("LITE_HYBRID_NIGHT") -> MapScheme.LITE_HYBRID_NIGHT
-      value?.uppercase().equals("LOGISTICS_DAY") -> MapScheme.LOGISTICS_DAY
-      else -> MapScheme.NORMAL_DAY
-    }
-
-    loadCameraView(view)
+  @ReactProp(name = "coordinates")
+  override fun setCoordinates(view: MapsHereView, value: ReadableMap?) {
+    view.setCoordinates(value)
   }
 
-  @ReactProp(name = "zoomKind")
-  override fun setZoomKind(view: MapsHereView?, value: String?) {
-    Log.d(TAG, "setZoomKind: $value")
-
-    zoomKind = when {
-      value?.uppercase().equals("DISTANCE") -> MapMeasure.Kind.DISTANCE
-      value?.uppercase().equals("ZOOM_LEVEL") -> MapMeasure.Kind.ZOOM_LEVEL
-      value?.uppercase().equals("SCALE") -> MapMeasure.Kind.SCALE
-      else -> MapMeasure.Kind.ZOOM_LEVEL
-    }
-    updateCameraView(view)
+  @ReactProp(name = "mapScheme")
+  override fun setMapScheme(view: MapsHereView, value: String) {
+    view.setMapScheme(value)
   }
 
   @ReactProp(name = "zoomValue")
-  override fun setZoomValue(view: MapsHereView?, value: Double) {
-    Log.d(TAG, "setZoomValue: $value")
-
-    zoomValue = value
-    updateCameraView(view)
+  override fun setZoomValue(view: MapsHereView, value: Double) {
+    view.setZoomValue(value)
   }
 
-  @ReactProp(name = "coordinates")
-  override fun setCoordinates(view: MapsHereView?, value: ReadableMap?) {
-    Log.d(TAG, "setCoordinates: $value")
-
-    val latitude = value?.getDouble("lat") ?: 0.0
-    val longitude = value?.getDouble("lon") ?: 0.0
-    coordinates = GeoCoordinates(latitude, longitude)
-
-    updateCameraView(view)
+  @ReactProp(name = "zoomKind")
+  override fun setZoomKind(view: MapsHereView, value: String) {
+    view.setZoomKind(value)
   }
 
-  private fun loadCameraView(view: MapsHereView?) {
-    view?.mapScene?.loadScene(mapScheme) { mapError ->
-      if (mapError == null) {
-        view.camera.lookAt(coordinates, MapMeasure(zoomKind, zoomValue))
-      } else {
-        Log.d(TAG, "Loading map failed: mapError" + mapError.name)
+  override fun addView(parent: MapsHereView, child: View?, index: Int) {
+    when (child) {
+      is PolylineView -> {
+        parent.addMapItem(child)
       }
     }
   }
 
-  private fun updateCameraView(view: MapsHereView?) {
-    view?.camera?.lookAt(coordinates, MapMeasure(zoomKind, zoomValue))
+  override fun removeViewAt(parent: MapsHereView, index: Int) {
+    parent.removeMapItemAt(index)
   }
 
-  companion object {
-    const val NAME = "MapsHereView"
-    private const val TAG = "MapsHereViewManager"
+  override fun getChildAt(parent: MapsHereView, index: Int): View {
+    return parent.getItemAt(index)
+  }
+
+  override fun getChildCount(parent: MapsHereView): Int {
+    return parent.getItemsCount()
   }
 }

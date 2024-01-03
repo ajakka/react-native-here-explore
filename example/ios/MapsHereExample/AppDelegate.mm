@@ -11,7 +11,7 @@
   // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};
 
-  [[HERESDKManager shared] initializeHERESDK];
+//  [[HERESDKManager shared] initializeHERESDK];
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
 
@@ -26,7 +26,7 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Dispose HERE SDK
-    [[HERESDKManager shared] disposeHERESDK];
+//    [[HERESDKManager shared] disposeHERESDK];
 }
 
 @end

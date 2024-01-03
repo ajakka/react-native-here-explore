@@ -5,35 +5,22 @@ import {
   UIManager,
   type ViewProps,
 } from 'react-native';
-import { LINKING_ERROR } from '../constants';
-
-export type ZoomKind = 'DISTANCE' | 'ZOOM_LEVEL' | 'SCALE';
-
-export type MapScheme =
-  | 'NORMAL_DAY'
-  | 'NORMAL_NIGHT'
-  | 'SATELLITE'
-  | 'HYBRID_DAY'
-  | 'HYBRID_NIGHT'
-  | 'LITE_DAY'
-  | 'LITE_NIGHT'
-  | 'LITE_HYBRID_DAY'
-  | 'LITE_HYBRID_NIGHT'
-  | 'LOGISTICS_DAY';
-
-export interface Coordinates {
-  lat: number;
-  lon: number;
-}
-
-export interface MapsHereViewProps extends ViewProps {
-  mapScheme?: MapScheme;
-  zoomKind?: ZoomKind;
-  zoomValue?: number;
-  coordinates?: Coordinates;
-}
+import { LINKING_ERROR } from '../Constant';
+import type { Coordinates } from '../types/Coordinates';
+import type { MapScheme } from '../types/MapScheme';
+import type { ZoomKind } from '../types/ZoomKind';
 
 const COMPONENT_NAME = 'MapsHereView';
+
+export interface MapsHereViewProps extends ViewProps {
+  coordinates: Coordinates;
+
+  mapScheme?: MapScheme;
+
+  zoomValue?: number;
+
+  zoomKind?: ZoomKind;
+}
 
 const RCTMapsHereView =
   UIManager.getViewManagerConfig(COMPONENT_NAME) != null

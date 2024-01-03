@@ -1,0 +1,11 @@
+export type MapScheme =
+  | 'NORMAL_DAY'
+  | 'NORMAL_NIGHT'
+  | 'SATELLITE'
+  | 'HYBRID_DAY'
+  | 'HYBRID_NIGHT'
+  | 'LITE_DAY'
+  | 'LITE_NIGHT'
+  | 'LITE_HYBRID_DAY'
+  | 'LITE_HYBRID_NIGHT'
+  | 'LOGISTICS_DAY';

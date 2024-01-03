@@ -5,6 +5,7 @@ import com.facebook.react.bridge.NativeModule
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.uimanager.ViewManager
 import com.mapshere.components.MapsHereViewManager
+import com.mapshere.components.polyline.PolylineViewManager
 import com.mapshere.modules.MapsHereConfigModule
 
 class MapsHerePackage : ReactPackage {
@@ -12,6 +13,7 @@ class MapsHerePackage : ReactPackage {
   override fun createViewManagers(reactContext: ReactApplicationContext): List<ViewManager<*, *>> {
     val viewManagers: MutableList<ViewManager<*, *>> = ArrayList()
     viewManagers.add(MapsHereViewManager())
+    viewManagers.add(PolylineViewManager())
     return viewManagers
   }
 
