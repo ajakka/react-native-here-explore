@@ -1,4 +1,4 @@
-import { MapsHereView } from './components/MapsHereView';
-import { MapsHereConfig } from './modules/MapsHereConfig';
+export { MapsHereConfig } from './modules/MapsHereConfig';
 
-export { MapsHereConfig, MapsHereView };
+export { MapsHereView } from './components/MapsHereView';
+export { PolylineView } from './components/PolylineView';

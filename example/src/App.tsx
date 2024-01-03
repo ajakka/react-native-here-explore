@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
-import { MapsHereView } from 'react-native-maps-here';
-import { PolylineView } from '../../src/components/PolylineView';
+import { MapsHereView, PolylineView } from 'react-native-maps-here';
 
 export default function App() {
   return (

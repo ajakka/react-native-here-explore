@@ -1,22 +1,14 @@
 package com.mapshere.components
 
-import android.util.Log
 import android.view.View
 import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.module.annotations.ReactModule
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.annotations.ReactProp
-import com.here.sdk.core.GeoCoordinates
-import com.here.sdk.mapview.MapMeasure
-import com.here.sdk.mapview.MapScheme
 import com.mapshere.components.polyline.PolylineView
-import com.mapshere.utils.mapSchemes
-import com.mapshere.utils.zoomKinds
-
 
 @ReactModule(name = MapsHereViewManager.TAG)
-class MapsHereViewManager :
-  MapsHereViewManagerSpec<MapsHereView>() {
+class MapsHereViewManager : MapsHereViewManagerSpec<MapsHereView>() {
 
   companion object {
     const val TAG = "MapsHereView"
