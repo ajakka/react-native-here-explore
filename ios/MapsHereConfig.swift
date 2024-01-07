@@ -8,14 +8,11 @@ class MapsHereConfig: NSObject {
             let options = SDKOptions(
                 accessKeyId: accessKeyID,
                 accessKeySecret: accessKeySecret)
-            
             do {
                 try SDKNativeEngine.makeSharedInstance(options: options)
                 return "SDKNativeEngine started"
-//                resolve("Here SDK initialized")
             } catch _ {
                 return "SDKNativeEngine errored"
-//                reject("", "", error)
             }
         }
 }
