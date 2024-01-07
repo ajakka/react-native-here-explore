@@ -4,6 +4,9 @@ import { name as appName } from './app.json';
 
 import { MapsHereConfig } from 'react-native-maps-here';
 
-MapsHereConfig.initializeHereSDK('', '');
+MapsHereConfig.initializeHereSDK(
+  'YOUR_ACCESS_KEY_ID',
+  'YOUR_ACCESS_KEY_SECRET'
+);
 
 AppRegistry.registerComponent(appName, () => App);

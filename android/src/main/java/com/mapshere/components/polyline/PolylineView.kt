@@ -2,6 +2,7 @@ package com.mapshere.components.polyline
 
 import android.content.Context
 import com.facebook.react.bridge.ReadableArray
+import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.views.view.ReactViewGroup
 import com.here.sdk.core.Color
 import com.here.sdk.core.GeoCoordinates
@@ -16,7 +17,7 @@ class PolylineView(context: Context?) : ReactViewGroup(context) {
 
   private var coordinates = arrayListOf<GeoCoordinates>()
 
-  private var lineColor: Color = ColorParser.toHereColor("white")
+  private var lineColor: Color = Color.valueOf(255)
 
   private var lineWidth: Double = 8.0
 
@@ -38,7 +39,7 @@ class PolylineView(context: Context?) : ReactViewGroup(context) {
     }
   }
 
-  fun setLineColor(value: String) {
+  fun setLineColor(value: Double) {
     lineColor = ColorParser.toHereColor(value)
     updatePolyline()
   }

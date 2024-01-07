@@ -11,7 +11,7 @@ export default function App() {
       coordinates={{ lat: 52.53032, lon: 13.37409 }}
     >
       <PolylineView
-        lineColor="blue"
+        lineColor="rgba(255, 255, 255, 255)"
         lineWidth={8.0}
         coordinates={[
           { lat: 52.53032, lon: 13.37409 },
@@ -22,6 +22,8 @@ export default function App() {
       />
 
       <PolylineView
+        lineColor="green"
+        lineWidth={8.0}
         coordinates={[
           { lat: 52.55032, lon: 13.44409 },
           { lat: 52.5509, lon: 13.4446 },
@@ -31,6 +33,8 @@ export default function App() {
       />
 
       <PolylineView
+        lineColor="yellow"
+        lineWidth={8.0}
         coordinates={[
           { lat: 52.63032, lon: 13.47409 },
           { lat: 52.6309, lon: 13.4946 },
@@ -44,7 +48,8 @@ export default function App() {
 
 const styles = StyleSheet.create({
   box: {
-    width: '100%',
-    height: '100%',
+    // width: '100%',
+    // height: '100%',
+    backgroundColor: 'green',
   },
 });

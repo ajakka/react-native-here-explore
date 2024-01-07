@@ -1,6 +1,7 @@
 package com.mapshere.components.polyline
 
 import com.facebook.react.bridge.ReadableArray
+import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.module.annotations.ReactModule
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.annotations.ReactProp
@@ -19,7 +20,7 @@ class PolylineViewManager : PolylineViewManagerSpec<PolylineView>() {
   }
 
   @ReactProp(name = "lineColor")
-  override fun setLineColor(view: PolylineView, value: String) {
+  override fun setLineColor(view: PolylineView, value: Double) {
     view.setLineColor(value)
   }
 

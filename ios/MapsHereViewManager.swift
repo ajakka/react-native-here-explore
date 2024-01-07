@@ -12,20 +12,15 @@ class MapsHereViewManager: RCTViewManager {
     @objc override static func requiresMainQueueSetup() -> Bool {
         return false
     }
+    
+    override static func moduleName() -> String! {
+        return "MapsHereView"
+    }
 }
 
 class MapsHereView : UIView {
     
     let mapView = MapView()
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        mapView.frame = self.bounds
-        self.loadCameraView()
-        self.addSubview(mapView)
-        
-    }
     
     @objc var zoomKind: String = "ZOOM_LEVEL" {
         didSet {self.updateCameraView()}
@@ -41,6 +36,37 @@ class MapsHereView : UIView {
     
     @objc var mapScheme: String = "NORMAL_DAY" {
         didSet {self.loadCameraView()}
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        mapView.frame = self.bounds
+        self.loadCameraView()
+        self.addSubview(mapView)
+    }
+    
+    override func addSubview(_ view: UIView) {
+        if let polylineView = view as? PolylineView {
+            polylineView.onUpdate = { old, new in
+                if let oldPolyline = old {
+                    self.mapView.mapScene.removeMapPolyline(oldPolyline)
+                }
+                self.mapView.mapScene.addMapPolyline(new)
+            }
+            polylineView.updatePolyline()
+        }
+        //        else {
+        super.addSubview(view)
+        //        }
+    }
+    
+    override func willRemoveSubview(_ subview: UIView) {
+        if let polylineView = subview as? PolylineView {
+            if let currentPolyline = polylineView.currentPolyline {
+                self.mapView.mapScene.removeMapPolyline(currentPolyline)
+            }
+        }
+        super.willRemoveSubview(subview)
     }
     
     private func updateCameraView() -> Void {

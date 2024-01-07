@@ -1,16 +1,13 @@
 import React from 'react';
+import { UIManager, processColor, requireNativeComponent } from 'react-native';
 
-import { requireNativeComponent, UIManager } from 'react-native';
+// import tinycolor, { type ColorInput } from 'tinycolor2';
+import type { ColorValue, ProcessedColorValue } from 'react-native';
 import { LINKING_ERROR } from '../Constant';
-import type { ColorValue } from 'react-native';
 import type { Coordinates } from '../types/Coordinates';
 
 const COMPONENT_NAME = 'PolylineView';
 
-/**
- * PolylineView is responsible of drawing a polyline on the map
- * given a list of coordinates
- */
 export interface PolylineViewProps {
   /**
    * ### **(REQUIRED)** The coordinates used to draw the polyline.
@@ -31,16 +28,19 @@ export interface PolylineViewProps {
   /**
    * ### A color value used to color the polyline.
    *
-   * basic color names like: `red`, `blue`, `green`, `black`, `white`, etc...
-   * are accepted but it's recomended to use hexadecimal values instead.
-   *
    * **Default value:** `white`
+   *
+   * **Possible values:**
+   * - `white`, `black`, `red`, `green`, `blue`...
+   * - `rgba(255, 255, 255, 255)`
+   * - `#FFFFFFFF`
    *
    * **Example:**
    * ```
    * lineColor="#0F0F0F"
    * ```
    */
+  // lineColor?: ColorInput;
   lineColor?: ColorValue;
 
   /**
@@ -78,13 +78,21 @@ export interface PolylineViewProps {
   lineWidthUnit?: 'PIXELS' | 'DENSITY_INDEPENDENT_PIXELS' | 'METERS';
 }
 
+interface RTCPolylineViewProps extends Omit<PolylineViewProps, 'lineColor'> {
+  lineColor: ProcessedColorValue;
+}
+
 const RCTPolylineView =
   UIManager.getViewManagerConfig(COMPONENT_NAME) != null
-    ? requireNativeComponent<PolylineViewProps>(COMPONENT_NAME)
+    ? requireNativeComponent<RTCPolylineViewProps>(COMPONENT_NAME)
     : () => {
         throw new Error(LINKING_ERROR);
       };
 
+/**
+ * PolylineView is responsible of drawing a polyline on the map
+ * given a list of coordinates
+ */
 export function PolylineView(props: PolylineViewProps) {
   const {
     coordinates = [],
@@ -96,10 +104,10 @@ export function PolylineView(props: PolylineViewProps) {
   return (
     <RCTPolylineView
       coordinates={coordinates}
-      lineColor={lineColor}
+      lineColor={processColor(lineColor) || 0}
       lineWidth={lineWidth}
       // lineWidthUnit={lineWidthUnite}
-      lineWidthUnit={'PIXELS'}
+      lineWidthUnit="PIXELS"
     />
   );
 }
