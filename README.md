@@ -53,10 +53,15 @@ export default function App() {
 
 ## Documentation
 
-[MapsHereConfig](docs/modules/MapsHereConfig.md)
+### Components
 
-[MapsHereView](docs/components/MapsHereView.md)
-[PolylineView](docs/components/PolylineView.md)
+- [MapsHereView](docs/components/MapsHereView.md)
+
+- [PolylineView](docs/components/PolylineView.md)
+
+### Modules
+
+- [MapsHereConfig](docs/modules/MapsHereConfig.md)
 
 ## Contributing
 

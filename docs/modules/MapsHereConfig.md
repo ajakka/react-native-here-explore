@@ -4,11 +4,11 @@
 
 ## Overview
 
-The `MapsHereConfig` class is designed to initialize the Here SDK in a React Native application. It's crucial for setting up mapping functionalities provided by Here Technologies.
+The `MapsHereConfig` class is used to initialize the Here SDK in a React Native application. It's crucial for setting up mapping functionalities provided by Here Technologies.
 
 ## Methods
 
-### initializeHereSDK
+### MapsHereConfig.initializeHereSDK()
 
 Initializes the Here SDK using the provided credentials. This is typically the first method you need to call before using any mapping functionalities from the SDK.
 

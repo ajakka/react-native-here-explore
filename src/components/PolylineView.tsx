@@ -5,6 +5,7 @@ import { UIManager, processColor, requireNativeComponent } from 'react-native';
 import type { ColorValue, ProcessedColorValue } from 'react-native';
 import { LINKING_ERROR } from '../Constant';
 import type { Coordinates } from '../types/Coordinates';
+import type { LineWidthUnit } from '../types/LineWidthUnit';
 
 const COMPONENT_NAME = 'PolylineView';
 
@@ -75,7 +76,7 @@ export interface PolylineViewProps {
    * and cannot be changed due to an issue that causes the library to
    * crash when using other units
    */
-  lineWidthUnit?: 'PIXELS' | 'DENSITY_INDEPENDENT_PIXELS' | 'METERS';
+  lineWidthUnit?: LineWidthUnit;
 }
 
 interface RTCPolylineViewProps extends Omit<PolylineViewProps, 'lineColor'> {
