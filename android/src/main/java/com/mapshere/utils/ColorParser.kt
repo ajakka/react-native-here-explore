@@ -5,7 +5,6 @@ import com.here.sdk.core.Color
 
 class ColorParser {
   companion object {
-
     fun toHereColor(value: Double): Color {
       return Color.valueOf(value.toInt())
     }

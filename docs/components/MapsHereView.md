@@ -1,20 +1,20 @@
 <h1 align="center">
-    <strong>MapsHereView</strong>
+    <strong>Map</strong>
 </h1>
 
 ## Overview
 
-`<MapsHereView />` is used to display the maps within your application. The component allows you to specify the location, appearance, and behavior of the map through a series of props.
+`<Map />` is used to display the maps within your application. The component allows you to specify the location, appearance, and behavior of the map through a series of props.
 
 ## Properties
 
-### `coordinates` (Coordinates) - REQUIRED
+### `geoCoordinates` (GeoCoordinates) - REQUIRED
 
 - **Description:** The geographical coordinates used to center the map. This prop is essential for defining the initial position of the map.
-- **Type:** `Coordinates` (Object with `lat` and `lon` properties)
+- **Type:** `GeoCoordinates` (Object with `latitude`, `longitude`, and optionally `altitude` properties)
 - **Example:**
   ```jsx
-  coordinates={{ lat: 99.00990, lon: 9.00990 }}
+  geoCoordinates={{ latitude: 99.00990, longitude: 9.00990, altitude: 1.07 }}
   ```
 
 ### `mapScheme` (MapScheme)
@@ -61,7 +61,38 @@
   ```jsx
   zoomKind = 'ZOOM_LEVEL';
   ```
-- **Note:** Unless you have a specific requirement, it's usually best to stick with the default `ZOOM_LEVEL`.
+
+### `bearing` (number)
+
+- **Description:** Takes a value from 0 to 360 that's used to rotate the map.
+- **Type:** `number`
+- **Default value:** `0`
+- **Example:**
+  ```jsx
+  bearing={90}
+  ```
+
+### `tilt` (number)
+
+- **Description:** Takes a value from 0 to 70 that's used to give a tilted view with some 3D Objects when the city is supported.
+- **Type:** `number`
+- **Default value:** `0`
+- **Example:**
+  ```jsx
+  tilt={30}
+  ```
+
+### `watermarkStyle` (WatermarkStyle)
+
+- **Description:** Controls the color of the HERE watermark. Useful for custom map schemes.
+- **Type:** `WatermarkStyle` (Enum)
+- **Possible values:**
+  - `DARK`
+  - `LIGHT`
+- **Example:**
+  ```jsx
+  watermarkStyle = 'DARK';
+  ```
 
 ## Example Usage
 
@@ -69,12 +100,12 @@ Here's a simple example of how to use the `MapsHereView` component within your R
 
 ```jsx
 import React from 'react';
-import { MapsHereView } from 'react-native-maps-here';
+import { Map as MapsHereView } from 'react-native-maps-here';
 
 const App = () => {
   return (
     <MapsHereView
-      coordinates={{ lat: 40.7128, lon: -74.006 }} // Coordinates for New York City
+      geoCoordinates={{ latitude: 40.7128, longitude: -74.006, altitude: 1.07 }} // Coordinates for New York City
       mapScheme="NORMAL_DAY"
       zoomValue={10}
     />
@@ -84,4 +115,4 @@ const App = () => {
 export default App;
 ```
 
-This code will render a map centered on New York City with a standard daytime scheme and a zoom level that provides a city-wide view. You can adjust the `coordinates`, `mapScheme`, and `zoomValue` props to fit your specific needs.
+This code will render a map centered on New York City with a standard daytime scheme and a zoom level that provides a city-wide view. You can adjust the `geoCoordinates`, `mapScheme`, and `zoomValue` props to fit your specific needs.

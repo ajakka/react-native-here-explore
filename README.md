@@ -33,16 +33,16 @@ Checkout [INSTALLATION.md](docs/INSTALLATION.md) for more details
 
 ## Example
 
-This is an example snippet Using `MapsHereView` to show the Map
+This is an example snippet Using `Map` to show the Map
 
 ```tsx
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
-import { MapsHereView } from 'react-native-maps-here';
+import { Map } from 'react-native-maps-here';
 
 export default function App() {
   return (
-    <MapsHereView
+    <Map
       mapScheme="NORMAL_NIGHT"
       zoomValue={5}
       coordinates={{ lat: 31.6913827, lon: -8.4413898 }}
@@ -55,9 +55,15 @@ export default function App() {
 
 ### Components
 
-- [MapsHereView](docs/components/MapsHereView.md)
+- [Map](docs/components/MapsHereView.md)
 
-- [PolylineView](docs/components/PolylineView.md)
+- [Arrow](docs/components/ArrowView.md)
+
+- [Marker](docs/components/MarkerView.md)
+
+- [Polygon](docs/components/PolygonView.md)
+
+- [Polyline](docs/components/PolylineView.md)
 
 ### Modules
 

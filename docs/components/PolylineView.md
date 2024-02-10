@@ -4,19 +4,19 @@
 
 ## Overview
 
-`<PolylineView />` is a React Native component designed for drawing polylines within the `<MapsHereView />` map component. It provides a way to visualize paths or routes by connecting a series of geographical coordinates with a line. The `PolylineView` component is used as a child of the `MapsHereView` component to add path information over the map, such as routes or boundaries.
+`<Polyline />` is a React Native component designed for drawing polylines within the `<Maps />` map component. It provides a way to visualize paths or routes by connecting a series of geographical coordinates with a line. The `Polyline` component is used as a child of the `Maps` component to add path information over the map, such as routes or boundaries.
 
 ## Properties
 
-### `coordinates` (Coordinates[]) - REQUIRED
+### `geoPolyline` (GeoPolyline) - REQUIRED
 
-- **Description:** The array of geographical coordinates used to draw the polyline. At least two coordinates are required to display a line.
-- **Type:** `Coordinates[]` (Array of Objects with `lat` and `lon` properties)
+- **Description:** The coordinates used to draw the polyline. At least two coordinates are required before a line is displayed, otherwise nothing will show up.
+- **Type:** `GeoPolyline` (Array of Objects with `latitude`, `longitude`, and optionally `altitude` properties)
 - **Example:**
   ```jsx
-  coordinates={[
-       { lat: 99.00990, lon: 9.00990 },
-       { lat: 99.00990, lon: 9.00990 },
+  geoPolyline={[
+       { latitude: 99.00990, longitude: 9.00990, altitude: 1.3 },
+       { latitude: 99.00990, longitude: 9.00990, altitude: 1.3 },
   ]}
   ```
 
@@ -41,20 +41,25 @@
   lineWidth={8.0}
   ```
 
-### `lineWidthUnit` (LineWidthUnit)
+### `lineType` (LineType)
 
-- **Description:** Determines the unit used for the line thickness. However, due to a current issue, this property is fixed to `PIXELS`.
-- **Type:** `LineWidthUnit`
-- **Default value:** `PIXELS`
+- **Description:** Controls the line type, allowing for solid or dashed lines.
+- **Type:** `LineType`
 - **Possible values:**
-  - `PIXELS`
-  - `DENSITY_INDEPENDENT_PIXELS`
-  - `METERS`
+  - `SOLID`
+  - `DASH`
 - **Example:**
   ```jsx
-  lineWidthUnit = 'PIXELS';
+  lineType = 'DASH';
   ```
-- **Note:** Currently, due to a known issue, this property is restricted to `PIXELS` and cannot be changed.
+
+For dashed lines, additional properties include `lineLength`, `gapLength`, and `gapColor`.
+
+### Additional Properties for Dashed Lines
+
+- **`lineLength` (number):** Controls how tall is the line.
+- **`gapLength` (number):** Controls how tall is the gap.
+- **`gapColor` (ColorValue):** Changes the gap color.
 
 ## Example Usage
 
@@ -72,12 +77,13 @@ const App = () => {
       zoomValue={10}
     >
       <PolylineView
-        coordinates={[
-          { lat: 40.7128, lon: -74.006 },
-          { lat: 40.7158, lon: -74.016 },
+        geoPolyline={[
+          { latitude: 40.7128, longitude: -74.006, altitude: 1.3 },
+          { latitude: 40.7158, longitude: -74.016, altitude: 1.3 },
         ]}
         lineColor="red"
         lineWidth={5}
+        lineType="SOLID"
       />
     </MapsHereView>
   );
@@ -86,8 +92,6 @@ const App = () => {
 export default App;
 ```
 
-In this example, `PolylineView` is used to draw a red line between two points in New York City on the map. You can modify the `coordinates`, `lineColor`, and `lineWidth` props to customize the polyline's appearance and path.
-
----
+In this example, `PolylineView` is used to draw a red solid line between two points in New York City on the map. You can modify the `geoPolyline`, `lineColor`, `lineWidth`, and `lineType` props to customize the polyline's appearance and path.
 
 Remember to review the prop values and defaults to ensure the polyline appears as expected on your map. Happy mapping!

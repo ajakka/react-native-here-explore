@@ -6,26 +6,16 @@ import {
   type ViewProps,
 } from 'react-native';
 import { LINKING_ERROR } from '../Constant';
-import type { Coordinates } from '../types/Coordinates';
+import type { GeoBox, GeoCoordinates, Rectangle2D } from '../types/Coordinates';
 import type { MapScheme } from '../types/MapScheme';
 import type { ZoomKind } from '../types/ZoomKind';
+import type { WatermarkStyle } from '../types/WatermarkStyle';
 
 const COMPONENT_NAME = 'MapsHereView';
 
-export interface MapsHereViewProps extends ViewProps {
+interface BaseMapProps extends ViewProps {
   /**
-   * ### **(REQUIRED)** The coordinates used to position the map.
-   *
-   *
-   * **Example:**
-   * ```
-   * coordinates={{ lat: 99.00990, lon: 9.00990 }}
-   * ```
-   */
-  coordinates: Coordinates;
-
-  /**
-   * ### The map scheme used by the map
+   * ### The map's default schemes used to change the look and feel of the map.
    *
    * **Default value:** `NORMAL_DAY`
    *
@@ -42,20 +32,70 @@ export interface MapsHereViewProps extends ViewProps {
    * - `LOGISTICS_DAY`
    *
    * **Example:**
-   *
    * ```
    * mapScheme="NORMAL_DAY"
    * ```
    */
-  mapScheme?: MapScheme;
+  mapScheme: MapScheme;
 
   /**
-   * ### The zoom value, bigger means closer to the coordinates
+   * ### Controles the color of the HERE watermark.
+   *
+   * It's only usefull for custom map schemes, which are not supported at the moment.
+   *
+   * **Possible values:**
+   * - `DARK`
+   * - `LIGHT`
+   *
+   * **Example:**
+   * ```
+   * watermarkStyle="DARK"
+   * ```
+   */
+  watermarkStyle?: WatermarkStyle;
+
+  /**
+   * ### Takes a value from 0 to 360 that's used to rotate the map.
+   *
+   * **Default value:** `0`
+   *
+   * **Example:**
+   * ```
+   * bearing={90}
+   * ```
+   */
+  bearing?: number;
+
+  /**
+   * ### Takes a value from 0 to 70 that's used to give a tilted view with some 3D Objects when the city is supported.
+   *
+   * **Default value:** `0`
+   *
+   * **Example:**
+   * ```
+   * tilt={30}
+   * ```
+   */
+  tilt?: number;
+}
+
+interface GeoCoordinatesProps extends BaseMapProps {
+  /**
+   * ### **(REQUIRED)** The coordinates used to position the map.
+   *
+   * **Example:**
+   * ```
+   * geoCoordinates={{ latitude: 99.00990, longitude: 9.00990, altitude: 1.07 }}
+   * ```
+   */
+  geoCoordinates: GeoCoordinates;
+
+  /**
+   * ### The zoom value, bigger means closer to the coordinates.
    *
    * **Default value:** `8.0`
    *
    * **Example:**
-   *
    * ```
    * zoomValue={8.0}
    * ```
@@ -63,7 +103,7 @@ export interface MapsHereViewProps extends ViewProps {
   zoomValue?: number;
 
   /**
-   * ### The zoom methode used to calculate the zoom value
+   * ### The zoom methode used to calculate the zoom value.
    *
    * **Default value:** `ZOOM_LEVEL`
    *
@@ -73,7 +113,6 @@ export interface MapsHereViewProps extends ViewProps {
    * - `SCALE`
    *
    * **Example:**
-   *
    * ```
    * zoomKind="ZOOM_LEVEL"
    * ```
@@ -84,9 +123,31 @@ export interface MapsHereViewProps extends ViewProps {
   zoomKind?: ZoomKind;
 }
 
+interface GeoBoxProps extends BaseMapProps {
+  /**
+   * ### **(REQUIRED)** Two coordinate values used to describe the ends of the map view.
+   *
+   * **Example:**
+   * ```
+   * geoBox={{
+   *   southWestCorner: { latitude: 33.819096, longitude: -7.320056 },
+   *   northEastCorner: { latitude: 34.460004, longitude: -6.121828 },
+   * }}
+   * ```
+   */
+  geoBox: GeoBox;
+
+  /**
+   *
+   */
+  rectangle2D?: Rectangle2D;
+}
+
+export type MapProps = GeoCoordinatesProps | GeoBoxProps;
+
 const RCTMapsHereView =
   UIManager.getViewManagerConfig(COMPONENT_NAME) != null
-    ? requireNativeComponent<MapsHereViewProps>(COMPONENT_NAME)
+    ? requireNativeComponent<MapProps>(COMPONENT_NAME)
     : () => {
         throw new Error(LINKING_ERROR);
       };
@@ -94,19 +155,10 @@ const RCTMapsHereView =
 /**
  * MapsHereView is the main view responsible for displaying the Map
  */
-export function MapsHereView(props: MapsHereViewProps) {
-  const {
-    mapScheme = 'NORMAL_DAY',
-    zoomValue = 8,
-    zoomKind = 'ZOOM_LEVEL',
-  } = props;
-
+export function Map(props: MapProps) {
   return (
     <RCTMapsHereView
       {...props}
-      mapScheme={mapScheme}
-      zoomValue={zoomValue}
-      zoomKind={zoomKind}
       style={[{ width: '100%', height: '100%' }, props.style]}
     />
   );

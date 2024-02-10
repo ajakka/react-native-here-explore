@@ -8,9 +8,19 @@ abstract class MapsHereViewManagerSpec<T : ViewGroup> : ViewGroupManager<T>() {
 
   abstract fun setMapScheme(view: T, value: String)
 
+  abstract fun setWatermarkStyle(view: MapsHereView, value: String?)
+
+  abstract fun setBearing(view: MapsHereView, value: Double)
+
+  abstract fun setTilt(view: MapsHereView, value: Double)
+
+//  GeoCoordinates
+  abstract fun setGeoCoordinates(view: T, value: ReadableMap?)
+
   abstract fun setZoomKind(view: T, value: String)
 
   abstract fun setZoomValue(view: T, value: Double)
 
-  abstract fun setCoordinates(view: T, value: ReadableMap?)
+//  GeoBox
+  abstract fun setGeoBox(view: MapsHereView, value: ReadableMap?)
 }

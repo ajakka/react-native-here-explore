@@ -2,8 +2,6 @@ package com.mapshere.components.polyline
 
 import android.content.Context
 import com.facebook.react.bridge.ReadableArray
-import com.facebook.react.bridge.ReadableMap
-import com.facebook.react.views.view.ReactViewGroup
 import com.here.sdk.core.Color
 import com.here.sdk.core.GeoCoordinates
 import com.here.sdk.core.GeoPolyline
@@ -11,98 +9,125 @@ import com.here.sdk.mapview.LineCap
 import com.here.sdk.mapview.MapMeasureDependentRenderSize
 import com.here.sdk.mapview.MapPolyline
 import com.here.sdk.mapview.RenderSize
+import com.mapshere.components.item.ItemView
 import com.mapshere.utils.ColorParser
+import com.mapshere.utils.GeoCoordinatesUtils
 
-class PolylineView(context: Context?) : ReactViewGroup(context) {
+class PolylineView(context: Context?) : ItemView(context) {
 
-  private var coordinates = arrayListOf<GeoCoordinates>()
+  private var geoPolyline = arrayListOf<GeoCoordinates>()
 
-  private var lineColor: Color = Color.valueOf(255)
+  private var lineType: String = "SOLID" // or "DASH"
 
   private var lineWidth: Double = 8.0
 
+  private var lineColor: Color = Color.valueOf(255)
+
+  private var lineLength: Double = 2.0
+
+  private var gapColor: Color = Color.valueOf(0f, 0f, 0f, 0f)
+
+  private var gapLength: Double = 2.0
+
+  private var outlineWidth: Double = 0.0
+
+  private var outlineColor: Color = Color.valueOf(0f, 0f, 0f, 0f)
+
+  private var capShape: LineCap = LineCap.ROUND
+
   private var lineWidthUnit: RenderSize.Unit = RenderSize.Unit.PIXELS
 
-  var mapPolyline: MapPolyline? = null
+  private var mapPolyline: MapPolyline? = null
 
-  private var listener: OnUpdateListener? = null
-
-  fun setGeoCoordinate(value: ReadableArray?) {
-    if (value != null && value.size() > 0) {
-      coordinates = convertToGeoCoordinates(value)
-      if (coordinates.size == 1) {
-        val lat = coordinates[0].latitude
-        val lon = coordinates[0].longitude
-        coordinates.add(GeoCoordinates(lat, lon))
-      }
-      updatePolyline()
+  fun setGeoPolyline(value: ReadableArray?) {
+    if (value != null && value.size() > 1) {
+      geoPolyline = GeoCoordinatesUtils.convertToGeoCoordinatesList(value)
     }
   }
 
-  fun setLineColor(value: Double) {
-    lineColor = ColorParser.toHereColor(value)
-    updatePolyline()
+  fun setLineType(value: String) {
+    lineType = value
   }
 
   fun setLineWidth(value: Double) {
     lineWidth = value
-    updatePolyline()
+  }
+
+  fun setLineColor(value: Double) {
+    lineColor = ColorParser.toHereColor(value)
+  }
+
+  fun setOutlineWidth(value: Double) {
+    outlineWidth = value
+  }
+
+  fun setOutlineColor(value: Double) {
+    outlineColor = ColorParser.toHereColor(value)
+  }
+
+  fun setLineLength(value: Double) {
+    lineLength = value
+  }
+
+  fun setGapColor(value: Double) {
+    gapColor = ColorParser.toHereColor(value)
+  }
+
+  fun setGapLength(value: Double) {
+    gapLength = value
+  }
+
+  fun setCapShape(value: String) {
+    capShape = LineCap.valueOf(value)
   }
 
   fun setLineWidthUnit(value: String) {
     lineWidthUnit = RenderSize.Unit.valueOf(value)
-    updatePolyline()
   }
 
-  fun setOnUpdateListener(listener: OnUpdateListener?) {
-    this.listener = listener
-  }
+  override fun updateFeature() {
+    if (geoPolyline.size > 1) {
+      val newPolyline = createPolyline()
+      val mapScene = parentMap?.mapScene
 
-  private fun createPolyline(coordinates: ArrayList<GeoCoordinates>): MapPolyline {
-    val geoPolyline = GeoPolyline(coordinates)
-    val lineSize = MapMeasureDependentRenderSize(lineWidthUnit, lineWidth)
+      mapPolyline?.let { mapScene?.removeMapPolyline(it) }
 
-    return MapPolyline(
-      geoPolyline,
-      MapPolyline.SolidRepresentation(
-        lineSize,
-        lineColor,
-        LineCap.BUTT
-      )
-    )
-  }
-
-  fun updatePolyline() {
-    if (coordinates.size > 0) {
-      val newPolyline = createPolyline(coordinates)
-      listener?.onUpdate(mapPolyline, newPolyline)
+      mapScene?.addMapPolyline(newPolyline)
       mapPolyline = newPolyline
     }
   }
 
-//  fun clearPolyline() {
-//    coordinates = arrayListOf()
-//    mapPolyline = null
-//    listener = null
-//  }
-
-  private fun convertToGeoCoordinates(readableArray: ReadableArray): ArrayList<GeoCoordinates> {
-    val coordinates = ArrayList<GeoCoordinates>()
-
-    for (i in 0 until readableArray.size()) {
-      val item = readableArray.getMap(i)
-      val lat = item.getDouble("lat")
-      val lon = item.getDouble("lon")
-      coordinates.add(GeoCoordinates(lat, lon))
-    }
-    return coordinates
+  override fun removeFeature() {
+    mapPolyline?.let { parentMap?.mapScene?.removeMapPolyline(it) }
+    mapPolyline = null
+    unassignMap()
   }
 
-  fun interface OnUpdateListener {
-    fun onUpdate(old: MapPolyline?, new: MapPolyline)
-  }
+  private fun createPolyline(): MapPolyline {
+    val geoPolyline = GeoPolyline(geoPolyline)
 
-  companion object {
-    private const val TAG = "PolylineView"
+    val representation =
+      if (lineType == "SOLID") {
+        MapPolyline.SolidRepresentation(
+          MapMeasureDependentRenderSize(lineWidthUnit, lineWidth),
+          lineColor,
+          MapMeasureDependentRenderSize(lineWidthUnit, outlineWidth),
+          outlineColor,
+          capShape
+        )
+      }
+      else {
+        MapPolyline.DashRepresentation(
+          MapMeasureDependentRenderSize(lineWidthUnit, lineWidth),
+          MapMeasureDependentRenderSize(lineWidthUnit, lineLength),
+          MapMeasureDependentRenderSize(lineWidthUnit, gapLength),
+          lineColor,
+          gapColor
+        )
+      }
+
+    return MapPolyline(
+      geoPolyline, representation
+    )
   }
 }

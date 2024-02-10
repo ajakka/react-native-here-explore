@@ -4,7 +4,7 @@ import type {
   Double,
   WithDefault,
 } from 'react-native/Libraries/Types/CodegenTypes';
-import type { Coordinates } from '../types/Coordinates';
+import type { GeoCoordinates } from '../types/Coordinates';
 import type { MapScheme } from '../types/MapScheme';
 import type { ZoomKind } from '../types/ZoomKind';
 
@@ -14,7 +14,7 @@ interface NativeProps extends ViewProps {
   mapScheme?: WithDefault<MapScheme, 'NORMAL_DAY'>;
   zoomKind?: WithDefault<ZoomKind, 'ZOOM_LEVEL'>;
   zoomValue: Double;
-  coordinates: Coordinates;
+  coordinates: GeoCoordinates;
 }
 
 export default codegenNativeComponent<NativeProps>(COMPONENT_NAME);

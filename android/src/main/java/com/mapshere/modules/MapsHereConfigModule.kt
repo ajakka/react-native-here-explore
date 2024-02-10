@@ -1,7 +1,5 @@
 package com.mapshere.modules
 
-import android.util.Log
-import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactMethod
 import com.here.sdk.core.engine.SDKNativeEngine

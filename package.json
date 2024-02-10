@@ -35,6 +35,7 @@
     "react": "18.2.0",
     "react-native": "0.72.7",
     "react-native-builder-bob": "^0.20.0",
+    "react-native-dotenv": "^3.4.9",
     "release-it": "^15.0.0",
     "turbo": "^1.10.7",
     "typescript": "^5.0.2"
