@@ -1,6 +1,26 @@
 import * as React from 'react';
-import { Image, ImageBase, StyleSheet } from 'react-native';
+import { Alert, Image, ImageBase, StyleSheet } from 'react-native';
 import { Arrow, Map, Marker, Polygon, Polyline } from 'react-native-maps-here';
+import { Routing } from '../../src/components/RoutingView';
+
+const originCoordinates = {
+  latitude: 33.757043,
+  longitude: -7.270303,
+};
+const destinationCoordinates = {
+  latitude: 33.865833,
+  longitude: -7.021998,
+};
+const wayPoints = [
+  {
+    latitude: 33.766877,
+    longitude: -7.058795,
+  },
+  {
+    latitude: 33.828499,
+    longitude: -6.959031,
+  },
+];
 
 export default function App() {
   return (
@@ -20,30 +40,46 @@ export default function App() {
       // tilt={0}
     >
       <Marker
-        geoCoordinates={{ latitude: 34.461004, longitude: -6.121828 }}
+        geoCoordinates={originCoordinates}
         image={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }}
         size={{ width: 200, height: 200 }}
       />
 
       <Marker
-        geoCoordinates={{ latitude: 33.819096, longitude: -7.320056 }}
+        geoCoordinates={destinationCoordinates}
         image={require('./assets/tiny_logo.jpg')}
         // scale={1.5}
         size={{ width: 180, height: 180 }}
         anchor={{ horizontal: 0.5 }}
       />
 
-      <Polyline
-        lineType="DASH"
-        lineColor="red"
-        lineWidth={8.0}
-        gapLength={2}
-        gapColor="black"
-        geoPolyline={[
-          { latitude: 33.819096, longitude: -7.320055 },
-          { latitude: 34.460004, longitude: -6.121828 },
-        ]}
+      <Routing
+        originCoordinates={originCoordinates}
+        destinationCoordinates={destinationCoordinates}
+        lineType={'SOLID'}
+        lineColor={'yellow'}
+        lineWidth={12.0}
+        wayPoints={wayPoints}
+        onSendMessageRoutingDetails={(data) =>
+          console.log('routing details', data)
+        }
       />
+
+      {wayPoints.map((val, i) => {
+        return (
+          <Marker
+            key={String(i)}
+            geoCoordinates={{
+              latitude: val.latitude,
+              longitude: val.longitude,
+            }}
+            image={require('./assets/red_dot.png')}
+            // scale={1.5}
+            size={{ width: 120, height: 120 }}
+            anchor={{ horizontal: 0.5 }}
+          />
+        );
+      })}
 
       {/* <Arrow
           lineColor="red"
