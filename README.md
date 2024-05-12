@@ -65,6 +65,8 @@ export default function App() {
 
 - [Polyline](docs/components/PolylineView.md)
 
+- [Routing](docs/components/RoutingView.md)
+
 ### Modules
 
 - [MapsHereConfig](docs/modules/MapsHereConfig.md)
