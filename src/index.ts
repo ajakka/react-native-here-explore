@@ -1,5 +1,14 @@
 export { MapsHereConfig } from './modules/MapsHereConfig';
 
+export {
+  useRouting,
+  type RouteType,
+  type OnRouteCalculated,
+  //
+  RouteOption,
+  type RouteOptionType,
+} from './modules/routing';
+
 export { Map } from './components/MapsHereView';
 export type { MapProps } from './components/MapsHereView';
 
@@ -14,3 +23,5 @@ export type { PolygonProps } from './components/PolygonView';
 
 export { Marker } from './components/MarkerView';
 export type { MarkerProps } from './components/MarkerView';
+
+export * from './types';

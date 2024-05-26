@@ -10,7 +10,7 @@ import com.here.sdk.core.GeoPolygon
 import com.here.sdk.mapview.MapPolygon
 import com.mapshere.components.item.ItemView
 import com.mapshere.utils.ColorParser
-import com.mapshere.utils.GeoCoordinatesUtils
+import com.mapshere.utils.CoordinatesUtils
 
 class PolygonView(context: Context?) : ItemView(context) {
 
@@ -28,7 +28,7 @@ class PolygonView(context: Context?) : ItemView(context) {
 
   fun setGeoCoordinates(value: ReadableArray?) {
     if (value != null) {
-      geoCoordinates = GeoCoordinatesUtils.convertToGeoCoordinatesList(value)
+      geoCoordinates = CoordinatesUtils.toCoordinatesList(value)
       geoCircle = null
     }
   }
@@ -39,7 +39,7 @@ class PolygonView(context: Context?) : ItemView(context) {
     if (circleMap != null) {
       val radiusInMeters = value.getDouble("radiusInMeters")
       geoCircle = GeoCircle(
-        GeoCoordinatesUtils.convertToGeoCoordinates(circleMap),
+        CoordinatesUtils.toCoordinates(circleMap),
         radiusInMeters
       )
       geoCoordinates = null

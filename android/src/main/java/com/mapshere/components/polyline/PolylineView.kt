@@ -11,7 +11,7 @@ import com.here.sdk.mapview.MapPolyline
 import com.here.sdk.mapview.RenderSize
 import com.mapshere.components.item.ItemView
 import com.mapshere.utils.ColorParser
-import com.mapshere.utils.GeoCoordinatesUtils
+import com.mapshere.utils.CoordinatesUtils
 
 class PolylineView(context: Context?) : ItemView(context) {
 
@@ -41,7 +41,7 @@ class PolylineView(context: Context?) : ItemView(context) {
 
   fun setGeoPolyline(value: ReadableArray?) {
     if (value != null && value.size() > 1) {
-      geoPolyline = GeoCoordinatesUtils.convertToGeoCoordinatesList(value)
+      geoPolyline = CoordinatesUtils.toCoordinatesList(value)
     }
   }
 

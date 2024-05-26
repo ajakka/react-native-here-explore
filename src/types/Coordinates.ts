@@ -14,6 +14,8 @@ export interface GeoBox {
   northEastCorner: GeoCoordinates;
 }
 
+export type GeoPolyline = GeoCoordinates[];
+
 export interface Point2D {
   x: number;
   y: number;
@@ -28,5 +30,3 @@ export interface Rectangle2D {
   origin: Point2D;
   size: Size2D;
 }
-
-export type GeoPolyline = GeoCoordinates[];

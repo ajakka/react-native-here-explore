@@ -1,7 +1,6 @@
 package com.mapshere.components.arrow
 
 import android.content.Context
-import android.util.Log
 import com.facebook.react.bridge.ReadableArray
 import com.here.sdk.core.Color
 import com.here.sdk.core.GeoCoordinates
@@ -9,7 +8,7 @@ import com.here.sdk.core.GeoPolyline
 import com.here.sdk.mapview.MapArrow
 import com.mapshere.components.item.ItemView
 import com.mapshere.utils.ColorParser
-import com.mapshere.utils.GeoCoordinatesUtils
+import com.mapshere.utils.CoordinatesUtils
 
 class ArrowView(context: Context?) : ItemView(context) {
 
@@ -23,7 +22,7 @@ class ArrowView(context: Context?) : ItemView(context) {
 
   fun setGeoPolyline(value: ReadableArray?) {
     if (value != null && value.size() > 1) {
-      geoPolyline = GeoCoordinatesUtils.convertToGeoCoordinatesList(value)
+      geoPolyline = CoordinatesUtils.toCoordinatesList(value)
     }
   }
 

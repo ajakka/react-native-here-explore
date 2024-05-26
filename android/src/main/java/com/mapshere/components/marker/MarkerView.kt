@@ -3,18 +3,16 @@ package com.mapshere.components.marker
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import android.util.Log
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.facebook.react.bridge.ReadableMap
 import com.here.sdk.core.Anchor2D
 import com.here.sdk.core.GeoCoordinates
-import com.here.sdk.mapview.LocationIndicator
 import com.here.sdk.mapview.MapImageFactory
 import com.here.sdk.mapview.MapMarker
 import com.mapshere.components.item.ItemView
-import com.mapshere.utils.GeoCoordinatesUtils
+import com.mapshere.utils.CoordinatesUtils
 
 class MarkerView(context: Context?) : ItemView(context) {
 
@@ -36,7 +34,7 @@ class MarkerView(context: Context?) : ItemView(context) {
 
   fun setGeoCoordinate(value: ReadableMap?) {
     if (value != null) {
-      geoCoordinates = GeoCoordinatesUtils.convertToGeoCoordinates(value)
+      geoCoordinates = CoordinatesUtils.toCoordinates(value)
     }
   }
 

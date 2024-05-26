@@ -13,7 +13,7 @@ import com.here.sdk.mapview.MapScheme
 import com.here.sdk.mapview.MapView
 import com.here.sdk.mapview.WatermarkStyle
 import com.mapshere.components.item.ItemView
-import com.mapshere.utils.GeoCoordinatesUtils
+import com.mapshere.utils.CoordinatesUtils
 
 class MapsHereView : MapView {
 
@@ -72,7 +72,7 @@ class MapsHereView : MapView {
   //  GeoCoordinates
   fun setGeoCoordinates(value: ReadableMap?) {
     if (value != null) {
-      geoCoordinates = GeoCoordinatesUtils.convertToGeoCoordinates(value)
+      geoCoordinates = CoordinatesUtils.toCoordinates(value)
       geoBox = null
     }
   }
@@ -92,8 +92,8 @@ class MapsHereView : MapView {
 
     if (southWestCorner != null && northEastCorner != null) {
       geoBox = GeoBox(
-        GeoCoordinatesUtils.convertToGeoCoordinates(southWestCorner),
-        GeoCoordinatesUtils.convertToGeoCoordinates(northEastCorner),
+        CoordinatesUtils.toCoordinates(southWestCorner),
+        CoordinatesUtils.toCoordinates(northEastCorner),
       )
       geoCoordinates = null
     }
