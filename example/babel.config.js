@@ -10,6 +10,7 @@ module.exports = {
         extensions: ['.tsx', '.ts', '.js', '.json'],
         alias: {
           [pak.name]: path.join(__dirname, '..', pak.source),
+          '@': './src',
         },
       },
     ],
@@ -24,5 +25,6 @@ module.exports = {
         verbose: false,
       },
     ],
+    'react-native-reanimated/plugin',
   ],
 };

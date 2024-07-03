@@ -94,5 +94,7 @@ dependencies {
 
   implementation "androidx.core:core-ktx:1.8.0"
 
-  implementation fileTree(dir: file("$rootDir/app/libs"), include: ['*.aar', '*.jar'])
+  // Includes the HERE SDK only at compile time to prevent errors
+  // The library must also be set in the app build.gradle file using "implementation"
+  compileOnly fileTree(dir: file("$rootDir/heresdk"), include: ['*.aar'])
 }

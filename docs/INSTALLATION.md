@@ -57,7 +57,7 @@ If you signed in and added billing info, you should see a **Get now** button to 
 
 After you download and extract the zip file you should see a .aar file amongst many others
 
-Copy that file and place it on `your-project/android/app/libs` folder
+Copy that file and place it on `your-project/android/heresdk` folder
 
 Then go to your `your-project/android/app/build.gradle` file and edit the dependencies block like bellow
 
@@ -66,7 +66,7 @@ dependencies {
     // ... other react dependencies
 
     // Import HERE SDK
-    implementation fileTree(dir: 'libs', include: ['*.aar', '*.jar'])
+    implementation fileTree(dir: file("../heresdk"), include: ['*.aar'])
 }
 ```
 
