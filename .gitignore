@@ -82,6 +82,5 @@ lib/
 
 # HERE
 credentials.properties
-**/libs/**.aar
-**/libs/**.jar
-**/**.xcframework
+*.aar
+*.xcframework
