@@ -23,6 +23,8 @@ type RoutingType = {
     waypoints: GeoPolyline,
     routeOption: string
   ) => Promise<OnRouteCalculated>;
+
+  cancel: () => Promise<void>;
 };
 
 /// @ts-expect-error
@@ -50,5 +52,9 @@ export function useRouting() {
     return await RCTRouting.calculateRoute(waypoints, routeOption.type);
   }
 
-  return { calculateRoute };
+  async function cancel() {
+    return await RCTRouting.cancel();
+  }
+
+  return { calculateRoute, cancel };
 }

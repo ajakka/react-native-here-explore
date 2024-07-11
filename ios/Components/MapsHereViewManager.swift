@@ -92,15 +92,15 @@ class MapsHereView : UIView {
         if (geoBox.count > 0) {
             guard let southWestDict = geoBox["southWestCorner"] as? NSDictionary,
                   let northEastDict = geoBox["northEastCorner"] as? NSDictionary,
-                  let southWestCorner = convertToGeoCoordinates(raw: southWestDict),
-                  let northEastCorner = convertToGeoCoordinates(raw: northEastDict)
+                  let southWestCorner = toCoordinates(raw: southWestDict),
+                  let northEastCorner = toCoordinates(raw: northEastDict)
             else { return }
 
             self.mapView.camera.lookAt(area: GeoBox(southWestCorner: southWestCorner, northEastCorner: northEastCorner),
                                        orientation: GeoOrientationUpdate(bearing: bearing, tilt: tilt))
         }
         else if (geoCoordinates.count > 0) {
-            guard let target = convertToGeoCoordinates(raw: geoCoordinates)
+            guard let target = toCoordinates(raw: geoCoordinates)
             else { return }
 
             self.mapView.camera.lookAt(point: target,

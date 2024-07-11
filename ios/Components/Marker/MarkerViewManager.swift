@@ -63,7 +63,7 @@ class MarkerView : ItemView {
                 
                 // Assuming MapImage can be initialized with a UIImage
                 if let uiImage = try? MapImage(from: downloadedImage),
-                   let coordinates = convertToGeoCoordinates(raw: self.geoCoordinates) {
+                   let coordinates = toCoordinates(raw: self.geoCoordinates) {
                     let newMapMarker = MapMarker(at: coordinates, image: uiImage)
                     
                     if let oldMapMarker = self.currentMapMarker {

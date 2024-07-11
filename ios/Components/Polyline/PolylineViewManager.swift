@@ -55,7 +55,7 @@ class PolylineView : ItemView {
     
     override func updateFeature() {
         if (geoPolyline.count <= 1) { return }
-        let geoCoordinates = convertToGeoCoordinatesList(raw: geoPolyline)
+        let geoCoordinates = toCoordinatesList(raw: geoPolyline)
         
         if (geoCoordinates.count <= 1) { return }
         

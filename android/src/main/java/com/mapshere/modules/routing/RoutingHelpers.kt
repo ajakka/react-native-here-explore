@@ -20,7 +20,11 @@ import com.here.sdk.routing.Waypoint
 import com.mapshere.utils.CoordinatesUtils
 
 
-fun RoutingEngine.calculateRoute(waypoints: List<Waypoint>, routingOption: String, callback: CalculateRouteCallback): TaskHandle {
+fun RoutingEngine.calculateRoute(
+  waypoints: List<Waypoint>,
+  routingOption: String,
+  callback: CalculateRouteCallback
+): TaskHandle {
   return when (routingOption) {
     "CarOptions" -> this.calculateRoute(waypoints, CarOptions(), callback)
     "PedestrianOptions" -> this.calculateRoute(waypoints, PedestrianOptions(), callback)

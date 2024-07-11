@@ -11,7 +11,6 @@ class MapsHereConfigModule internal constructor(context: ReactApplicationContext
 
   override fun getName() = NAME
 
-  /** FIXME: Initializing Here SDK from a module doesn't seem to work */
   @ReactMethod(isBlockingSynchronousMethod = true)
   override fun initializeHereSDK(accessKeyID: String, accessKeySecret: String): String {
     val options = SDKOptions(accessKeyID, accessKeySecret)

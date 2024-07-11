@@ -39,7 +39,7 @@ class PolygonView : ItemView {
         var mapPolygon: MapPolygon?
         
         if (geoCoordinates.count > 2) {
-            let vertices = convertToGeoCoordinatesList(raw: geoCoordinates)
+            let vertices = toCoordinatesList(raw: geoCoordinates)
             mapPolygon = try? MapPolygon(
                 geometry: GeoPolygon(vertices: vertices),
                 color: RCTConvert.uiColor(color),
@@ -49,7 +49,7 @@ class PolygonView : ItemView {
             
         }
         else if (geoCircle.count > 1) {
-            if let vertices = convertToGeoCircle(raw: geoCircle) {
+            if let vertices = toGeoCircle(raw: geoCircle) {
                 mapPolygon = MapPolygon(
                     geometry: GeoPolygon(geoCircle: vertices),
                     color: RCTConvert.uiColor(color),

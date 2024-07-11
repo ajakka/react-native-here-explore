@@ -1,12 +1,14 @@
 import { NativeModules } from 'react-native';
 import { LINKING_ERROR } from '../Constant';
 
+const NAME = 'MapsHereConfig';
+
 // @ts-expect-error
 const isTurboModuleEnabled = global.__turboModuleProxy != null;
 
 const MapsHereModule = isTurboModuleEnabled
   ? require('./NativeMapsHereConfig').default
-  : NativeModules.MapsHereConfig;
+  : NativeModules[NAME];
 
 const RCTMapsHere = MapsHereModule
   ? MapsHereModule

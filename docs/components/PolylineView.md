@@ -1,5 +1,5 @@
 <h1 align="center">
-    <strong>PolylineView</strong>
+    <strong>Polyline</strong>
 </h1>
 
 ## Overview
@@ -63,20 +63,20 @@ For dashed lines, additional properties include `lineLength`, `gapLength`, and `
 
 ## Example Usage
 
-Here's how you might use the `PolylineView` to draw a simple line:
+Here's how you might use the `Polyline` to draw a simple line:
 
 ```jsx
 import React from 'react';
-import { MapsHereView, PolylineView } from 'react-native-maps-here';
+import { Map, Polyline } from 'react-native-maps-here';
 
 const App = () => {
   return (
-    <MapsHereView
+    <Map
       coordinates={{ lat: 40.7128, lon: -74.006 }} // Coordinates for New York City
       mapScheme="NORMAL_DAY"
       zoomValue={10}
     >
-      <PolylineView
+      <Polyline
         geoPolyline={[
           { latitude: 40.7128, longitude: -74.006, altitude: 1.3 },
           { latitude: 40.7158, longitude: -74.016, altitude: 1.3 },
@@ -85,13 +85,13 @@ const App = () => {
         lineWidth={5}
         lineType="SOLID"
       />
-    </MapsHereView>
+    </Map>
   );
 };
 
 export default App;
 ```
 
-In this example, `PolylineView` is used to draw a red solid line between two points in New York City on the map. You can modify the `geoPolyline`, `lineColor`, `lineWidth`, and `lineType` props to customize the polyline's appearance and path.
+In this example, `Polyline` is used to draw a red solid line between two points in New York City on the map. You can modify the `geoPolyline`, `lineColor`, `lineWidth`, and `lineType` props to customize the polyline's appearance and path.
 
 Remember to review the prop values and defaults to ensure the polyline appears as expected on your map. Happy mapping!

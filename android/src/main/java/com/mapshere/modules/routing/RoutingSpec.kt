@@ -9,4 +9,6 @@ abstract class RoutingSpec(context: ReactApplicationContext) :
   ReactContextBaseJavaModule(context) {
 
   abstract fun calculateRoute(waypoints: ReadableArray, routeOption: String, promise: Promise)
+
+  abstract fun cancel(promise: Promise)
 }

@@ -5,18 +5,20 @@ import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactMethod
 import com.facebook.react.bridge.ReadableArray
+import com.here.sdk.core.threading.TaskHandle
 import com.here.sdk.routing.RoutingEngine
 import com.here.sdk.routing.Waypoint
 import com.mapshere.utils.CoordinatesUtils
 
 class RoutingModule(context: ReactApplicationContext) : RoutingSpec(context) {
 
+  private var taskHandle: TaskHandle? = null
+
   private val routingEngine: RoutingEngine by lazy { RoutingEngine() }
 
   @ReactMethod
   override fun calculateRoute(waypoints: ReadableArray, routeOption: String, promise: Promise) {
-
-    routingEngine.calculateRoute(
+    taskHandle = routingEngine.calculateRoute(
       CoordinatesUtils.toCoordinatesList(waypoints).map { Waypoint(it) },
       routeOption
     ) { routingError, routes ->
@@ -28,6 +30,22 @@ class RoutingModule(context: ReactApplicationContext) : RoutingSpec(context) {
         result.putArray("routes", routesToWritableArray(routes))
       }
       promise.resolve(result)
+    }
+  }
+
+  @ReactMethod
+  override fun cancel(promise: Promise) {
+    taskHandle?.let { gTaskHandle ->
+      if (gTaskHandle.isCancelled) {
+        promise.resolve(true)
+        return
+      }
+
+      gTaskHandle.cancel()
+      taskHandle = null
+      promise.resolve(true)
+    } ?: run {
+      promise.resolve(false)
     }
   }
 

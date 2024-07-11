@@ -1,5 +1,5 @@
 import { Button, StyleSheet, View } from 'react-native';
-import React from 'react';
+
 import type { ScreenNames, ScreenProps } from '@/navigation';
 import { PolylineScreenName, RoutesScreenName } from '@/features';
 
@@ -7,7 +7,7 @@ export const HomeScreenName: ScreenNames = 'Home';
 
 export default function HomeScreen({ navigation }: ScreenProps<'Home'>) {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container]}>
       <Button
         title="Polyline screen"
         onPress={() => navigation.navigate(PolylineScreenName)}
@@ -22,6 +22,11 @@ export default function HomeScreen({ navigation }: ScreenProps<'Home'>) {
 }
 
 const styles = StyleSheet.create({
-  container: { margin: 8 },
+  container: {
+    flex: 1,
+    margin: 8,
+    // alignItems: 'center',
+    justifyContent: 'center',
+  },
   margin: { marginVertical: 4 },
 });
