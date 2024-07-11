@@ -1,4 +1,3 @@
-import React from 'react';
 import { UIManager, processColor, requireNativeComponent } from 'react-native';
 import type { ColorValue, ProcessedColorValue } from 'react-native';
 

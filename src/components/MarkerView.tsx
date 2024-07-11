@@ -1,4 +1,3 @@
-import React from 'react';
 import { UIManager, requireNativeComponent } from 'react-native';
 
 import type { ImageURISource } from 'react-native';
