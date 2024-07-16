@@ -42,11 +42,9 @@ class MarkerView : ItemView {
         }
         
         URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
-            guard 
-                let self = self,
-                    let data = data, error == nil,
-                // TODO: use data directly on MapImage
-                    var downloadedImage = UIImage(data: data)
+            guard let self = self,
+                  let data = data, error == nil,
+                  var downloadedImage = UIImage(data: data) // TODO: use data directly on MapImage
             else {
                 print("Error downloading image: \(String(describing: error))")
                 return
@@ -60,12 +58,16 @@ class MarkerView : ItemView {
             }
             
             DispatchQueue.main.async {
-                
-                // Assuming MapImage can be initialized with a UIImage
                 if let uiImage = try? MapImage(from: downloadedImage),
                    let coordinates = toCoordinates(raw: self.geoCoordinates) {
-                    let newMapMarker = MapMarker(at: coordinates, image: uiImage)
-                    
+                    let newMapMarker = MapMarker(
+                        at: coordinates,
+                        image: uiImage,
+                        anchor: Anchor2D(
+                            horizontal: self.anchor["horizontal"] as? CGFloat ?? 0.5,
+                            vertical: self.anchor["vertical"] as? CGFloat ?? 0.5
+                        )
+                    )
                     if let oldMapMarker = self.currentMapMarker {
                         self.parentMap?.mapScene.removeMapMarker(oldMapMarker)
                     }
