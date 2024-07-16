@@ -154,10 +154,5 @@ const RCTMapsHereView =
  * MapsHereView is the main view responsible for displaying the Map
  */
 export function Map(props: MapProps) {
-  return (
-    <RCTMapsHereView
-      {...props}
-      style={[{ width: '100%', height: '100%' }, props.style]}
-    />
-  );
+  return <RCTMapsHereView {...props} style={[{ flex: 1 }, props.style]} />;
 }
