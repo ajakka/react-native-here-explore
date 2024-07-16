@@ -9,13 +9,13 @@ export default function HomeScreen({ navigation }: ScreenProps<'Home'>) {
   return (
     <View style={[styles.container]}>
       <Button
-        title="Polyline screen"
-        onPress={() => navigation.navigate(PolylineScreenName)}
+        title="Routes screen"
+        onPress={() => navigation.navigate(RoutesScreenName)}
       />
       <View style={styles.margin} />
       <Button
-        title="Routes screen"
-        onPress={() => navigation.navigate(RoutesScreenName)}
+        title="Polyline screen"
+        onPress={() => navigation.navigate(PolylineScreenName)}
       />
     </View>
   );

@@ -12,9 +12,9 @@ export default function App() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Routes" component={RoutesScreen} />
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Polyline" component={PolylineScreen} />
-          <Stack.Screen name="Routes" component={RoutesScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>
