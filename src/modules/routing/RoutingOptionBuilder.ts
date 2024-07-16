@@ -52,4 +52,8 @@ export class RouteOption {
   static privateBus(): RouteOption {
     return new RouteOption('PrivateBusOptions');
   }
+
+  equals(option: RouteOption) {
+    return this.type === option.type;
+  }
 }
