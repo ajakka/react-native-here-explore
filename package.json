@@ -13,8 +13,9 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
-    "prepare": "bob build",
-    "release": "release-it"
+    "release-patch": "bob build && release-it patch",
+    "release-minor": "bob build && release-it minor",
+    "release-major": "bob build && release-it major"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^17.0.2",
