@@ -2,14 +2,14 @@ import { useState, useEffect } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import type { GeoCoordinates, GeoPolyline } from 'react-native-maps-here';
+import type { GeoCoordinates, GeoPolyline } from 'react-native-here-explore';
 import {
   Map,
   Marker,
   Polyline,
   RouteOption,
   useRouting,
-} from 'react-native-maps-here';
+} from 'react-native-here-explore';
 
 import { BicycleSVG, BusSVG, CarSVG, TruckSVG } from '@/components/icons';
 import { ScooterSVG, TaxiSVG, PedestrianSVG } from '@/components/icons';

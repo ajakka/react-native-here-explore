@@ -48,7 +48,7 @@ Here's how you might use the `Polygon` to draw a polygon:
 
 ```jsx
 import React from 'react';
-import { Map, Polygon } from 'react-native-maps-here';
+import { Map, Polygon } from 'react-native-here-explore';
 
 const App = () => {
   return (

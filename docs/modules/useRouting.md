@@ -23,7 +23,7 @@ Here's how you might use the `useRouting`:
 
 ```jsx
 import React from 'react';
-import { Map, useRouting } from 'react-native-maps-here';
+import { Map, useRouting } from 'react-native-here-explore';
 
 const wayPoints: GeoPolyline = [
   { latitude: 52.5561936, longitude: 13.3432207 },

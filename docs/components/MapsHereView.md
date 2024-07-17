@@ -100,7 +100,7 @@ Here's a simple example of how to use the `MapsHereView` component within your R
 
 ```jsx
 import React from 'react';
-import { Map as MapsHereView } from 'react-native-maps-here';
+import { Map as MapsHereView } from 'react-native-here-explore';
 
 const App = () => {
   return (

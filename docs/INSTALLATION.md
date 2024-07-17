@@ -8,10 +8,10 @@ Before we can use the HERE SDKs properlly, we have to do some manual setup to ge
 
 ```sh
 # using npm
-npm install react-native-maps-here
+npm install react-native-here-explore
 
 # using yarn
-yarn add react-native-maps-here
+yarn add react-native-here-explore
 ```
 
 ## 1. Sign-up to [HERE Platform](https://platform.here.com/sign-up)
@@ -112,8 +112,8 @@ end
 
 Finaly in your terminal run `pod install`
 
-If the app doesn't run properly on iOS, then you have to manualy add `react-native-maps-here` to the Target Membership of `heresdk`.
-You do so by opening xcode and naviagting to the `heresdk.xcframework` package inside the `Pods/Developement Pods/heresdk`, then checking `react-native-maps-here` on the right menu like shown in the image bellow:
+If the app doesn't run properly on iOS, then you have to manualy add `react-native-here-explore` to the Target Membership of `heresdk`.
+You do so by opening xcode and naviagting to the `heresdk.xcframework` package inside the `Pods/Developement Pods/heresdk`, then checking `react-native-here-explore` on the right menu like shown in the image bellow:
 
 <img src="assets/xcode_heresdk_target_membership.png" alt="XCode HERE SDK Target Membership" title="XCode HERE SDK Target Membership" width="100%">
 
@@ -124,7 +124,7 @@ After setting up the SDKs on both platforms, we should initialize it using the `
 Just go to your index.ts file and add this before the `AppRegistry.registerComponent(appName, () => App)`:
 
 ```typescript
-import { MapsHereConfig } from 'react-native-maps-here';
+import { MapsHereConfig } from 'react-native-here-explore';
 
 MapsHereConfig.initializeHereSDK(
   'YOUR_ACCESS_KEY_ID',

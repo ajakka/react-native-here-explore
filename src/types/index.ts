@@ -1,11 +1,11 @@
 export type {
-  GeoCoordinates,
-  GeoCircle,
-  GeoBox,
-  GeoPolyline,
-  Point2D,
   Size2D,
+  Point2D,
   Rectangle2D,
+  GeoBox,
+  GeoCircle,
+  GeoPolyline,
+  GeoCoordinates,
 } from './Coordinates';
 
 export type { LineCap } from './LineCap';

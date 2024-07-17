@@ -45,7 +45,7 @@ Here's how you might use the `Arrow` to draw an arrow:
 
 ```jsx
 import React from 'react';
-import { Map, Arrow } from 'react-native-maps-here';
+import { Map, Arrow } from 'react-native-here-explore';
 
 const App = () => {
   return (

@@ -1,4 +1,5 @@
 apply plugin: "com.android.application"
+apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
 
 /**
@@ -70,12 +71,12 @@ def jscFlavor = 'org.webkit:android-jsc:+'
 
 android {
     ndkVersion rootProject.ext.ndkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdk rootProject.ext.compileSdkVersion
 
-    compileSdkVersion rootProject.ext.compileSdkVersion
-
-    namespace "com.mapshereexample"
+    namespace "com.hereexploreexample"
     defaultConfig {
-        applicationId "com.mapshereexample"
+        applicationId "com.hereexploreexample"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -102,18 +103,13 @@ android {
 }
 
 dependencies {
+    
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
 
     // Include the HERE SDK in the build using "implementation"
     implementation fileTree(dir: file("../heresdk"), include: ['*.aar'])
 
-    debugImplementation("com.facebook.flipper:flipper:$FLIPPER_VERSION")
-    debugImplementation("com.facebook.flipper:flipper-network-plugin:$FLIPPER_VERSION") {
-        exclude group:'com.squareup.okhttp3', module:'okhttp'
-    }
-
-    debugImplementation("com.facebook.flipper:flipper-fresco-plugin:$FLIPPER_VERSION")
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")
     } else {

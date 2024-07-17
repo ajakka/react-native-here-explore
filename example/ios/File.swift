@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  MapsHereExample
+//  HereExploreExample
 //
 
 import Foundation

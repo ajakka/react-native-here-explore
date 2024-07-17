@@ -24,7 +24,7 @@ func toCoordinatesList(raw: NSArray) -> [GeoCoordinates] {
 }
 
 func fromCoordinates(_ coordinates: GeoCoordinates) -> [String: Any] {
-    var map = [String: Any]()
+    var map: [String : Any] = [String: Any]()
     map["latitude"] = coordinates.latitude
     map["longitude"] = coordinates.longitude
     if let altitude = coordinates.altitude {

@@ -1,20 +1,20 @@
 {
-  "name": "react-native-maps-here-example",
+  "name": "react-native-here-explore-example",
   "version": "0.0.1",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "start": "react-native start --reset-cache",
+    "start": "react-native start",
     "build:android": "cd android && ./gradlew assembleDebug --no-daemon --console=plain -PreactNativeArchitectures=arm64-v8a",
-    "build:ios": "cd ios && xcodebuild -workspace MapsHereExample.xcworkspace -scheme MapsHereExample -configuration Debug -sdk iphonesimulator CC=clang CPLUSPLUS=clang++ LD=clang LDPLUSPLUS=clang++ GCC_OPTIMIZATION_LEVEL=0 GCC_PRECOMPILE_PREFIX_HEADER=YES ASSETCATALOG_COMPILER_OPTIMIZATION=time DEBUG_INFORMATION_FORMAT=dwarf COMPILER_INDEX_STORE_ENABLE=NO"
+    "build:ios": "cd ios && xcodebuild -workspace HereExploreExample.xcworkspace -scheme HereExploreExample -configuration Debug -sdk iphonesimulator CC=clang CPLUSPLUS=clang++ LD=clang LDPLUSPLUS=clang++ GCC_OPTIMIZATION_LEVEL=0 GCC_PRECOMPILE_PREFIX_HEADER=YES ASSETCATALOG_COMPILER_OPTIMIZATION=time DEBUG_INFORMATION_FORMAT=dwarf COMPILER_INDEX_STORE_ENABLE=NO"
   },
   "dependencies": {
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.9.26",
     "react": "18.2.0",
-    "react-native": "0.72.15",
-    "react-native-dotenv": "^3.4.9",
+    "react-native": "0.74.0",
+    "react-native-dotenv": "^3.4.11",
     "react-native-gesture-handler": "^2.17.1",
     "react-native-linear-gradient": "^2.8.3",
     "react-native-reanimated": "^3.14.0",
@@ -26,12 +26,13 @@
     "@babel/core": "^7.20.0",
     "@babel/preset-env": "^7.20.0",
     "@babel/runtime": "^7.20.0",
-    "@react-native/metro-config": "^0.72.11",
-    "babel-plugin-module-resolver": "^5.0.2",
-    "metro-react-native-babel-preset": "0.76.8",
+    "@react-native/babel-preset": "0.74.81",
+    "@react-native/metro-config": "0.74.81",
+    "@react-native/typescript-config": "0.74.81",
+    "babel-plugin-module-resolver": "^5.0.0",
     "pod-install": "^0.1.0"
   },
   "engines": {
-    "node": ">=16"
+    "node": ">=18"
   }
 }
