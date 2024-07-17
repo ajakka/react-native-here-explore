@@ -1,6 +1,6 @@
 import { type TurboModule, TurboModuleRegistry } from 'react-native';
 import type { GeoPolyline } from '../../../types';
-import type { OnRouteCalculated } from '../RoutingModule';
+import type { OnRouteCalculated } from '../types/RouteResult';
 
 export interface Spec extends TurboModule {
   calculateRoute: (

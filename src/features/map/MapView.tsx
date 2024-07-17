@@ -147,7 +147,7 @@ interface GeoBoxProps extends BaseMapProps {
 
 export type MapProps = GeoCoordinatesProps | GeoBoxProps;
 
-const RCTMapsHereView =
+const RCTMapsView =
   UIManager.getViewManagerConfig(COMPONENT_NAME) != null
     ? requireNativeComponent<MapProps>(COMPONENT_NAME)
     : () => {
@@ -155,8 +155,8 @@ const RCTMapsHereView =
       };
 
 /**
- * MapsHereView is the main view responsible for displaying the Map
+ * MapsView is the main view responsible for displaying the Map
  */
 export function Map(props: MapProps) {
-  return <RCTMapsHereView {...props} style={[{ flex: 1 }, props.style]} />;
+  return <RCTMapsView {...props} style={[{ flex: 1 }, props.style]} />;
 }
