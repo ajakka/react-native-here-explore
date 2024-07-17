@@ -55,7 +55,7 @@ export default function App() {
 
 ### Components
 
-- [Map](docs/components/MapsHereView.md)
+- [Map](docs/components/MapView.md)
 
 - [Arrow](docs/components/ArrowView.md)
 
@@ -67,7 +67,7 @@ export default function App() {
 
 ### Modules
 
-- [MapsHereConfig](docs/modules/MapsHereConfig.md)
+- [HEREConfig](docs/modules/HEREConfig.md)
 
 - [useRouting](docs/modules/useRouting.md)
 

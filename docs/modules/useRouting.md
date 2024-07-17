@@ -5,7 +5,7 @@
 ## Overview
 
 `useRouting` is a React Native hook used for calculating the shortest paths from a point A to point B.
-It accepts many route options such as `RouteOption.car()`, `RouteOption.bicycle()`, `RouteOption.pedestrian()`, etc... that can tell help otimize the best route.
+It accepts many route options such as `RouteOption.car()`, `RouteOption.bicycle()`, `RouteOption.pedestrian()`, etc. that can tell help otimize the best route.
 
 ## Functions
 
@@ -68,6 +68,6 @@ const App = () => {
 export default App;
 ```
 
-In this example, `Routing` is used to draw a yellow solid line between two points on the map. You can modify the `originCoordinates`, `destinationCoordinates`, `wayPoints`, `lineColor`, `lineWidth`, and `lineType` props to customize the polyline's appearance and path.
+In this example, `Routing` is used to draw a yellow solid line between two points on the map. You can modify the `originCoordinates`, `destinationCoordinates`, `wayPoints`, `lineColor`, `lineWidth` and `lineType` props to customize the polyline's appearance and path.
 
 Remember to review the prop values and defaults to ensure the paths appears as expected on your map. Happy mapping!

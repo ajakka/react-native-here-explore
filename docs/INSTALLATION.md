@@ -1,8 +1,9 @@
+
 <h1 align="center">
     <strong>Installation</strong>
 </h1>
 
-Before we can use the HERE SDKs properlly, we have to do some manual setup to get it to work.
+Before we can use the HERE SDKs properly, we have to do some manual setup to get it to work.
 
 ## Installing the library
 
@@ -14,21 +15,21 @@ npm install react-native-here-explore
 yarn add react-native-here-explore
 ```
 
-## 1. Sign-up to [HERE Platform](https://platform.here.com/sign-up)
+## 1. Sign up to [HERE Platform](https://platform.here.com/sign-up)
 
-First you need to get the access keys from the official HERE web portal.
+First, you need to get the access keys from the official HERE web portal.
 
-Keep in mind that providing the billing info is important to unlock the SDKs for both iOS and Android
+Keep in mind that providing the billing info is important to unlock the SDKs for both iOS and Android.
 
 ## 2. Register a new app
 
-Go to this [link](https://platform.here.com/admin/apps?action=new-registration) and regiter a new application.
+Go to this [link](https://platform.here.com/admin/apps?action=new-registration) and register a new application.
 
-After that it should bring you to a menu with the tab `Credentials` selected by default.
+After that, it should bring you to a menu with the tab `Credentials` selected by default.
 
-On the left menu select **OAuth 2.0** and click **Create credentials**
+On the left menu, select **OAuth 2.0** and click **Create credentials**.
 
-A popup menu will showup saying: **Your access key ID and secret were created** with a Download button to get the credentials
+A popup menu will show up saying: **Your access key ID and secret were created** with a Download button to get the credentials.
 
 The content of your downloaded file should be like this:
 
@@ -44,22 +45,22 @@ This step is important to get the access keys that you will then use to initiali
 
 ## 3. Download the [HERE SDK Explore Edition](https://platform.here.com/portal/sdk)
 
-On the Page above you will see a list of SDKs. The ones you need are:
+On the page above, you will see a list of SDKs. The ones you need are:
 
 - **HERE SDK Explore Edition for Android**
 - **HERE SDK Explore Edition for iOS**
 
-If you signed in and added billing info, you should see a **Get now** button to download each SDK
+If you signed in and added billing info, you should see a **Get now** button to download each SDK.
 
 ## 4. Extract and move the SDKs to your project
 
 - ### Android
 
-After you download and extract the zip file you should see a .aar file amongst many others
+After you download and extract the zip file, you should see a .aar file amongst many others.
 
-Copy that file and place it on `your-project/android/heresdk` folder
+Copy that file and place it in `your-project/android/heresdk` folder.
 
-Then go to your `your-project/android/app/build.gradle` file and edit the dependencies block like bellow
+Then go to your `your-project/android/app/build.gradle` file and edit the dependencies block like below:
 
 ```gradle
 dependencies {
@@ -72,13 +73,11 @@ dependencies {
 
 - ### iOS
 
-After you download and extract the zip file you should see a .xcframework folder (heresdk.xcframework)
+After you download and extract the zip file, you should see a .xcframework folder (heresdk.xcframework).
 
-Copy that file and place it on `your-project/ios/Frameworks` folder.
+Copy that file and place it in `your-project/ios/Frameworks` folder.
 
-On the same folder (ie `your-project/ios/Frameworks`) create a podspec file with the name `heresdk.podspec`
-
-and past in the following:
+In the same folder (i.e., `your-project/ios/Frameworks`), create a podspec file with the name `heresdk.podspec` and paste in the following:
 
 ```podspec
 Pod::Spec.new do |s|
@@ -93,9 +92,9 @@ Pod::Spec.new do |s|
 end
 ```
 
-Note that: The information in this podspec doesn't have to be exact since we only want Cocoapods to recognise the xcframework
+Note that: The information in this podspec doesn't have to be exact since we only want Cocoapods to recognize the xcframework.
 
-After that open `your-project/ios/Podfile` and add the library you just moved:
+After that, open `your-project/ios/Podfile` and add the library you just moved:
 
 ```podspec
 target 'MapsHereExample' do
@@ -110,16 +109,15 @@ target 'MapsHereExample' do
 end
 ```
 
-Finaly in your terminal run `pod install`
+Finally, in your terminal, run `pod install`.
 
-If the app doesn't run properly on iOS, then you have to manualy add `react-native-here-explore` to the Target Membership of `heresdk`.
-You do so by opening xcode and naviagting to the `heresdk.xcframework` package inside the `Pods/Developement Pods/heresdk`, then checking `react-native-here-explore` on the right menu like shown in the image bellow:
+If the app doesn't run properly on iOS, then you have to manually add `react-native-here-explore` to the Target Membership of `heresdk`. You do so by opening Xcode and navigating to the `heresdk.xcframework` package inside the `Pods/Development Pods/heresdk`, then checking `react-native-here-explore` on the right menu as shown in the image below:
 
 <img src="assets/xcode_heresdk_target_membership.png" alt="XCode HERE SDK Target Membership" title="XCode HERE SDK Target Membership" width="100%">
 
-## Athenticate using credentials
+## Authenticate using credentials
 
-After setting up the SDKs on both platforms, we should initialize it using the `ACCESS_KEY_ID` and `ACCESS_KEY_SECRET` that we retrived previously.
+After setting up the SDKs on both platforms, we should initialize it using the `ACCESS_KEY_ID` and `ACCESS_KEY_SECRET` that we retrieved previously.
 
 Just go to your index.ts file and add this before the `AppRegistry.registerComponent(appName, () => App)`:
 
@@ -132,4 +130,4 @@ MapsHereConfig.initializeHereSDK(
 );
 ```
 
-If all done correctly, you should have HERE Maps working
+If all done correctly, you should have HERE Maps working.
