@@ -6,10 +6,6 @@
     Integrate HERE Maps 🌍 Into React Native
 </p>
 
-## IMPORTANT NOTICE
-
-This library is moving from using the name `react-native-maps-here` to using `react-native-here-explore` to emphsise the use of the Explore Edition of HERE SDK
-
 <div align="center">
 
 [Introduction](#introduction) •
