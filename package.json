@@ -1,6 +1,6 @@
 {
   "name": "react-native-here-explore",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "HERE Explore Edition for React Native",
   "scripts": {
     "example": "yarn workspace react-native-here-explore-example",
