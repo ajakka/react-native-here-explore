@@ -45,7 +45,7 @@ export default function App() {
     <Map
       mapScheme="NORMAL_NIGHT"
       zoomValue={5}
-      coordinates={{ lat: 31.6913827, lon: -8.4413898 }}
+      geoCoordinates={{ lat: 31.6913827, lon: -8.4413898 }}
     />
   );
 }

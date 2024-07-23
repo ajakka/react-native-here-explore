@@ -50,9 +50,9 @@ const App = () => {
 
   return (
     <Map
+      geoCoordinates={{ latitude: 52.51967475, longitude: 13.36895715 }}
       style={styles.box}
       mapScheme="NORMAL_NIGHT"
-      geoCoordinates={{ latitude: 52.51967475, longitude: 13.36895715 }}
       zoomValue={13}
     >
       <Polyline

@@ -14,7 +14,7 @@ interface NativeProps extends ViewProps {
   mapScheme?: WithDefault<MapScheme, 'NORMAL_DAY'>;
   zoomKind?: WithDefault<ZoomKind, 'ZOOM_LEVEL'>;
   zoomValue: Double;
-  coordinates: GeoCoordinates;
+  geoCoordinates: GeoCoordinates;
 }
 
 export default codegenNativeComponent<NativeProps>(COMPONENT_NAME);

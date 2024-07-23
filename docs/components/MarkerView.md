@@ -46,7 +46,7 @@
   size={{ width: 40, height: 40 }}
   ```
 
-### `anchor` (Object)
+### `anchor` (Object) | [Official Docs](https://www.here.com/docs/bundle/sdk-for-android-explore-developer-guide/page/topics/map-items.html#anchored-poi-markers)
 
 - **Description:** Defines the anchor point used to place the image relative to the coordinates.
 - **Type:** `Object` with optional `horizontal` and `vertical` properties
@@ -66,7 +66,7 @@ import { Map, Marker } from 'react-native-here-explore';
 const App = () => {
   return (
     <Map
-      coordinates={{ lat: 40.7128, lon: -74.006 }} // Coordinates for New York City
+      geoCoordinates={{ lat: 40.7128, lon: -74.006 }} // Coordinates for New York City
       mapScheme="NORMAL_DAY"
       zoomValue={10}
     >

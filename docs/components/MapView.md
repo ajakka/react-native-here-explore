@@ -17,6 +17,18 @@
   geoCoordinates={{ latitude: 99.00990, longitude: 9.00990, altitude: 1.07 }}
   ```
 
+### `geoBox` (GeoBox) - REQUIRED
+
+- **Description:** Two coordinate values used to describe the south west and north east corners of the map view.
+- **Type:** `GeoBox` (Object with `southWestCorner` and `northEastCorner` which are of type `GeoCoordinates`)
+- **Example:**
+  ```jsx
+  geoCoordinates={{
+    southWestCorner: { latitude: 52.5561936, longitude: 13.3432207 },
+    northEastCorner: { latitude: 52.4841669, longitude: 13.3957046 },
+  }}
+  ```
+
 ### `mapScheme` (MapScheme)
 
 - **Description:** Determines the visual style of the map. This can range from standard day or night modes to more specialized schemes like satellite or hybrid views.
@@ -62,7 +74,7 @@
   zoomKind = 'ZOOM_LEVEL';
   ```
 
-### `bearing` (number)
+### `bearing` (number) | [Official Docs](https://www.here.com/docs/bundle/sdk-for-android-explore-developer-guide/page/topics/camera.html#rotate-the-camera)
 
 - **Description:** Takes a value from 0 to 360 that's used to rotate the map.
 - **Type:** `number`
@@ -72,7 +84,7 @@
   bearing={90}
   ```
 
-### `tilt` (number)
+### `tilt` (number) | [Official Docs](https://www.here.com/docs/bundle/sdk-for-android-explore-developer-guide/page/topics/camera.html#tilt-the-camera)
 
 - **Description:** Takes a value from 0 to 70 that's used to give a tilted view with some 3D Objects when the city is supported.
 - **Type:** `number`
@@ -100,11 +112,11 @@ Here's a simple example of how to use the `MapsHereView` component within your R
 
 ```jsx
 import React from 'react';
-import { Map as MapsHereView } from 'react-native-here-explore';
+import { Map } from 'react-native-here-explore';
 
 const App = () => {
   return (
-    <MapsHereView
+    <Map
       geoCoordinates={{ latitude: 40.7128, longitude: -74.006, altitude: 1.07 }} // Coordinates for New York City
       mapScheme="NORMAL_DAY"
       zoomValue={10}

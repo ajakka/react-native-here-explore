@@ -50,7 +50,7 @@ import { Map, Arrow } from 'react-native-here-explore';
 const App = () => {
   return (
     <Map
-      coordinates={{ lat: 40.7128, lon: -74.006 }} // Coordinates for New York City
+      geoCoordinates={{ lat: 40.7128, lon: -74.006 }} // Coordinates for New York City
       mapScheme="NORMAL_DAY"
       zoomValue={10}
     >
