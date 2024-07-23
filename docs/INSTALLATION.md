@@ -122,9 +122,9 @@ After setting up the SDKs on both platforms, we should initialize it using the `
 Just go to your index.ts file and add this before the `AppRegistry.registerComponent(appName, () => App)`:
 
 ```typescript
-import { MapsHereConfig } from 'react-native-here-explore';
+import { HEREConfig } from 'react-native-here-explore';
 
-MapsHereConfig.initializeHereSDK(
+HEREConfig.initializeHereSDK(
   'YOUR_ACCESS_KEY_ID',
   'YOUR_ACCESS_KEY_SECRET'
 );
