@@ -2,8 +2,13 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import type { GeoCoordinates, GeoPolyline } from 'react-native-here-explore';
-import { Map, Marker, Polyline } from 'react-native-here-explore';
-import { useRouting, RouteOption } from 'react-native-here-explore';
+import {
+  Map,
+  Marker,
+  Polyline,
+  RouteOption,
+  useRouting,
+} from 'react-native-here-explore';
 
 import type { ScreenNames, ScreenProps } from '@/navigation';
 import RouteOptionsSelector from './components/RouteOptionsSelector';
@@ -42,13 +47,15 @@ export default function RoutesScreen(_: ScreenProps<'Routes'>) {
   return (
     <View style={{ flex: 1 }}>
       <Map
+        geoCoordinates={centerPoint}
+        testID="map"
         style={styles.box}
         mapScheme="NORMAL_NIGHT"
-        geoCoordinates={centerPoint}
         zoomValue={13.4}
       >
-        {wayPoints.map((wayPoint) => (
+        {wayPoints.map((wayPoint, index) => (
           <Marker
+            key={index}
             geoCoordinates={wayPoint}
             size={{ width: 128, height: 128 }}
             anchor={{ vertical: 0.9 }}

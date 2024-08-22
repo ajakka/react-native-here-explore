@@ -1,7 +1,9 @@
 package com.hereexplore.features.marker
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
@@ -62,33 +64,55 @@ class MarkerView(context: Context?) : ItemView(context) {
     }
   }
 
+  @SuppressLint("DiscouragedApi")
+  private fun getDrawableResourceByName(name: String): Int {
+    return resources.getIdentifier(name, "drawable", context.packageName)
+  }
+
   override fun updateFeature() {
     imageUri?.let { uri ->
-      Glide.with(this).asBitmap().load(uri)
-        .into(object : CustomTarget<Bitmap?>() {
-          override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap?>?) {
-            val newWidth = width?.toInt() ?: resource.width
-            val scaledWidth = scale?.let { (newWidth * it).toInt() } ?: newWidth
 
-            val newHeight = height?.toInt() ?: resource.height
-            val scaledHeight = scale?.let { (newHeight * it).toInt() } ?: newHeight
-
-            val scaledResource =
-              Bitmap.createScaledBitmap(resource, scaledWidth, scaledHeight, false)
-
-            val mapImage = MapImageFactory.fromBitmap(scaledResource)
-            val newMarker = geoCoordinates?.let { coordinates -> MapMarker(coordinates, mapImage, anchor2D) }
-
-            val mapScene = parentMap?.mapScene
-            mapMarker?.let { mapScene?.removeMapMarker(it) }
-            newMarker?.let {
-              mapScene?.addMapMarker(it)
-              mapMarker = it
+      if (
+        uri.startsWith("http://") ||
+        uri.startsWith("https://") ||
+        uri.startsWith("file://") ||
+        uri.startsWith("asset://") ||
+        uri.startsWith("data:")
+      ) {
+        Glide.with(this)
+          .asBitmap()
+          .load(uri)
+          .into(object : CustomTarget<Bitmap?>() {
+            override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap?>?) {
+              assignMarkerBitmapToMap(resource)
             }
-          }
+            override fun onLoadCleared(placeholder: Drawable?) {}
+          })
+      } else {
+        val drawableId = getDrawableResourceByName(uri)
+        val resource = BitmapFactory.decodeResource(resources, drawableId)
+        assignMarkerBitmapToMap(resource)
+      }
+    }
+  }
 
-          override fun onLoadCleared(placeholder: Drawable?) {}
-        })
+  fun assignMarkerBitmapToMap(resource: Bitmap) {
+    val newWidth = width?.toInt() ?: resource.width
+    val scaledWidth = scale?.let { (newWidth * it).toInt() } ?: newWidth
+
+    val newHeight = height?.toInt() ?: resource.height
+    val scaledHeight = scale?.let { (newHeight * it).toInt() } ?: newHeight
+
+    val scaledResource = Bitmap.createScaledBitmap(resource, scaledWidth, scaledHeight, false)
+
+    val mapImage = MapImageFactory.fromBitmap(scaledResource)
+    val newMarker = geoCoordinates?.let { coordinates -> MapMarker(coordinates, mapImage, anchor2D) }
+
+    val mapScene = parentMap?.mapScene
+    mapMarker?.let { mapScene?.removeMapMarker(it) }
+    newMarker?.let {
+      mapScene?.addMapMarker(it)
+      mapMarker = it
     }
   }
 
