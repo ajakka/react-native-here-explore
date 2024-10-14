@@ -83,6 +83,7 @@ yarn.lock
 lib/
 
 # HERE
+sdk/
 credentials.properties
 *.aar
 *.xcframework
