@@ -1,4 +1,4 @@
-package com.hereexploreexample
+package hereexplore.example
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

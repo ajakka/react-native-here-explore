@@ -53,7 +53,7 @@ class MapsViewManager : MapsViewManagerSpec<MapsView>() {
   }
 
 
-  override fun addView(parent: MapsView, child: View?, index: Int) {
+  override fun addView(parent: MapsView, child: View, index: Int) {
     when (child) {
       is ItemView -> {
         parent.addMapItem(child)
