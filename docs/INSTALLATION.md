@@ -108,12 +108,27 @@ target 'MapsHereExample' do
   pod 'heresdk', :path => 'Frameworks'
 end
 ```
+add this code block to the Podfile that automatically sets the target membership of the here framework to react-native-here-explore package inside `post_install`
+
+```podspec
+  post_install do |installer|
+    # ... some stuff
+       if target.name  == "react-native-here-explore"
+         all_filerefs = installer.pods_project.files
+         all_filerefs.each do |fileref|
+            if fileref.path.end_with? "heresdk.xcframework"
+             build_phase = target.frameworks_build_phase
+             unless build_phase.files_references.include?(fileref)
+               build_phase.add_file_reference(fileref)
+             end
+           end
+         end
+       end
+    # ... some stuff
+    end
+```
 
 Finally, in your terminal, run `pod install`.
-
-If the app doesn't run properly on iOS, then you have to manually add `react-native-here-explore` to the Target Membership of `heresdk`. You do so by opening Xcode and navigating to the `heresdk.xcframework` package inside the `Pods/Development Pods/heresdk`, then checking `react-native-here-explore` on the right menu as shown in the image below:
-
-<img src="assets/xcode_heresdk_target_membership.png" alt="XCode HERE SDK Target Membership" title="XCode HERE SDK Target Membership" width="100%">
 
 ## Authenticate using credentials
 
