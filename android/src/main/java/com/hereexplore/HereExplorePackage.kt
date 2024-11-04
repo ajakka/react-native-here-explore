@@ -11,6 +11,8 @@ import com.hereexplore.features.marker.MarkerViewManager
 import com.hereexplore.features.polygon.PolygonViewManager
 import com.hereexplore.features.polyline.PolylineViewManager
 import com.hereexplore.features.config.ConfigModule
+import com.hereexplore.features.pin.PinViewContentManager
+import com.hereexplore.features.pin.PinViewManager
 import com.hereexplore.features.routing.RoutingModule
 
 class HereExplorePackage : ReactPackage {
@@ -22,6 +24,8 @@ class HereExplorePackage : ReactPackage {
       PolygonViewManager(),
       PolylineViewManager(),
       MarkerViewManager(),
+      PinViewManager(),
+      PinViewContentManager()
     )
   }
 

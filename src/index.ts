@@ -17,4 +17,6 @@ export { Polygon, type PolygonProps } from './features/polygon/PolygonView';
 
 export { Marker, type MarkerProps } from './features/marker/MarkerView';
 
+export { Pin, type PinProps } from './features/pin/PinView';
+
 export * from './types';

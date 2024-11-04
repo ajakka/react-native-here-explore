@@ -1,10 +1,11 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import type { GeoCoordinates, GeoPolyline } from 'react-native-here-explore';
 import {
   Map,
   Marker,
+  Pin,
   Polyline,
   RouteOption,
   useRouting,
@@ -68,6 +69,15 @@ export default function RoutesScreen(_: ScreenProps<'Routes'>) {
           lineWidth={16}
           geoPolyline={vertices}
         />
+        <Pin
+          geoCoordinates={centerPoint}
+          anchor={{ horizontal: 0.5, vertical: 1 }}
+        >
+          <View style={styles.pin_container}>
+            <Text style={styles.pin_text}>Custom Pin</Text>
+          </View>
+          <View style={styles.pin_arrow} />
+        </Pin>
       </Map>
 
       <RouteOptionsSelector
@@ -105,5 +115,28 @@ const styles = StyleSheet.create({
     width: '100%',
     alignContent: 'center',
     marginBottom: 16,
+  },
+  pin_container: {
+    padding: 15,
+    backgroundColor: 'black',
+    borderRadius: 10,
+  },
+  pin_text: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  pin_arrow: {
+    width: 0,
+    height: 0,
+    backgroundColor: 'transparent',
+    borderStyle: 'solid',
+    borderLeftWidth: 10,
+    borderRightWidth: 10,
+    borderBottomWidth: 10,
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderBottomColor: 'black',
+    transform: [{ rotate: '180deg' }],
+    top: -1,
   },
 });
