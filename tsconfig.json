@@ -24,6 +24,7 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "esnext",
-    "verbatimModuleSyntax": true
+    "verbatimModuleSyntax": true,
+    "moduleSuffixes": [".ios", ".android", ""]
   }
 }
