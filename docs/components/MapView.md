@@ -106,25 +106,95 @@
   watermarkStyle = 'DARK';
   ```
 
+### `onMapTap` (Function)
+
+- **Description:** Event handler that is called when the user taps on the map.
+- **Type:** `(event: { nativeEvent: { latitude: number; longitude: number } }) => void`
+- **Example:**
+  ```jsx
+  onMapTap={({ nativeEvent }) => {
+    console.log(`Map clicked at: ${nativeEvent.latitude}, ${nativeEvent.longitude}`);
+  }}
+  ```
+
+### `onMapLongPress` (Function)
+
+- **Description:** Event handler that is called when the user long presses on the map.
+- **Type:** `(event: { nativeEvent: { latitude: number; longitude: number } }) => void`
+- **Example:**
+  ```jsx
+  onMapLongPress={({ nativeEvent }) => {
+    console.log(`Map long-pressed at: ${nativeEvent.latitude}, ${nativeEvent.longitude}`);
+  }}
+  ```
+
 ## Example Usage
 
 Here's a simple example of how to use the `MapsHereView` component within your React Native application. This example demonstrates a basic setup with specified coordinates, map scheme, and zoom value.
 
 ```jsx
-import React from 'react';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 import { Map } from 'react-native-here-explore';
 
-const App = () => {
+const MapExample = () => {
+  const [clickedLocation, setClickedLocation] = useState(null);
+
   return (
-    <Map
-      geoCoordinates={{ latitude: 40.7128, longitude: -74.006, altitude: 1.07 }} // Coordinates for New York City
-      mapScheme="NORMAL_DAY"
-      zoomValue={10}
-    />
+    <View style={styles.container}>
+      <Map
+        geoCoordinates={{ latitude: 40.7128, longitude: -74.006 }}
+        mapScheme="NORMAL_DAY"
+        zoomValue={14}
+        onMapTap={({ nativeEvent }) => {
+          setClickedLocation({
+            latitude: nativeEvent.latitude,
+            longitude: nativeEvent.longitude,
+          });
+        }}
+        onMapLongPress={({ nativeEvent }) => {
+          console.log(
+            `Long press at: ${nativeEvent.latitude}, ${nativeEvent.longitude}`
+          );
+        }}
+        style={styles.map}
+      />
+
+      {clickedLocation && (
+        <View style={styles.coordinatesContainer}>
+          <Text style={styles.coordinatesText}>
+            Clicked at: {clickedLocation.latitude.toFixed(6)},{' '}
+            {clickedLocation.longitude.toFixed(6)}
+          </Text>
+        </View>
+      )}
+    </View>
   );
 };
 
-export default App;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  map: {
+    flex: 1,
+  },
+  coordinatesContainer: {
+    position: 'absolute',
+    bottom: 20,
+    left: 0,
+    right: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    padding: 10,
+    alignItems: 'center',
+  },
+  coordinatesText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+});
+
+export default MapExample;
 ```
 
-This code will render a map centered on New York City with a standard daytime scheme and a zoom level that provides a city-wide view. You can adjust the `geoCoordinates`, `mapScheme`, and `zoomValue` props to fit your specific needs.
+In this example, the Map component is configured to respond to both click and long press events. When the user clicks on the map, the location coordinates are displayed at the bottom of the screen. Long press events are logged to the console.

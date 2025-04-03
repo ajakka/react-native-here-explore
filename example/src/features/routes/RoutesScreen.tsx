@@ -53,6 +53,12 @@ export default function RoutesScreen(_: ScreenProps<'Routes'>) {
         style={styles.box}
         mapScheme="NORMAL_NIGHT"
         zoomValue={13.4}
+        onMapTap={({ nativeEvent }) => {
+          console.log('onMapTap', nativeEvent);
+        }}
+        onMapLongPress={({ nativeEvent }) => {
+          console.log('onMapLongPress', nativeEvent);
+        }}
       >
         {wayPoints.map((wayPoint, index) => (
           <Marker

@@ -73,18 +73,6 @@ const RCTMarker =
 /**
  * Draws a Marker over the given coordinates
  */
-export function Marker(props: MarkerProps) {
-  const { geoCoordinates, image, scale, size, anchor } = props;
-
-  return (
-    <RCTMarker
-      geoCoordinates={geoCoordinates}
-      image={Image.resolveAssetSource(image)}
-      scale={scale}
-      size={size}
-      anchor={anchor}
-    />
-    //   <Image source={image} />
-    // </RCTMarker>
-  );
+export function Marker({ image, ...otherProps }: MarkerProps) {
+  return <RCTMarker image={Image.resolveAssetSource(image)} {...otherProps} />;
 }

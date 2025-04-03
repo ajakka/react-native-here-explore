@@ -30,7 +30,7 @@ class MarkerView(context: Context?) : ItemView(context) {
 
   private var anchor2D = Anchor2D(0.5, 0.5)
 
-  private var vertical: Double = 0.5
+//  private var vertical: Double = 0.5
 
   private var mapMarker: MapMarker? = null
 
@@ -106,7 +106,8 @@ class MarkerView(context: Context?) : ItemView(context) {
     val scaledResource = Bitmap.createScaledBitmap(resource, scaledWidth, scaledHeight, false)
 
     val mapImage = MapImageFactory.fromBitmap(scaledResource)
-    val newMarker = geoCoordinates?.let { coordinates -> MapMarker(coordinates, mapImage, anchor2D) }
+    val newMarker =
+      geoCoordinates?.let { coordinates -> MapMarker(coordinates, mapImage, anchor2D) }
 
     val mapScene = parentMap?.mapScene
     mapMarker?.let { mapScene?.removeMapMarker(it) }

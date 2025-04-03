@@ -66,7 +66,7 @@ import { Map, Marker } from 'react-native-here-explore';
 const App = () => {
   return (
     <Map
-      geoCoordinates={{ lat: 40.7128, lon: -74.006 }} // Coordinates for New York City
+      geoCoordinates={{ latitude: 40.7128, longitude: -74.006 }} // Coordinates for New York City
       mapScheme="NORMAL_DAY"
       zoomValue={10}
     >

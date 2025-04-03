@@ -11,4 +11,7 @@ RCT_EXPORT_VIEW_PROPERTY(zoomKind, NSString)
 RCT_EXPORT_VIEW_PROPERTY(zoomValue, double)
 RCT_EXPORT_VIEW_PROPERTY(geoBox, NSDictionary)
 
+RCT_EXPORT_VIEW_PROPERTY(onMapTap, RCTDirectEventBlock)
+RCT_EXPORT_VIEW_PROPERTY(onMapLongPress, RCTDirectEventBlock)
+
 @end

@@ -2,6 +2,7 @@ import {
   requireNativeComponent,
   UIManager,
   type ViewProps,
+  type NativeSyntheticEvent,
 } from 'react-native';
 import { LINKING_ERROR } from '../../constants';
 import type {
@@ -79,6 +80,46 @@ interface BaseMapProps extends ViewProps {
    * ```
    */
   tilt?: number;
+
+  /**
+   * ### Event handler for map clicks.
+   *
+   * Returns an object with `latitude` and `longitude` properties.
+   *
+   * **Example:**
+   * ```
+   * onMapTap={({nativeEvent}) => {
+   *   console.log(nativeEvent.latitude, nativeEvent.longitude);
+   * }}
+   * ```
+   */
+  onMapTap?: (
+    event: NativeSyntheticEvent<{
+      latitude: number;
+      longitude: number;
+      altitude: number;
+    }>
+  ) => void;
+
+  /**
+   * ### Event handler for map long press.
+   *
+   * Returns an object with `latitude` and `longitude` properties.
+   *
+   * **Example:**
+   * ```
+   * onMapLongPress={({nativeEvent}) => {
+   *   console.log(nativeEvent.latitude, nativeEvent.longitude);
+   * }}
+   * ```
+   */
+  onMapLongPress?: (
+    event: NativeSyntheticEvent<{
+      latitude: number;
+      longitude: number;
+      altitude: number;
+    }>
+  ) => void;
 }
 
 interface GeoCoordinatesProps extends BaseMapProps {
@@ -157,6 +198,6 @@ const RCTMapsView =
 /**
  * MapsView is the main view responsible for displaying the Map
  */
-export function Map(props: MapProps) {
-  return <RCTMapsView {...props} style={[{ flex: 1 }, props.style]} />;
+export function Map({ style, ...otherProps }: MapProps) {
+  return <RCTMapsView style={[{ flex: 1 }, style]} {...otherProps} />;
 }

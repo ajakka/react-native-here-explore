@@ -1,13 +1,19 @@
 package com.hereexplore.features.map
 
 import android.content.Context
-import android.util.AttributeSet
+import android.os.Bundle
 import android.util.Log
 import android.view.View
+import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.ReadableMap
+import com.facebook.react.uimanager.ThemedReactContext
+import com.facebook.react.uimanager.events.RCTEventEmitter
+import com.facebook.react.uimanager.events.RCTModernEventEmitter
 import com.here.sdk.core.GeoBox
 import com.here.sdk.core.GeoCoordinates
 import com.here.sdk.core.GeoOrientationUpdate
+import com.here.sdk.gestures.LongPressListener
+import com.here.sdk.gestures.TapListener
 import com.here.sdk.mapview.MapMeasure
 import com.here.sdk.mapview.MapScheme
 import com.here.sdk.mapview.MapView
@@ -15,14 +21,14 @@ import com.here.sdk.mapview.WatermarkStyle
 import com.hereexplore.features.item.ItemView
 import com.hereexplore.helpers.CoordinatesUtils
 
-class MapsView : MapView {
+
+class MapsView(context: Context?) : MapView(context) {
 
   companion object {
     const val TAG = "MapsView"
   }
 
   private val mapItems: ArrayList<ItemView> = arrayListOf()
-
 
   private var mapScheme = MapScheme.NORMAL_DAY
 
@@ -32,25 +38,42 @@ class MapsView : MapView {
 
   private var tilt: Double = 0.0
 
-
   private var geoCoordinates: GeoCoordinates? = null
 
   private var zoomKind: MapMeasure.Kind = MapMeasure.Kind.ZOOM_LEVEL
 
   private var zoomValue: Double = 8.0
 
-
   private var geoBox: GeoBox? = null
 
-  constructor(context: Context?) : super(context)
+  override fun onCreate(bundle: Bundle?) {
+    super.onCreate(bundle)
 
-  constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
+    // Tap listener
+    gestures.tapListener = TapListener { touchPoint ->
+      val coordinates = viewToGeoCoordinates(touchPoint)
+      Log.d(TAG, "onCreate: TapListener ${coordinates?.latitude} ${coordinates?.longitude}")
+      coordinates?.let { sendCoordinates("onMapTap", it) }
+    }
 
-  constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(
-    context,
-    attrs,
-    defStyleAttr
-  )
+    // Long press listener
+    gestures.longPressListener = LongPressListener { _, touchPoint ->
+      val coordinates = viewToGeoCoordinates(touchPoint)
+      Log.d(TAG, "onCreate: LongPressListener ${coordinates?.latitude} ${coordinates?.longitude}")
+      coordinates?.let { sendCoordinates("onMapLongPress", it) }
+    }
+  }
+
+  private fun sendCoordinates(eventName: String, coordinates: GeoCoordinates) {
+    val eventArgs = Arguments.createMap()
+    eventArgs.putDouble("latitude", coordinates.latitude)
+    eventArgs.putDouble("longitude", coordinates.longitude)
+    coordinates.altitude?.let { altitude -> eventArgs.putDouble("altitude", altitude) }
+
+    val reactContext = context as? ThemedReactContext
+    val jsModule = reactContext?.getJSModule(RCTEventEmitter::class.java)
+    jsModule?.receiveEvent(id, eventName, eventArgs)
+  }
 
   fun setMapScheme(value: String) {
     mapScheme = MapScheme.valueOf(value)

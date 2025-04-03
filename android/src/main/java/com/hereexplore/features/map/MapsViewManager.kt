@@ -6,6 +6,8 @@ import com.facebook.react.module.annotations.ReactModule
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.annotations.ReactProp
 import com.hereexplore.features.item.ItemView
+import com.facebook.react.common.MapBuilder
+import javax.annotation.Nullable
 
 @ReactModule(name = MapsViewManager.TAG)
 class MapsViewManager : MapsViewManagerSpec<MapsView>() {
@@ -85,6 +87,14 @@ class MapsViewManager : MapsViewManagerSpec<MapsView>() {
     mapsHereView.onCreate(null)
     mapsHereView.loadCameraView()
     return mapsHereView
+  }
+
+  @Nullable
+  override fun getExportedCustomDirectEventTypeConstants(): Map<String, Any> {
+    return MapBuilder.builder<String, Any>()
+      .put("onMapTap", MapBuilder.of("registrationName", "onMapTap"))
+      .put("onMapLongPress", MapBuilder.of("registrationName", "onMapLongPress"))
+      .build()
   }
 
   companion object {
