@@ -52,14 +52,12 @@ class MapsView(context: Context?) : MapView(context) {
     // Tap listener
     gestures.tapListener = TapListener { touchPoint ->
       val coordinates = viewToGeoCoordinates(touchPoint)
-      Log.d(TAG, "onCreate: TapListener ${coordinates?.latitude} ${coordinates?.longitude}")
       coordinates?.let { sendCoordinates("onMapTap", it) }
     }
 
     // Long press listener
     gestures.longPressListener = LongPressListener { _, touchPoint ->
       val coordinates = viewToGeoCoordinates(touchPoint)
-      Log.d(TAG, "onCreate: LongPressListener ${coordinates?.latitude} ${coordinates?.longitude}")
       coordinates?.let { sendCoordinates("onMapLongPress", it) }
     }
   }
