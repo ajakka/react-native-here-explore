@@ -1,9 +1,9 @@
 {
-  "name": "react-native-here-explore",
+  "name": "react-native-here-navigate",
   "version": "2.2.0",
   "description": "HERE Explore Edition for React Native",
   "scripts": {
-    "example": "yarn workspace react-native-here-explore-example",
+    "example": "yarn workspace react-native-here-navigate-example",
     "test": "jest",
     "typecheck": "tsc --noEmit",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
@@ -70,14 +70,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ajakka/react-native-here-explore.git"
+    "url": "git+https://github.com/ajakka/react-native-here-navigate.git"
   },
   "author": "Abderrahim Ajakka <ajakka.abderrahim@gmail.com> (https://github.com/ajakka)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ajakka/react-native-here-explore/issues"
+    "url": "https://github.com/ajakka/react-native-here-navigate/issues"
   },
-  "homepage": "https://github.com/ajakka/react-native-here-explore#readme",
+  "homepage": "https://github.com/ajakka/react-native-here-navigate#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },

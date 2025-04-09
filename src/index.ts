@@ -1,22 +1,46 @@
 export { ConfigModule as HEREConfig } from './features/config/ConfigModule';
 
-export { useRouting, RouteOption } from './features/routing';
-export type {
-  RouteOptionType,
-  RouteResultType,
-  OnRouteCalculated,
+export {
+  useRouting,
+  RouteOption,
+  type RouteOptionType,
+  type RouteResultType,
+  type OnRouteCalculated,
 } from './features/routing';
 
-export { Map, type MapProps } from './features/map/MapView';
+export {
+  Map, //
+  type MapProps,
+} from './features/map/MapView';
 
-export { Arrow, type ArrowProps } from './features/arrow/ArrowView';
+export {
+  Arrow, //
+  type ArrowProps,
+} from './features/arrow/ArrowView';
 
-export { Polyline, type PolylineProps } from './features/polyline/PolylineView';
+export {
+  Polyline, //
+  type PolylineProps,
+} from './features/polyline/PolylineView';
 
-export { Polygon, type PolygonProps } from './features/polygon/PolygonView';
+export {
+  Polygon, //
+  type PolygonProps,
+} from './features/polygon/PolygonView';
 
-export { Marker, type MarkerProps } from './features/marker/MarkerView';
+export {
+  Marker, //
+  type MarkerProps,
+} from './features/marker/MarkerView';
 
-export { Pin, type PinProps } from './features/pin/PinView';
+export {
+  Pin, //
+  type PinProps,
+} from './features/pin/PinView';
+
+export {
+  Navigation,
+  type NavigationProps,
+} from './features/navigation/NavigationView';
 
 export * from './types';

@@ -11,6 +11,7 @@ import com.hereexplore.features.marker.MarkerViewManager
 import com.hereexplore.features.polygon.PolygonViewManager
 import com.hereexplore.features.polyline.PolylineViewManager
 import com.hereexplore.features.config.ConfigModule
+import com.hereexplore.features.navigation.NavigationViewManager
 import com.hereexplore.features.pin.PinViewContentManager
 import com.hereexplore.features.pin.PinViewManager
 import com.hereexplore.features.routing.RoutingModule
@@ -20,6 +21,7 @@ class HereExplorePackage : ReactPackage {
   override fun createViewManagers(reactContext: ReactApplicationContext): ArrayList<ViewGroupManager<out ViewGroup>> {
     return arrayListOf(
       MapsViewManager(),
+      NavigationViewManager(),
       ArrowViewManager(),
       PolygonViewManager(),
       PolylineViewManager(),
@@ -32,7 +34,7 @@ class HereExplorePackage : ReactPackage {
   override fun createNativeModules(reactContext: ReactApplicationContext): MutableList<NativeModule> {
     return arrayListOf(
       RoutingModule(reactContext),
-      ConfigModule(reactContext)
+      ConfigModule(reactContext),
     )
   }
 }

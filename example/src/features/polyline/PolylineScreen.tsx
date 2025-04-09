@@ -1,7 +1,7 @@
 import type { ScreenNames, ScreenProps } from '@/navigation';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Map, Polyline } from 'react-native-here-explore';
+import { Map, Polyline } from 'react-native-here-navigate';
 
 export const PolylineScreenName: ScreenNames = 'Polyline';
 

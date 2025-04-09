@@ -10,7 +10,7 @@ import com.facebook.react.common.MapBuilder
 import javax.annotation.Nullable
 
 @ReactModule(name = MapsViewManager.TAG)
-class MapsViewManager : MapsViewManagerSpec<MapsView>() {
+open class MapsViewManager : MapsViewManagerSpec<MapsView>() {
 
   @ReactProp(name = "mapScheme")
   override fun setMapScheme(view: MapsView, value: String) {
@@ -89,7 +89,6 @@ class MapsViewManager : MapsViewManagerSpec<MapsView>() {
     return mapsHereView
   }
 
-  @Nullable
   override fun getExportedCustomDirectEventTypeConstants(): Map<String, Any> {
     return MapBuilder.builder<String, Any>()
       .put("onMapTap", MapBuilder.of("registrationName", "onMapTap"))

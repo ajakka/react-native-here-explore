@@ -61,7 +61,7 @@ Here's how you might use the `Marker` to place a custom marker:
 
 ```jsx
 import React from 'react';
-import { Map, Marker } from 'react-native-here-explore';
+import { Map, Marker } from 'react-native-here-navigate';
 
 const App = () => {
   return (

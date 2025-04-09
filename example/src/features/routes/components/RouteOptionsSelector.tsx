@@ -4,7 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BicycleSVG, BusSVG, CarSVG, TruckSVG } from '@/components/icons';
 import { ScooterSVG, TaxiSVG, PedestrianSVG } from '@/components/icons';
 import RoundButton from '@/components/RoundButton';
-import { RouteOption } from 'react-native-here-explore';
+import { RouteOption } from 'react-native-here-navigate';
 
 const RouteOptions = [
   {

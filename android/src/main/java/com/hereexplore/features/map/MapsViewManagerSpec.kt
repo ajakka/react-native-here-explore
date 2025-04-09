@@ -8,19 +8,19 @@ abstract class MapsViewManagerSpec<T : ViewGroup> : ViewGroupManager<T>() {
 
   abstract fun setMapScheme(view: T, value: String)
 
-  abstract fun setWatermarkStyle(view: MapsView, value: String?)
+  abstract fun setWatermarkStyle(view: T, value: String?)
 
-  abstract fun setBearing(view: MapsView, value: Double)
+  abstract fun setBearing(view: T, value: Double)
 
-  abstract fun setTilt(view: MapsView, value: Double)
+  abstract fun setTilt(view: T, value: Double)
 
-//  GeoCoordinates
+  //  GeoCoordinates
   abstract fun setGeoCoordinates(view: T, value: ReadableMap?)
 
   abstract fun setZoomKind(view: T, value: String)
 
   abstract fun setZoomValue(view: T, value: Double)
 
-//  GeoBox
-  abstract fun setGeoBox(view: MapsView, value: ReadableMap?)
+  //  GeoBox
+  abstract fun setGeoBox(view: T, value: ReadableMap?)
 }

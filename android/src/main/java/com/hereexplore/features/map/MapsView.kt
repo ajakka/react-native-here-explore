@@ -8,7 +8,6 @@ import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.events.RCTEventEmitter
-import com.facebook.react.uimanager.events.RCTModernEventEmitter
 import com.here.sdk.core.GeoBox
 import com.here.sdk.core.GeoCoordinates
 import com.here.sdk.core.GeoOrientationUpdate
@@ -22,7 +21,7 @@ import com.hereexplore.features.item.ItemView
 import com.hereexplore.helpers.CoordinatesUtils
 
 
-class MapsView(context: Context?) : MapView(context) {
+open class MapsView(context: Context?) : MapView(context) {
 
   companion object {
     const val TAG = "MapsView"

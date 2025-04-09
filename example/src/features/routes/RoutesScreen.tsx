@@ -1,15 +1,16 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import type { GeoCoordinates, GeoPolyline } from 'react-native-here-explore';
+import type { GeoCoordinates, GeoPolyline } from 'react-native-here-navigate';
 import {
   Map,
   Marker,
+  Navigation,
   Pin,
   Polyline,
   RouteOption,
   useRouting,
-} from 'react-native-here-explore';
+} from 'react-native-here-navigate';
 
 import type { ScreenNames, ScreenProps } from '@/navigation';
 import RouteOptionsSelector from './components/RouteOptionsSelector';

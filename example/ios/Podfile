@@ -42,7 +42,7 @@ target 'HereExploreExample' do
       # :ccache_enabled => true
     )
      installer.pods_project.targets.each do |target|
-       if target.name  == "react-native-here-explore"
+       if target.name  == "react-native-here-navigate"
          all_filerefs = installer.pods_project.files
          all_filerefs.each do |fileref|
             if fileref.path.end_with? "heresdk.xcframework"

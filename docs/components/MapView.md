@@ -135,7 +135,7 @@ Here's a simple example of how to use the `MapsHereView` component within your R
 ```jsx
 import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { Map } from 'react-native-here-explore';
+import { Map } from 'react-native-here-navigate';
 
 const MapExample = () => {
   const [clickedLocation, setClickedLocation] = useState(null);

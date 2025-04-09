@@ -1,4 +1,3 @@
-
 <h1 align="center">
     <strong>Installation</strong>
 </h1>
@@ -9,10 +8,10 @@ Before we can use the HERE SDKs properly, we have to do some manual setup to get
 
 ```sh
 # using npm
-npm install react-native-here-explore
+npm install react-native-here-navigate
 
 # using yarn
-yarn add react-native-here-explore
+yarn add react-native-here-navigate
 ```
 
 ## 1. Sign up to [HERE Platform](https://platform.here.com/sign-up)
@@ -108,12 +107,13 @@ target 'MapsHereExample' do
   pod 'heresdk', :path => 'Frameworks'
 end
 ```
-add this code block to the Podfile that automatically sets the target membership of the here framework to react-native-here-explore package inside `post_install`
+
+add this code block to the Podfile that automatically sets the target membership of the here framework to react-native-here-navigate package inside `post_install`
 
 ```podspec
   post_install do |installer|
     # ... some stuff
-       if target.name  == "react-native-here-explore"
+       if target.name  == "react-native-here-navigate"
          all_filerefs = installer.pods_project.files
          all_filerefs.each do |fileref|
             if fileref.path.end_with? "heresdk.xcframework"
@@ -137,12 +137,9 @@ After setting up the SDKs on both platforms, we should initialize it using the `
 Just go to your index.ts file and add this before the `AppRegistry.registerComponent(appName, () => App)`:
 
 ```typescript
-import { HEREConfig } from 'react-native-here-explore';
+import { HEREConfig } from 'react-native-here-navigate';
 
-HEREConfig.initializeHereSDK(
-  'YOUR_ACCESS_KEY_ID',
-  'YOUR_ACCESS_KEY_SECRET'
-);
+HEREConfig.initializeHereSDK('YOUR_ACCESS_KEY_ID', 'YOUR_ACCESS_KEY_SECRET');
 ```
 
 If all done correctly, you should have HERE Maps working.

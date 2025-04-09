@@ -67,7 +67,7 @@ Here's how you might use the `Polyline` to draw a simple line:
 
 ```jsx
 import React from 'react';
-import { Map, Polyline } from 'react-native-here-explore';
+import { Map, Polyline } from 'react-native-here-navigate';
 
 const App = () => {
   return (

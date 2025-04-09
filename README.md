@@ -1,5 +1,5 @@
 <h1 align="center">
-    <strong>react-native-here-explore</strong>
+    <strong>react-native-here-navigate</strong>
 </h1>
 
 <p align="center">
@@ -19,7 +19,7 @@
 
 ## Introduction
 
-The react-native-here-explore library is designed to integrate HERE Maps SDK's features into React Native, one feature at a time.
+The react-native-here-navigate library is designed to integrate HERE Maps SDK's features into React Native, one feature at a time.
 Crafted from scratch utilizing latest languages in the native domain (Kotlin/Swift), it ensures a streamlined installation process despite the manual approach required for the SDKs themselves.
 This library bridges the gap, bringing mapping capabilities into your React Native applications with ease and efficiency.
 
@@ -38,7 +38,7 @@ This is an example snippet Using `Map` to show the Map
 ```tsx
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
-import { Map } from 'react-native-here-explore';
+import { Map } from 'react-native-here-navigate';
 
 export default function App() {
   return (
