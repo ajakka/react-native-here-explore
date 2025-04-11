@@ -3,7 +3,6 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import type { GeoCoordinates, GeoPolyline } from 'react-native-here-navigate';
 import {
-  Map,
   Marker,
   Navigation,
   Pin,
@@ -48,7 +47,7 @@ export default function RoutesScreen(_: ScreenProps<'Routes'>) {
 
   return (
     <View style={{ flex: 1 }}>
-      <Map
+      <Navigation
         geoCoordinates={centerPoint}
         testID="map"
         style={styles.box}
@@ -85,7 +84,7 @@ export default function RoutesScreen(_: ScreenProps<'Routes'>) {
           </View>
           <View style={styles.pin_arrow} />
         </Pin>
-      </Map>
+      </Navigation>
 
       <RouteOptionsSelector
         selectedRoute={route}
