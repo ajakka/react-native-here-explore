@@ -44,7 +44,7 @@ fun routesToWritableArray(routes: List<Route>): WritableArray {
   val waRoutes = Arguments.createArray()
   routes.map {
     val wmRoute = Arguments.createMap()
-    wmRoute.putArray("vertices", CoordinatesUtils.fromCoordinatesList(it.geometry.vertices))
+    wmRoute.putArray("vertices", CoordinatesUtils.fromGeoCoordinatesList(it.geometry.vertices))
     wmRoute.putString("routeHandle", it.routeHandle?.handle)
     wmRoute.putInt("durationInSeconds", it.duration.seconds.toInt())
     wmRoute.putInt("trafficDelayInSeconds", it.trafficDelay.seconds.toInt())

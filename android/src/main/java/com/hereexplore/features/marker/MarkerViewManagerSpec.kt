@@ -1,13 +1,8 @@
 package com.hereexplore.features.marker
 
-import android.content.Context
 import android.view.ViewGroup
-import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.uimanager.ViewGroupManager
-import com.here.sdk.mapview.MapMarker
-import com.here.sdk.mapview.MapPolygon
-import com.hereexplore.features.item.ItemView
 
 abstract class MarkerViewManagerSpec<T : ViewGroup> : ViewGroupManager<T>() {
 

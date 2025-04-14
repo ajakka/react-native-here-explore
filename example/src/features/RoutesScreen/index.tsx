@@ -2,14 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import type { GeoCoordinates, GeoPolyline } from 'react-native-here-navigate';
-import {
-  Marker,
-  Navigation,
-  Pin,
-  Polyline,
-  RouteOption,
-  useRouting,
-} from 'react-native-here-navigate';
+import { Marker, Map, Pin, Polyline, RouteOption, useRouting, type NavigationHandle } from 'react-native-here-navigate';
 
 import type { ScreenNames, ScreenProps } from '@/navigation';
 import RouteOptionsSelector from './components/RouteOptionsSelector';
@@ -28,11 +21,10 @@ const wayPoints: GeoCoordinates[] = [
 
 export default function RoutesScreen(_: ScreenProps<'Routes'>) {
   const [vertices, setVertices] = React.useState<GeoPolyline>([]);
-  const [route, setRoute] = React.useState<RouteOption>(
-    RouteOption.pedestrian()
-  );
+  const [route, setRoute] = React.useState<RouteOption>(RouteOption.pedestrian());
 
   const { cancel, calculateRoute } = useRouting();
+
   React.useEffect(() => {
     runCalculateRoute();
     return () => void cancel();
@@ -47,9 +39,8 @@ export default function RoutesScreen(_: ScreenProps<'Routes'>) {
 
   return (
     <View style={{ flex: 1 }}>
-      <Navigation
+      <Map
         geoCoordinates={centerPoint}
-        testID="map"
         style={styles.box}
         mapScheme="NORMAL_NIGHT"
         zoomValue={13.4}
@@ -69,27 +60,16 @@ export default function RoutesScreen(_: ScreenProps<'Routes'>) {
             image={require('@/assets/marker.png')}
           />
         ))}
-        <Polyline
-          lineType="SOLID"
-          lineColor="#72A1F1"
-          lineWidth={16}
-          geoPolyline={vertices}
-        />
-        <Pin
-          geoCoordinates={centerPoint}
-          anchor={{ horizontal: 0.5, vertical: 1 }}
-        >
+        <Polyline lineType="SOLID" lineColor="#72A1F1" lineWidth={16} geoPolyline={vertices} />
+        <Pin geoCoordinates={centerPoint} anchor={{ horizontal: 0.5, vertical: 1 }}>
           <View style={styles.pin_container}>
             <Text style={styles.pin_text}>Custom Pin</Text>
           </View>
           <View style={styles.pin_arrow} />
         </Pin>
-      </Navigation>
+      </Map>
 
-      <RouteOptionsSelector
-        selectedRoute={route}
-        onRouteOptionPress={setRoute}
-      />
+      <RouteOptionsSelector selectedRoute={route} onRouteOptionPress={setRoute} />
     </View>
   );
 }

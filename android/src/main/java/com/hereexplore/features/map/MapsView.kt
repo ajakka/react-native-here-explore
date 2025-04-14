@@ -6,8 +6,6 @@ import android.util.Log
 import android.view.View
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.ReadableMap
-import com.facebook.react.uimanager.ThemedReactContext
-import com.facebook.react.uimanager.events.RCTEventEmitter
 import com.here.sdk.core.GeoBox
 import com.here.sdk.core.GeoCoordinates
 import com.here.sdk.core.GeoOrientationUpdate
@@ -19,12 +17,16 @@ import com.here.sdk.mapview.MapView
 import com.here.sdk.mapview.WatermarkStyle
 import com.hereexplore.features.item.ItemView
 import com.hereexplore.helpers.CoordinatesUtils
+import com.hereexplore.helpers.sendEvent
 
 
 open class MapsView(context: Context?) : MapView(context) {
 
   companion object {
     const val TAG = "MapsView"
+
+    const val EVENT_MAP_TAP = "onMapTap"
+    const val EVENT_MAP_LONG_PRESS = "onMapLongPress"
   }
 
   private val mapItems: ArrayList<ItemView> = arrayListOf()
@@ -47,29 +49,31 @@ open class MapsView(context: Context?) : MapView(context) {
 
   override fun onCreate(bundle: Bundle?) {
     super.onCreate(bundle)
+    initializeGestureListeners()
+  }
 
+  private fun initializeGestureListeners() {
     // Tap listener
     gestures.tapListener = TapListener { touchPoint ->
       val coordinates = viewToGeoCoordinates(touchPoint)
-      coordinates?.let { sendCoordinates("onMapTap", it) }
+      val eventArgs = Arguments.createMap()
+      eventArgs.putDouble("latitude", coordinates?.latitude ?: 0.0)
+      eventArgs.putDouble("longitude", coordinates?.longitude ?: 0.0)
+      eventArgs.putDouble("altitude", coordinates?.altitude ?: 0.0)
+
+     sendEvent(id, context, EVENT_MAP_TAP, eventArgs)
     }
 
     // Long press listener
     gestures.longPressListener = LongPressListener { _, touchPoint ->
       val coordinates = viewToGeoCoordinates(touchPoint)
-      coordinates?.let { sendCoordinates("onMapLongPress", it) }
+      val eventArgs = Arguments.createMap()
+      eventArgs.putDouble("latitude", coordinates?.latitude ?: 0.0)
+      eventArgs.putDouble("longitude", coordinates?.longitude ?: 0.0)
+      eventArgs.putDouble("altitude", coordinates?.altitude ?: 0.0)
+
+      sendEvent(id, context, EVENT_MAP_LONG_PRESS, eventArgs)
     }
-  }
-
-  private fun sendCoordinates(eventName: String, coordinates: GeoCoordinates) {
-    val eventArgs = Arguments.createMap()
-    eventArgs.putDouble("latitude", coordinates.latitude)
-    eventArgs.putDouble("longitude", coordinates.longitude)
-    coordinates.altitude?.let { altitude -> eventArgs.putDouble("altitude", altitude) }
-
-    val reactContext = context as? ThemedReactContext
-    val jsModule = reactContext?.getJSModule(RCTEventEmitter::class.java)
-    jsModule?.receiveEvent(id, eventName, eventArgs)
   }
 
   fun setMapScheme(value: String) {
@@ -92,7 +96,7 @@ open class MapsView(context: Context?) : MapView(context) {
   //  GeoCoordinates
   fun setGeoCoordinates(value: ReadableMap?) {
     if (value != null) {
-      geoCoordinates = CoordinatesUtils.toCoordinates(value)
+      geoCoordinates = CoordinatesUtils.toGeoCoordinates(value)
       geoBox = null
     }
   }
@@ -112,8 +116,8 @@ open class MapsView(context: Context?) : MapView(context) {
 
     if (southWestCorner != null && northEastCorner != null) {
       geoBox = GeoBox(
-        CoordinatesUtils.toCoordinates(southWestCorner),
-        CoordinatesUtils.toCoordinates(northEastCorner),
+        CoordinatesUtils.toGeoCoordinates(southWestCorner),
+        CoordinatesUtils.toGeoCoordinates(northEastCorner),
       )
       geoCoordinates = null
     }
@@ -122,7 +126,6 @@ open class MapsView(context: Context?) : MapView(context) {
   fun loadCameraView() {
     mapScene.loadScene(mapScheme) { mapError ->
       if (mapError == null) updateCameraView()
-      else Log.d(MapsViewManager.TAG, "Loading map failed: mapError" + mapError.name)
     }
   }
 

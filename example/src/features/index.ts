@@ -1,14 +1,19 @@
 export {
+  NavigationScreenName, //
+  default as NavigationScreen,
+} from './NavigationScreen';
+
+export {
   HomeScreenName, //
   default as HomeScreen,
-} from './home/HomeScreen';
+} from './HomeScreen';
 
 export {
-  RoutesScreenName,
+  RoutesScreenName, //
   default as RoutesScreen,
-} from './routes/RoutesScreen';
+} from './RoutesScreen';
 
 export {
-  PolylineScreenName,
+  PolylineScreenName, //
   default as PolylineScreen,
-} from './polyline/PolylineScreen';
+} from './PolylineScreen';

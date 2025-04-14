@@ -38,9 +38,6 @@ export {
   type PinProps,
 } from './features/pin/PinView';
 
-export {
-  Navigation,
-  type NavigationProps,
-} from './features/navigation/NavigationView';
+export { Navigation, type NavigationProps, type NavigationHandle } from './features/Navigation';
 
 export * from './types';

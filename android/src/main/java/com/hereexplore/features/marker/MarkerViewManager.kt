@@ -1,12 +1,9 @@
 package com.hereexplore.features.marker
 
-import android.util.Log
-import android.view.View
 import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.module.annotations.ReactModule
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.annotations.ReactProp
-import com.facebook.react.views.image.ReactImageView
 
 
 @ReactModule(name = MarkerViewManager.TAG)

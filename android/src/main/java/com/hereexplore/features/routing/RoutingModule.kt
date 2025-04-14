@@ -19,7 +19,7 @@ class RoutingModule(context: ReactApplicationContext) : RoutingSpec(context) {
   @ReactMethod
   override fun calculateRoute(waypoints: ReadableArray, routeOption: String, promise: Promise) {
     taskHandle = routingEngine.calculateRoute(
-      CoordinatesUtils.toCoordinatesList(waypoints).map { Waypoint(it) },
+      CoordinatesUtils.toGeoCoordinatesList(waypoints).map { Waypoint(it) },
       routeOption
     ) { routingError, routes ->
       val result = Arguments.createMap()

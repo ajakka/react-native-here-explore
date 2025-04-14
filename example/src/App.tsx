@@ -1,7 +1,7 @@
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { HomeScreen, PolylineScreen, RoutesScreen } from '@/features';
+import { NavigationScreen, HomeScreen, PolylineScreen, RoutesScreen } from '@/features';
 import type { ScreenParams } from './navigation';
 
 const Stack = createNativeStackNavigator<ScreenParams>();
@@ -11,6 +11,7 @@ export default function App() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Navigation" component={NavigationScreen} />
           <Stack.Screen name="Routes" component={RoutesScreen} />
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Polyline" component={PolylineScreen} />

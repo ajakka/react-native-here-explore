@@ -1,25 +1,24 @@
 package com.hereexplore.features.navigation
 
+import android.util.Log
 import android.view.View
+import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.common.MapBuilder
 import com.facebook.react.module.annotations.ReactModule
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.annotations.ReactProp
-import com.here.sdk.navigation.VisualNavigator
 import com.hereexplore.features.item.ItemView
+import com.hereexplore.features.map.MapsView.Companion.EVENT_MAP_LONG_PRESS
+import com.hereexplore.features.map.MapsView.Companion.EVENT_MAP_TAP
+import com.hereexplore.features.navigation.NavigationView.Companion.COMMAND_START_NAVIGATION
+import com.hereexplore.features.navigation.NavigationView.Companion.COMMAND_STOP_NAVIGATION
 
 // This class is a replica of the map view manager
 // with what will potentially be the navigate own properties
 // FIXME: find a way to inherit from map manager instead
-@ReactModule(name = NavigationViewManager.TAG)
+@ReactModule(name = NavigationView.TAG)
 class NavigationViewManager : NavigationViewManagerSpec<NavigationView>() {
-
-  companion object {
-    const val TAG = "NavigationView"
-  }
-
-  private val visualNavigator: VisualNavigator by lazy { VisualNavigator() }
 
   @ReactProp(name = "mapScheme")
   override fun setMapScheme(view: NavigationView, value: String) {
@@ -63,21 +62,28 @@ class NavigationViewManager : NavigationViewManagerSpec<NavigationView>() {
     view.setGeoBox(value)
   }
 
-  public override fun createViewInstance(context: ThemedReactContext): NavigationView {
-    val mapsHereView = NavigationView(context)
-    mapsHereView.onCreate(null)
-    mapsHereView.loadCameraView()
-    visualNavigator.startRendering(mapsHereView)
-    return mapsHereView
+  @ReactProp(name = "isSimulated")
+  override fun setIsSimulated(view: NavigationView, value: Boolean) {
+    view.setIsSimulated(value)
   }
 
-  override fun getName() = TAG
+  @ReactProp(name = "isCameraTrackingEnabled")
+  override fun setIsCameraTrackingEnabled(view: NavigationView, value: Boolean) {
+    view.setIsCameraTrackingEnabled(value)
+  }
+
+  public override fun createViewInstance(context: ThemedReactContext): NavigationView {
+    val navigationView = NavigationView(context)
+    navigationView.onCreate(null)
+    navigationView.loadCameraView()
+    return navigationView
+  }
+
+  override fun getName() = NavigationView.TAG
 
   override fun addView(parent: NavigationView, child: View, index: Int) {
     when (child) {
-      is ItemView -> {
-        parent.addMapItem(child)
-      }
+      is ItemView -> parent.addMapItem(child)
     }
   }
 
@@ -98,10 +104,48 @@ class NavigationViewManager : NavigationViewManagerSpec<NavigationView>() {
     view.updateCameraView()
   }
 
+  override fun onDropViewInstance(view: NavigationView) {
+    super.onDropViewInstance(view)
+    view.stopNavigation()
+  }
+
   override fun getExportedCustomDirectEventTypeConstants(): Map<String, Any> {
     return MapBuilder.builder<String, Any>()
-      .put("onMapTap", MapBuilder.of("registrationName", "onMapTap"))
-      .put("onMapLongPress", MapBuilder.of("registrationName", "onMapLongPress"))
+      // Map events
+      .put(EVENT_MAP_TAP, MapBuilder.of("registrationName", EVENT_MAP_TAP))
+      .put(EVENT_MAP_LONG_PRESS, MapBuilder.of("registrationName", EVENT_MAP_LONG_PRESS))
       .build()
+  }
+
+  override fun getCommandsMap(): Map<String, Int> {
+    return MapBuilder.of(
+      COMMAND_START_NAVIGATION, 1,
+      COMMAND_STOP_NAVIGATION, 2
+    )
+  }
+
+  override fun receiveCommand(root: NavigationView, commandId: String?, args: ReadableArray?) {
+    Log.d(NavigationView.TAG, "Received command: $commandId")
+
+    when (commandId) {
+      COMMAND_START_NAVIGATION -> {
+        if (args != null && args.size() > 0) {
+          val routeData = args.getMap(0)
+          Log.d(NavigationView.TAG, "Starting navigation with route data: $routeData")
+          root.startNavigation(routeData)
+        } else {
+          Log.e(NavigationView.TAG, "Invalid arguments for startNavigation command")
+        }
+      }
+
+      COMMAND_STOP_NAVIGATION -> {
+        Log.d(NavigationView.TAG, "Stopping navigation")
+        root.stopNavigation()
+      }
+
+      else -> {
+        Log.e(NavigationView.TAG, "Unknown command: $commandId")
+      }
+    }
   }
 }

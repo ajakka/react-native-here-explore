@@ -6,36 +6,54 @@ import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.bridge.WritableArray
 import com.facebook.react.bridge.WritableMap
 import com.here.sdk.core.GeoCoordinates
+import com.here.sdk.routing.Waypoint
 
 class CoordinatesUtils {
   companion object {
-    fun toCoordinates(readableMap: ReadableMap): GeoCoordinates {
+    fun toGeoCoordinates(readableMap: ReadableMap): GeoCoordinates {
       val latitude = readableMap.getDouble("latitude")
       val longitude = readableMap.getDouble("longitude")
       val altitude: Double?
 
-      return if (readableMap.hasKey("altitude")){
-          altitude = readableMap.getDouble("altitude")
+      return if (readableMap.hasKey("altitude")) {
+        altitude = readableMap.getDouble("altitude")
         GeoCoordinates(latitude, longitude, altitude)
       } else {
         GeoCoordinates(latitude, longitude)
       }
     }
 
-    fun toCoordinatesList(readableArray: ReadableArray?): ArrayList<GeoCoordinates> {
+    fun toGeoCoordinatesList(readableArray: ReadableArray?): ArrayList<GeoCoordinates> {
       val coordinates = ArrayList<GeoCoordinates>()
       val arraySize = readableArray?.size()
 
       if (arraySize != null) {
         for (i in 0 until arraySize) {
           val item = readableArray.getMap(i)
-          coordinates.add(toCoordinates(item))
+          coordinates.add(toGeoCoordinates(item))
         }
       }
       return coordinates
     }
 
-    fun fromCoordinates(coordinates: GeoCoordinates): WritableMap {
+    fun toWaypoint(readableMap: ReadableMap): Waypoint {
+      return Waypoint(toGeoCoordinates(readableMap))
+    }
+
+    fun toWaypointList(readableArray: ReadableArray?): ArrayList<Waypoint> {
+      val coordinates = ArrayList<Waypoint>()
+      val arraySize = readableArray?.size()
+
+      if (arraySize != null) {
+        for (i in 0 until arraySize) {
+          val item = readableArray.getMap(i)
+          coordinates.add(toWaypoint(item))
+        }
+      }
+      return coordinates
+    }
+
+    fun fromGeoCoordinates(coordinates: GeoCoordinates): WritableMap {
       val map = Arguments.createMap()
       map.putDouble("latitude", coordinates.latitude)
       map.putDouble("longitude", coordinates.longitude)
@@ -43,9 +61,9 @@ class CoordinatesUtils {
       return map
     }
 
-    fun fromCoordinatesList(coordinatesList: List<GeoCoordinates>): WritableArray {
+    fun fromGeoCoordinatesList(coordinatesList: List<GeoCoordinates>): WritableArray {
       val map = Arguments.createArray()
-      coordinatesList.map { map.pushMap(fromCoordinates(it)) }
+      coordinatesList.map { map.pushMap(fromGeoCoordinates(it)) }
       return map
     }
   }

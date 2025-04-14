@@ -87,3 +87,6 @@ sdk/
 credentials.properties
 *.aar
 *.xcframework
+
+# Navigation examples
+navigation-example/

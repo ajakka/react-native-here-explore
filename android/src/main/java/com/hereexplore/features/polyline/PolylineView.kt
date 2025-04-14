@@ -41,7 +41,7 @@ class PolylineView(context: Context?) : ItemView(context) {
 
   fun setGeoPolyline(value: ReadableArray?) {
     if (value != null && value.size() > 1) {
-      geoPolyline = CoordinatesUtils.toCoordinatesList(value)
+      geoPolyline = CoordinatesUtils.toGeoCoordinatesList(value)
     }
   }
 

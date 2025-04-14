@@ -2,14 +2,15 @@ package com.hereexplore.features.map
 
 import android.view.View
 import com.facebook.react.bridge.ReadableMap
+import com.facebook.react.common.MapBuilder
 import com.facebook.react.module.annotations.ReactModule
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.annotations.ReactProp
 import com.hereexplore.features.item.ItemView
-import com.facebook.react.common.MapBuilder
-import javax.annotation.Nullable
+import com.hereexplore.features.map.MapsView.Companion.EVENT_MAP_LONG_PRESS
+import com.hereexplore.features.map.MapsView.Companion.EVENT_MAP_TAP
 
-@ReactModule(name = MapsViewManager.TAG)
+@ReactModule(name = MapsView.TAG)
 open class MapsViewManager : MapsViewManagerSpec<MapsView>() {
 
   @ReactProp(name = "mapScheme")
@@ -80,7 +81,7 @@ open class MapsViewManager : MapsViewManagerSpec<MapsView>() {
     view.updateCameraView()
   }
 
-  override fun getName() = TAG
+  override fun getName() = MapsView.TAG
 
   public override fun createViewInstance(context: ThemedReactContext): MapsView {
     val mapsHereView = MapsView(context)
@@ -91,12 +92,8 @@ open class MapsViewManager : MapsViewManagerSpec<MapsView>() {
 
   override fun getExportedCustomDirectEventTypeConstants(): Map<String, Any> {
     return MapBuilder.builder<String, Any>()
-      .put("onMapTap", MapBuilder.of("registrationName", "onMapTap"))
-      .put("onMapLongPress", MapBuilder.of("registrationName", "onMapLongPress"))
+      .put(EVENT_MAP_TAP, MapBuilder.of("registrationName", EVENT_MAP_TAP))
+      .put(EVENT_MAP_LONG_PRESS, MapBuilder.of("registrationName", EVENT_MAP_LONG_PRESS))
       .build()
-  }
-
-  companion object {
-    const val TAG = "MapsView"
   }
 }

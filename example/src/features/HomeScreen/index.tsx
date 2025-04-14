@@ -8,15 +8,9 @@ export const HomeScreenName: ScreenNames = 'Home';
 export default function HomeScreen({ navigation }: ScreenProps<'Home'>) {
   return (
     <View style={[styles.container]}>
-      <Button
-        title="Routes screen"
-        onPress={() => navigation.navigate(RoutesScreenName)}
-      />
+      <Button title="Routes screen" onPress={() => navigation.navigate(RoutesScreenName)} />
       <View style={styles.margin} />
-      <Button
-        title="Polyline screen"
-        onPress={() => navigation.navigate(PolylineScreenName)}
-      />
+      <Button title="Polyline screen" onPress={() => navigation.navigate(PolylineScreenName)} />
     </View>
   );
 }

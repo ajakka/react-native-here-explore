@@ -36,7 +36,7 @@ class MarkerView(context: Context?) : ItemView(context) {
 
   fun setGeoCoordinate(value: ReadableMap?) {
     if (value != null) {
-      geoCoordinates = CoordinatesUtils.toCoordinates(value)
+      geoCoordinates = CoordinatesUtils.toGeoCoordinates(value)
     }
   }
 

@@ -28,7 +28,7 @@ class PolygonView(context: Context?) : ItemView(context) {
 
   fun setGeoCoordinates(value: ReadableArray?) {
     if (value != null) {
-      geoCoordinates = CoordinatesUtils.toCoordinatesList(value)
+      geoCoordinates = CoordinatesUtils.toGeoCoordinatesList(value)
       geoCircle = null
     }
   }
@@ -39,7 +39,7 @@ class PolygonView(context: Context?) : ItemView(context) {
     if (circleMap != null) {
       val radiusInMeters = value.getDouble("radiusInMeters")
       geoCircle = GeoCircle(
-        CoordinatesUtils.toCoordinates(circleMap),
+        CoordinatesUtils.toGeoCoordinates(circleMap),
         radiusInMeters
       )
       geoCoordinates = null
