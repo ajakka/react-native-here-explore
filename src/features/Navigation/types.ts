@@ -3,7 +3,6 @@ import type { MapProps } from '../map/MapView';
 
 export interface Route {
   geoPolyline: GeoPolyline;
-  fromUserLocation?: boolean;
 }
 
 export interface NavigationHandle {
@@ -14,6 +13,7 @@ export interface NavigationHandle {
 interface BaseNavigationProps {
   isSimulated?: boolean;
   isCameraTrackingEnabled?: boolean;
+  isVoiceGuidanceEnabled?: boolean;
 }
 
 export type NavigationProps = BaseNavigationProps & MapProps;

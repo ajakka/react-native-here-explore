@@ -9,6 +9,8 @@ import com.hereexplore.features.navigation.engines.DynamicRoutingHelper
 import com.hereexplore.features.navigation.engines.LocationHelper
 import com.hereexplore.features.navigation.engines.NavigatorHelper
 import com.hereexplore.features.navigation.engines.RoutingHelper
+import com.hereexplore.features.navigation.engines.VoiceAssistant
+import java.util.Locale
 
 
 class NavigationView(context: Context?) : MapsView(context) {
@@ -21,11 +23,13 @@ class NavigationView(context: Context?) : MapsView(context) {
 
   private val routingHelper by lazy { RoutingHelper() }
   private val locationHelper by lazy { LocationHelper() }
+  private val voiceAssistant by lazy { VoiceAssistant(context!!) }
   private val navigatorHelper by lazy { NavigatorHelper() }
   private val dynamicRoutingHelper by lazy { DynamicRoutingHelper() }
 
   private var isSimulated: Boolean = false
   private var isCameraTrackingEnabled: Boolean = true
+  private var isVoiceGuidanceEnabled: Boolean = true
 
   fun setIsSimulated(value: Boolean) {
     isSimulated = value
@@ -42,8 +46,21 @@ class NavigationView(context: Context?) : MapsView(context) {
     }
   }
 
+  fun setVoiceGuidanceEnabled(enabled: Boolean) {
+    Log.d(TAG, "Voice guidance ${if (enabled) "enabled" else "disabled"}")
+    isVoiceGuidanceEnabled = enabled
+  }
+
   fun startNavigation(routeMap: ReadableMap?) {
     routingHelper.calculateRoute(routeMap) { route ->
+
+      // Setup voice guidance
+      voiceAssistant.setLanguage(Locale.getDefault())
+      navigatorHelper.onTextUpdate {
+        if (isVoiceGuidanceEnabled) {
+          voiceAssistant.speak(it)
+        }
+      }
 
       // Start rendering the navigation on this view
       navigatorHelper.visualNavigator.startRendering(this)
@@ -79,6 +96,8 @@ class NavigationView(context: Context?) : MapsView(context) {
 
     navigatorHelper.visualNavigator.stopRendering() // Stop rendering navigation
     navigatorHelper.visualNavigator.route = null // Clear the route
+
+    voiceAssistant.shutdown()
 
     Log.d(TAG, "Navigation stopped")
   }

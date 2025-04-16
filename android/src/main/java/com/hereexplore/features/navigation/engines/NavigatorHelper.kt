@@ -2,6 +2,7 @@ package com.hereexplore.features.navigation.engines
 
 import com.here.sdk.core.errors.InstantiationErrorException
 import com.here.sdk.navigation.DynamicCameraBehavior
+import com.here.sdk.navigation.EventTextListener
 import com.here.sdk.navigation.VisualNavigator
 
 class NavigatorHelper {
@@ -26,5 +27,11 @@ class NavigatorHelper {
 
   fun stopCameraTracking() {
     visualNavigator.cameraBehavior = null
+  }
+
+  fun onTextUpdate(callback: (text: String) -> Unit) {
+    visualNavigator.eventTextListener = EventTextListener { eventText ->
+      callback(eventText.text)
+    }
   }
 }

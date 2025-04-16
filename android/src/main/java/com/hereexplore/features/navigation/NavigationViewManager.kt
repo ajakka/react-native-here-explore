@@ -72,6 +72,11 @@ class NavigationViewManager : NavigationViewManagerSpec<NavigationView>() {
     view.setIsCameraTrackingEnabled(value)
   }
 
+  @ReactProp(name = "isVoiceGuidanceEnabled")
+  override fun setIsVoiceGuidanceEnabled(view: NavigationView, value: Boolean) {
+    view.setVoiceGuidanceEnabled(value)
+  }
+
   public override fun createViewInstance(context: ThemedReactContext): NavigationView {
     val navigationView = NavigationView(context)
     navigationView.onCreate(null)
