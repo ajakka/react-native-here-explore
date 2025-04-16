@@ -23,6 +23,7 @@ class NavigatorHelper {
 
 //    visualNavigator.cameraBehavior = FixedCameraBehavior()
 //    visualNavigator.cameraBehavior = SpeedBasedCameraBehavior()
+
   }
 
   fun stopCameraTracking() {

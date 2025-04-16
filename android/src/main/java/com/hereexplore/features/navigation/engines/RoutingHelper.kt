@@ -2,6 +2,7 @@ package com.hereexplore.features.navigation.engines
 
 import android.util.Log
 import com.facebook.react.bridge.ReadableMap
+import com.here.sdk.core.Location
 import com.here.sdk.core.errors.InstantiationErrorException
 import com.here.sdk.routing.CarOptions
 import com.here.sdk.routing.Route
@@ -20,8 +21,12 @@ class RoutingHelper {
     }
   }
 
-  fun calculateRoute(routeMap: ReadableMap?, onRouteFound: (Route) -> Unit) {
+  fun calculateRoute(routeMap: ReadableMap?, lastKnownLocation: Location?, onRouteFound: (Route) -> Unit) {
     val geoPolyline = CoordinatesUtils.toWaypointList(routeMap?.getArray("geoPolyline"))
+
+    if (lastKnownLocation != null) {
+      geoPolyline.add(0, Waypoint(lastKnownLocation.coordinates))
+    }
 
     val carOptions = CarOptions()
     // FIXME: required for the DynamicRoutingEngine

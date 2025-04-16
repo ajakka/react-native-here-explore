@@ -11,6 +11,8 @@ import com.here.sdk.core.GeoCoordinates
 import com.here.sdk.core.GeoOrientationUpdate
 import com.here.sdk.gestures.LongPressListener
 import com.here.sdk.gestures.TapListener
+import com.here.sdk.mapview.MapFeatureModes
+import com.here.sdk.mapview.MapFeatures
 import com.here.sdk.mapview.MapMeasure
 import com.here.sdk.mapview.MapScheme
 import com.here.sdk.mapview.MapView
@@ -130,6 +132,13 @@ open class MapsView(context: Context?) : MapView(context) {
   }
 
   fun updateCameraView() {
+    // Enable traffic flows and 3D landmarks, by default.
+    val mapFeatures: MutableMap<String, String> = HashMap()
+    mapFeatures[MapFeatures.TRAFFIC_FLOW] = MapFeatureModes.TRAFFIC_FLOW_WITH_FREE_FLOW
+    mapFeatures[MapFeatures.LOW_SPEED_ZONES] = MapFeatureModes.LOW_SPEED_ZONES_ALL
+    mapFeatures[MapFeatures.LANDMARKS] = MapFeatureModes.LANDMARKS_TEXTURED
+    mapScene.enableFeatures(mapFeatures)
+
     geoCoordinates?.let {
       camera.lookAt(it, GeoOrientationUpdate(bearing, tilt), MapMeasure(zoomKind, zoomValue))
     } ?: geoBox?.let {

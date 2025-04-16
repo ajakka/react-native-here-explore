@@ -3,6 +3,7 @@ package com.hereexplore.features.navigation
 import android.content.Context
 import android.util.Log
 import com.facebook.react.bridge.ReadableMap
+import com.here.sdk.core.Location
 import com.here.sdk.location.LocationAccuracy
 import com.hereexplore.features.map.MapsView
 import com.hereexplore.features.navigation.engines.DynamicRoutingHelper
@@ -23,8 +24,8 @@ class NavigationView(context: Context?) : MapsView(context) {
 
   private val routingHelper by lazy { RoutingHelper() }
   private val locationHelper by lazy { LocationHelper() }
-  private val voiceAssistant by lazy { VoiceAssistant(context!!) }
   private val navigatorHelper by lazy { NavigatorHelper() }
+  private val voiceAssistant by lazy { VoiceAssistant(context!!) }
   private val dynamicRoutingHelper by lazy { DynamicRoutingHelper() }
 
   private var isSimulated: Boolean = false
@@ -52,7 +53,15 @@ class NavigationView(context: Context?) : MapsView(context) {
   }
 
   fun startNavigation(routeMap: ReadableMap?) {
-    routingHelper.calculateRoute(routeMap) { route ->
+    if (isSimulated) {
+      startSimulatedNavigation(routeMap)
+    } else {
+      startRealNavigation(routeMap)
+    }
+  }
+
+  private fun startSimulatedNavigation(routeMap: ReadableMap?) {
+    routingHelper.calculateRoute(routeMap, null) { route ->
 
       // Setup voice guidance
       voiceAssistant.setLanguage(Locale.getDefault())
@@ -68,20 +77,49 @@ class NavigationView(context: Context?) : MapsView(context) {
       // Set the calculated route to the navigator
       navigatorHelper.visualNavigator.route = route
 
-      // Start location updates based on the mode (real or simulated)
-      if (isSimulated) {
-        locationHelper.startSimulation(route, navigatorHelper.visualNavigator)
-        Log.d(TAG, "Started simulated location updates")
-      } else {
-        locationHelper.startRealLocation(navigatorHelper.visualNavigator, LocationAccuracy.NAVIGATION)
-        Log.d(TAG, "Started real location updates")
-      }
+      // Start location updates based on the mode ( simulated)
+      locationHelper.startSimulation(route, navigatorHelper.visualNavigator)
+      Log.d(TAG, "Started simulated location updates")
+
 
       // Set up dynamic routing for traffic-aware navigation
       dynamicRoutingHelper.setupDynamicRouting(route, true)
 
       // Update camera tracking based on the setting
       updateCameraTracking(isCameraTrackingEnabled)
+    }
+  }
+
+  private fun startRealNavigation(routeMap: ReadableMap?) {
+    val lastKnownLocation = locationHelper.getLastKnownLocation()
+
+    if (lastKnownLocation != null) {
+      routingHelper.calculateRoute(routeMap, lastKnownLocation) { route ->
+
+        // Setup voice guidance
+        voiceAssistant.setLanguage(Locale.getDefault())
+        navigatorHelper.onTextUpdate {
+          if (isVoiceGuidanceEnabled) {
+            voiceAssistant.speak(it)
+          }
+        }
+
+        // Start rendering the navigation on this view
+        navigatorHelper.visualNavigator.startRendering(this)
+
+        // Set the calculated route to the navigator
+        navigatorHelper.visualNavigator.route = route
+
+        // Start location updates based on the mode (real)
+        locationHelper.startRealLocation(navigatorHelper.visualNavigator, LocationAccuracy.NAVIGATION)
+        Log.d(TAG, "Started real location updates")
+
+        // Set up dynamic routing for traffic-aware navigation
+        dynamicRoutingHelper.setupDynamicRouting(route, true)
+
+        // Update camera tracking based on the setting
+        updateCameraTracking(isCameraTrackingEnabled)
+      }
     }
   }
 
@@ -108,5 +146,9 @@ class NavigationView(context: Context?) : MapsView(context) {
     } else {
       navigatorHelper.stopCameraTracking()
     }
+  }
+
+  private fun getLastKnownLocation(): Location? {
+    return locationHelper.getLastKnownLocation()
   }
 }

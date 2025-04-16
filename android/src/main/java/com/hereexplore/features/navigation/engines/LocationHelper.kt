@@ -49,8 +49,13 @@ class LocationHelper {
 
     locationListener = navigator
 
+    locationEngine.confirmHEREPrivacyNoticeInclusion()
+
     // Set up the location engine with the navigator as listener
     locationEngine.addLocationListener(navigator)
+//    locationEngine.addLocationListener {
+//      Log.d(TAG, "Location updated: ${it.coordinates.latitude}, ${it.coordinates.latitude}")
+//    }
     locationEngine.addLocationStatusListener(locationStatusListener)
 
     // Start the location engine with the specified accuracy

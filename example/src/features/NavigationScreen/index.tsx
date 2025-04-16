@@ -25,9 +25,8 @@ export default function NavigationScreen(_: ScreenProps<'Navigation'>) {
   const navigationRef = React.useRef<NavigationHandle>(null);
 
   const [isNavigating, setIsNavigating] = useState(false);
-  const [isSimulated, setIsSimulated] = useState(true);
+  const [isSimulated, setIsSimulated] = useState(false);
   const [isCameraTracking, setIsCameraTracking] = useState(true);
-  const [isVoiceGuidanceEnabled, setIsVoiceGuidanceEnabled] = useState(true);
 
   const handleNavigationToggle = () => {
     if (isNavigating) {
@@ -46,10 +45,6 @@ export default function NavigationScreen(_: ScreenProps<'Navigation'>) {
     setIsSimulated(!isSimulated);
   };
 
-  const handleVoiceGuidanceToggle = () => {
-    setIsVoiceGuidanceEnabled(!isVoiceGuidanceEnabled);
-  };
-
   return (
     <View style={styles.container}>
       <Navigation
@@ -60,7 +55,7 @@ export default function NavigationScreen(_: ScreenProps<'Navigation'>) {
         zoomValue={13.4}
         isSimulated={isSimulated}
         isCameraTrackingEnabled={isCameraTracking}
-        isVoiceGuidanceEnabled={isVoiceGuidanceEnabled}
+        isVoiceGuidanceEnabled={true}
       />
       <View style={[styles.controlsContainer, { paddingBottom: bottom + 16 }]}>
         <Text style={styles.title}>Navigation Controls</Text>
@@ -79,11 +74,6 @@ export default function NavigationScreen(_: ScreenProps<'Navigation'>) {
             icon={<ScooterSVG color="white" width={24} height={24} />}
             title={isSimulated ? 'Simulation' : 'Real'}
             onPress={handleSimulationToggle}
-          />
-          <NavigationButton
-            icon={<ScooterSVG color="white" width={24} height={24} />}
-            title={isVoiceGuidanceEnabled ? 'Voice' : 'No Voice'}
-            onPress={handleVoiceGuidanceToggle}
           />
         </View>
       </View>
