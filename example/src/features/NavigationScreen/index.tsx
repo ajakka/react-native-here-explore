@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { CarSVG, PedestrianSVG, ScooterSVG } from '@/components/icons';
+import { useLocationPermission } from '@/hooks/useLocationPermission';
 import type { ScreenNames, ScreenProps } from '@/navigation';
 import type { GeoCoordinates, GeoPolyline, NavigationHandle } from 'react-native-here-navigate';
 import { Navigation } from 'react-native-here-navigate';
-import { CarSVG, PedestrianSVG, ScooterSVG } from '@/components/icons';
-import { useLocationPermission } from '@/hooks/useLocationPermission';
 
 export const NavigationScreenName: ScreenNames = 'Navigation';
 
-const centerPoint: GeoCoordinates = { latitude: 52.5561936, longitude: 13.3432207 };
+const centerPoint: GeoCoordinates = { latitude: 30.4130643, longitude: -9.6126792 };
 
 const geoPolyline: GeoPolyline = [
-  { latitude: 52.5561936, longitude: 13.3432207 },
-  { latitude: 52.4571936, longitude: 13.3422207 },
+  // { latitude: 52.5561936, longitude: 13.3432207 },
+  { latitude: 30.4130643, longitude: -9.6126792 },
 ];
 
 export default function NavigationScreen(_: ScreenProps<'Navigation'>) {
@@ -28,11 +28,19 @@ export default function NavigationScreen(_: ScreenProps<'Navigation'>) {
   const [isSimulated, setIsSimulated] = useState(false);
   const [isCameraTracking, setIsCameraTracking] = useState(true);
 
+  const handleUserLocationResolved = (userLocation: GeoCoordinates) => {
+    navigationRef.current?.startNavigation({ geoPolyline: [userLocation, ...geoPolyline] });
+  };
+
+  const handleUserLocationNotFound = (message: string) => {
+    console.error('User location not found', message);
+  };
+
   const handleNavigationToggle = () => {
     if (isNavigating) {
       navigationRef.current?.stopNavigation();
     } else {
-      navigationRef.current?.startNavigation({ geoPolyline });
+      navigationRef.current?.prefetchUserLocation();
     }
     setIsNavigating(!isNavigating);
   };
@@ -56,6 +64,8 @@ export default function NavigationScreen(_: ScreenProps<'Navigation'>) {
         isSimulated={isSimulated}
         isCameraTrackingEnabled={isCameraTracking}
         isVoiceGuidanceEnabled={true}
+        onUserLocationNotFound={(e) => handleUserLocationNotFound(e.nativeEvent.message)}
+        onUserLocationResolved={(e) => handleUserLocationResolved(e.nativeEvent)}
       />
       <View style={[styles.controlsContainer, { paddingBottom: bottom + 16 }]}>
         <Text style={styles.title}>Navigation Controls</Text>

@@ -21,12 +21,7 @@ class RoutingHelper {
     }
   }
 
-  fun calculateRoute(routeMap: ReadableMap?, lastKnownLocation: Location?, onRouteFound: (Route) -> Unit) {
-    val geoPolyline = CoordinatesUtils.toWaypointList(routeMap?.getArray("geoPolyline"))
-
-    if (lastKnownLocation != null) {
-      geoPolyline.add(0, Waypoint(lastKnownLocation.coordinates))
-    }
+  fun calculateRoute( geoPolyline: ArrayList<Waypoint>, onRouteFound: (Route) -> Unit) {
 
     val carOptions = CarOptions()
     // FIXME: required for the DynamicRoutingEngine

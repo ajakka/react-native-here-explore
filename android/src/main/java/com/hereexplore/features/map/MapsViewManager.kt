@@ -9,6 +9,7 @@ import com.facebook.react.uimanager.annotations.ReactProp
 import com.hereexplore.features.item.ItemView
 import com.hereexplore.features.map.MapsView.Companion.EVENT_MAP_LONG_PRESS
 import com.hereexplore.features.map.MapsView.Companion.EVENT_MAP_TAP
+import com.hereexplore.features.navigation.NavigationView.Companion.EVENT_USER_LOCATION_NOT_FOUND
 
 @ReactModule(name = MapsView.TAG)
 open class MapsViewManager : MapsViewManagerSpec<MapsView>() {

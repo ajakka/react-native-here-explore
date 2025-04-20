@@ -11,13 +11,17 @@ import com.facebook.react.uimanager.annotations.ReactProp
 import com.hereexplore.features.item.ItemView
 import com.hereexplore.features.map.MapsView.Companion.EVENT_MAP_LONG_PRESS
 import com.hereexplore.features.map.MapsView.Companion.EVENT_MAP_TAP
+import com.hereexplore.features.navigation.NavigationView.Companion.COMMAND_PREFETCH_USER_LOCATION
 import com.hereexplore.features.navigation.NavigationView.Companion.COMMAND_START_NAVIGATION
 import com.hereexplore.features.navigation.NavigationView.Companion.COMMAND_STOP_NAVIGATION
+import com.hereexplore.features.navigation.NavigationView.Companion.EVENT_USER_LOCATION_NOT_FOUND
+import com.hereexplore.features.navigation.NavigationView.Companion.EVENT_USER_LOCATION_RESOLVED
+import com.hereexplore.features.navigation.NavigationView.Companion.TAG
 
 // This class is a replica of the map view manager
 // with what will potentially be the navigate own properties
 // FIXME: find a way to inherit from map manager instead
-@ReactModule(name = NavigationView.TAG)
+@ReactModule(name = TAG)
 class NavigationViewManager : NavigationViewManagerSpec<NavigationView>() {
 
   @ReactProp(name = "mapScheme")
@@ -84,7 +88,7 @@ class NavigationViewManager : NavigationViewManagerSpec<NavigationView>() {
     return navigationView
   }
 
-  override fun getName() = NavigationView.TAG
+  override fun getName() = TAG
 
   override fun addView(parent: NavigationView, child: View, index: Int) {
     when (child) {
@@ -119,38 +123,32 @@ class NavigationViewManager : NavigationViewManagerSpec<NavigationView>() {
       // Map events
       .put(EVENT_MAP_TAP, MapBuilder.of("registrationName", EVENT_MAP_TAP))
       .put(EVENT_MAP_LONG_PRESS, MapBuilder.of("registrationName", EVENT_MAP_LONG_PRESS))
+      .put(EVENT_USER_LOCATION_NOT_FOUND, MapBuilder.of("registrationName", EVENT_USER_LOCATION_NOT_FOUND))
+      .put(EVENT_USER_LOCATION_RESOLVED, MapBuilder.of("registrationName", EVENT_USER_LOCATION_RESOLVED))
       .build()
   }
 
   override fun getCommandsMap(): Map<String, Int> {
     return MapBuilder.of(
-      COMMAND_START_NAVIGATION, 1,
-      COMMAND_STOP_NAVIGATION, 2
+      COMMAND_PREFETCH_USER_LOCATION, 1,
+      COMMAND_START_NAVIGATION, 2,
+      COMMAND_STOP_NAVIGATION, 3
     )
   }
 
   override fun receiveCommand(root: NavigationView, commandId: String?, args: ReadableArray?) {
-    Log.d(NavigationView.TAG, "Received command: $commandId")
-
     when (commandId) {
+      COMMAND_PREFETCH_USER_LOCATION -> root.prefetchUserLocation()
+
       COMMAND_START_NAVIGATION -> {
         if (args != null && args.size() > 0) {
-          val routeData = args.getMap(0)
-          Log.d(NavigationView.TAG, "Starting navigation with route data: $routeData")
-          root.startNavigation(routeData)
-        } else {
-          Log.e(NavigationView.TAG, "Invalid arguments for startNavigation command")
+          root.startNavigation(args.getMap(0))
         }
       }
 
-      COMMAND_STOP_NAVIGATION -> {
-        Log.d(NavigationView.TAG, "Stopping navigation")
-        root.stopNavigation()
-      }
+      COMMAND_STOP_NAVIGATION -> root.stopNavigation()
 
-      else -> {
-        Log.e(NavigationView.TAG, "Unknown command: $commandId")
-      }
+      else -> Log.e(TAG, "Unknown command: $commandId")
     }
   }
 }

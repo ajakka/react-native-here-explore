@@ -2,15 +2,19 @@ package com.hereexplore.features.navigation
 
 import android.content.Context
 import android.util.Log
+import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.ReadableMap
 import com.here.sdk.core.Location
 import com.here.sdk.location.LocationAccuracy
+import com.here.sdk.routing.Waypoint
 import com.hereexplore.features.map.MapsView
 import com.hereexplore.features.navigation.engines.DynamicRoutingHelper
 import com.hereexplore.features.navigation.engines.LocationHelper
 import com.hereexplore.features.navigation.engines.NavigatorHelper
 import com.hereexplore.features.navigation.engines.RoutingHelper
 import com.hereexplore.features.navigation.engines.VoiceAssistant
+import com.hereexplore.helpers.CoordinatesUtils
+import com.hereexplore.helpers.sendEvent
 import java.util.Locale
 
 
@@ -18,8 +22,12 @@ class NavigationView(context: Context?) : MapsView(context) {
   companion object {
     const val TAG = "NavigationView"
 
+    const val COMMAND_PREFETCH_USER_LOCATION = "prefetchUserLocation"
     const val COMMAND_START_NAVIGATION = "startNavigation"
     const val COMMAND_STOP_NAVIGATION = "stopNavigation"
+
+    const val EVENT_USER_LOCATION_NOT_FOUND = "onUserLocationNotFound"
+    const val EVENT_USER_LOCATION_RESOLVED = "onUserLocationResolved"
   }
 
   private val routingHelper by lazy { RoutingHelper() }
@@ -61,7 +69,21 @@ class NavigationView(context: Context?) : MapsView(context) {
   }
 
   private fun startSimulatedNavigation(routeMap: ReadableMap?) {
-    routingHelper.calculateRoute(routeMap, null) { route ->
+    val lastKnownLocation = locationHelper.getLastKnownLocation()
+    val geoPolyline = CoordinatesUtils.toWaypointList(routeMap?.getArray("geoPolyline"))
+
+    if (lastKnownLocation == null && geoPolyline.size <= 1) {
+      val eventArgs = Arguments.createMap()
+      eventArgs.putString("message", "No user location found and waypoints are less than 2")
+      sendEvent(id, context, EVENT_USER_LOCATION_NOT_FOUND, eventArgs)
+      return
+    }
+
+    if (lastKnownLocation != null && geoPolyline.size == 1) {
+      geoPolyline.add(0, Waypoint(lastKnownLocation.coordinates))
+    }
+
+    routingHelper.calculateRoute(geoPolyline) { route ->
 
       // Setup voice guidance
       voiceAssistant.setLanguage(Locale.getDefault())
@@ -92,34 +114,44 @@ class NavigationView(context: Context?) : MapsView(context) {
 
   private fun startRealNavigation(routeMap: ReadableMap?) {
     val lastKnownLocation = locationHelper.getLastKnownLocation()
+    val geoPolyline = CoordinatesUtils.toWaypointList(routeMap?.getArray("geoPolyline"))
 
-    if (lastKnownLocation != null) {
-      routingHelper.calculateRoute(routeMap, lastKnownLocation) { route ->
+    if (lastKnownLocation == null && geoPolyline.size <= 1) {
+      val eventArgs = Arguments.createMap()
+      eventArgs.putString("message", "No user location found and waypoints are less than 2")
+      sendEvent(id, context, EVENT_USER_LOCATION_NOT_FOUND, eventArgs)
+      return
+    }
 
-        // Setup voice guidance
-        voiceAssistant.setLanguage(Locale.getDefault())
-        navigatorHelper.onTextUpdate {
-          if (isVoiceGuidanceEnabled) {
-            voiceAssistant.speak(it)
-          }
+    if (lastKnownLocation != null && geoPolyline.size == 1) {
+      geoPolyline.add(0, Waypoint(lastKnownLocation.coordinates))
+    }
+
+    routingHelper.calculateRoute(geoPolyline) { route ->
+
+      // Setup voice guidance
+      voiceAssistant.setLanguage(Locale.getDefault())
+      navigatorHelper.onTextUpdate {
+        if (isVoiceGuidanceEnabled) {
+          voiceAssistant.speak(it)
         }
-
-        // Start rendering the navigation on this view
-        navigatorHelper.visualNavigator.startRendering(this)
-
-        // Set the calculated route to the navigator
-        navigatorHelper.visualNavigator.route = route
-
-        // Start location updates based on the mode (real)
-        locationHelper.startRealLocation(navigatorHelper.visualNavigator, LocationAccuracy.NAVIGATION)
-        Log.d(TAG, "Started real location updates")
-
-        // Set up dynamic routing for traffic-aware navigation
-        dynamicRoutingHelper.setupDynamicRouting(route, true)
-
-        // Update camera tracking based on the setting
-        updateCameraTracking(isCameraTrackingEnabled)
       }
+
+      // Start rendering the navigation on this view
+      navigatorHelper.visualNavigator.startRendering(this)
+
+      // Set the calculated route to the navigator
+      navigatorHelper.visualNavigator.route = route
+
+      // Start location updates based on the mode (real)
+      locationHelper.startRealLocation(navigatorHelper.visualNavigator, LocationAccuracy.NAVIGATION)
+      Log.d(TAG, "Started real location updates")
+
+      // Set up dynamic routing for traffic-aware navigation
+      dynamicRoutingHelper.setupDynamicRouting(route, true)
+
+      // Update camera tracking based on the setting
+      updateCameraTracking(isCameraTrackingEnabled)
     }
   }
 
@@ -148,7 +180,16 @@ class NavigationView(context: Context?) : MapsView(context) {
     }
   }
 
-  private fun getLastKnownLocation(): Location? {
-    return locationHelper.getLastKnownLocation()
+  fun prefetchUserLocation() {
+    locationHelper.confirmHEREPrivacyNoticeInclusion()
+    locationHelper.prefetchUserLocation {
+      val eventArgs = Arguments.createMap()
+      eventArgs.putDouble("latitude", it.coordinates.latitude)
+      eventArgs.putDouble("longitude", it.coordinates.longitude)
+      eventArgs.putDouble("altitude", it.coordinates.altitude ?: 0.0)
+
+      sendEvent(id, context, EVENT_USER_LOCATION_RESOLVED, eventArgs)
+    }
+
   }
 }
