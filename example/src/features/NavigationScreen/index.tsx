@@ -59,7 +59,7 @@ export default function NavigationScreen(_: ScreenProps<'Navigation'>) {
         ref={navigationRef}
         geoCoordinates={centerPoint}
         style={styles.map}
-        mapScheme="SATELLITE"
+        mapScheme="LITE_NIGHT"
         zoomValue={13.4}
         isSimulated={isSimulated}
         isCameraTrackingEnabled={isCameraTracking}

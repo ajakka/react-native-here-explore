@@ -48,5 +48,17 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+
+	<!-- Location Permissions -->
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>We need access to your location to show you the best routes</string>
+	<key>NSLocationTemporaryUsageDescriptionDictionary</key>
+	<dict>
+		<key>NSLocationWhenInUseUsageDescription</key>
+		<string>We need access to your location to show you the best routes</string>
+	</dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We need access to your location to show you the best routes</string>
+
 </dict>
 </plist>

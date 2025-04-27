@@ -20,7 +20,6 @@ class NavigatorHelper {
   fun startCameraTracking() {
     // DynamicCameraBehavior is recommended for navigation mode
     visualNavigator.cameraBehavior = DynamicCameraBehavior()
-
 //    visualNavigator.cameraBehavior = FixedCameraBehavior()
 //    visualNavigator.cameraBehavior = SpeedBasedCameraBehavior()
 

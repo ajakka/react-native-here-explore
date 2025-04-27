@@ -20,7 +20,7 @@ class MapsViewManager: RCTViewManager {
 
 class MapsHereView : UIView, TapDelegate, LongPressDelegate {
   
-  private let mapView = MapView()
+  let mapView = MapView()
   
   @objc var mapScheme: String = "NORMAL_DAY" {
     didSet {self.loadCameraView()}

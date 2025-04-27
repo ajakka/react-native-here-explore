@@ -6,6 +6,7 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
+    "info": "react-native info",
     "test": "jest",
     "build:android": "cd android && ./gradlew assembleDebug",
     "release:android": "cd android && ./gradlew assembleRelease",

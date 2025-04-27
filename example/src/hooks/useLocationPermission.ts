@@ -1,5 +1,6 @@
 import React from 'react';
-import { checkMultiple, PERMISSIONS, requestMultiple, RESULTS } from 'react-native-permissions';
+import { Platform } from 'react-native';
+import { PERMISSIONS, requestMultiple, type Permission } from 'react-native-permissions';
 
 export const useLocationPermission = () => {
   React.useEffect(() => {
@@ -12,14 +13,18 @@ export const useLocationPermission = () => {
       PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
     ];
 
-    const result = await checkMultiple(ANDROID_LOCATION_PERMISSIONS);
-    if (
-      result[PERMISSIONS.ANDROID.ACCESS_COARSE_LOCATION] === RESULTS.GRANTED &&
-      result[PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION] === RESULTS.GRANTED
-    ) {
-      return;
-    }
+    const IOS_LOCATION_PERMISSIONS = [
+      PERMISSIONS.IOS.LOCATION_WHEN_IN_USE,
+      PERMISSIONS.IOS.LOCATION_ALWAYS,
+      PERMISSIONS.IOS.LOCATION_WHEN_IN_USE,
+    ];
 
-    await requestMultiple(ANDROID_LOCATION_PERMISSIONS);
+    const LOCATION_PERMISSIONS = Platform.select<Permission[]>({
+      ios: IOS_LOCATION_PERMISSIONS,
+      android: ANDROID_LOCATION_PERMISSIONS,
+      default: [],
+    });
+
+    await requestMultiple(LOCATION_PERMISSIONS);
   };
 };
