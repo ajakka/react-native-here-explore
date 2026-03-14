@@ -1,11 +1,10 @@
-import type { ScreenNames, ScreenProps } from '@/navigation';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import type { ScreenNames, ScreenProps } from '../../navigation';
+import { StyleSheet, View } from 'react-native';
 import { Map, Polyline } from 'react-native-here-explore';
 
 export const PolylineScreenName: ScreenNames = 'Polyline';
 
-export default function PolylineScreen(props: ScreenProps<'Polyline'>) {
+export default function PolylineScreen(_: ScreenProps<'Polyline'>) {
   return (
     <View style={{ flex: 1 }}>
       <Map
@@ -16,7 +15,7 @@ export default function PolylineScreen(props: ScreenProps<'Polyline'>) {
       >
         <Polyline
           lineType="SOLID"
-          lineColor="#6cabae"
+          lineColor="#6CABAE"
           lineWidth={12}
           geoPolyline={[
             { latitude: 52.5561936, longitude: 13.3432207 },

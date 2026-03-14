@@ -1,7 +1,7 @@
 import { Button, StyleSheet, View } from 'react-native';
 
-import type { ScreenNames, ScreenProps } from '@/navigation';
-import { PolylineScreenName, RoutesScreenName } from '@/features';
+import type { ScreenNames, ScreenProps } from '../../navigation';
+import { PolylineScreenName, RoutesScreenName } from '../../features';
 
 export const HomeScreenName: ScreenNames = 'Home';
 

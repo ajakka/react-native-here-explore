@@ -1,17 +1,16 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import type { GeoCoordinates, GeoPolyline } from 'react-native-here-explore';
 import {
   Map,
   Marker,
-  Pin,
   Polyline,
   RouteOption,
   useRouting,
 } from 'react-native-here-explore';
 
-import type { ScreenNames, ScreenProps } from '@/navigation';
+import type { ScreenNames, ScreenProps } from '../../navigation';
 import RouteOptionsSelector from './components/RouteOptionsSelector';
 
 export const RoutesScreenName: ScreenNames = 'Routes';
@@ -21,25 +20,29 @@ const centerPoint: GeoCoordinates = {
   longitude: 13.36895715,
 };
 
-const wayPoints: GeoCoordinates[] = [
+const waypoints: GeoCoordinates[] = [
   { latitude: 52.5561936, longitude: 13.3432207 },
   { latitude: 52.4841669, longitude: 13.3957046 },
 ];
 
 export default function RoutesScreen(_: ScreenProps<'Routes'>) {
   const [vertices, setVertices] = React.useState<GeoPolyline>([]);
-  const [route, setRoute] = React.useState<RouteOption>(
+  const [routeOption, setRouteOption] = React.useState<RouteOption>(
     RouteOption.pedestrian()
   );
 
-  const { cancel, calculateRoute } = useRouting();
+  const { cancel, calculateRoute } = useRouting({ waypoints, routeOption });
+
   React.useEffect(() => {
     runCalculateRoute();
-    return () => void cancel();
-  }, [route]);
+    return () => {
+      cancel();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [routeOption]);
 
   async function runCalculateRoute() {
-    const data = await calculateRoute(wayPoints, route);
+    const data = await calculateRoute();
     if (!data.routingError && data.routes[0]) {
       setVertices(data.routes[0].vertices);
     }
@@ -60,13 +63,13 @@ export default function RoutesScreen(_: ScreenProps<'Routes'>) {
           console.log('onMapLongPress', nativeEvent);
         }}
       >
-        {wayPoints.map((wayPoint, index) => (
+        {waypoints.map((waypoint, index) => (
           <Marker
             key={index}
-            geoCoordinates={wayPoint}
+            geoCoordinates={waypoint}
             size={{ width: 128, height: 128 }}
             anchor={{ vertical: 0.9 }}
-            image={require('@/assets/marker.png')}
+            image={require('../../assets/marker.png')}
           />
         ))}
         <Polyline
@@ -75,20 +78,11 @@ export default function RoutesScreen(_: ScreenProps<'Routes'>) {
           lineWidth={16}
           geoPolyline={vertices}
         />
-        <Pin
-          geoCoordinates={centerPoint}
-          anchor={{ horizontal: 0.5, vertical: 1 }}
-        >
-          <View style={styles.pin_container}>
-            <Text style={styles.pin_text}>Custom Pin</Text>
-          </View>
-          <View style={styles.pin_arrow} />
-        </Pin>
       </Map>
 
       <RouteOptionsSelector
-        selectedRoute={route}
-        onRouteOptionPress={setRoute}
+        selectedRoute={routeOption}
+        onRouteOptionPress={setRouteOption}
       />
     </View>
   );

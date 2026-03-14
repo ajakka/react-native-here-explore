@@ -1,3 +1,5 @@
+ENV['RCT_NEW_ARCH_ENABLED'] = '1'
+
 # Resolve react_native_pods.rb with node to allow for hoisting
 require Pod::Executable.execute_command('node', ['-p',
   'require.resolve(
@@ -23,36 +25,28 @@ target 'HereExploreExample' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  # Include the HERE SDK in the build using "pod"
   pod 'heresdk', :path => 'Frameworks'
 
-  target 'HereExploreExampleTests' do
-    inherit! :complete
-    # Pods for testing
-  end
-
-  pod 'heresdk', :path => 'Frameworks'
-  
   post_install do |installer|
-    # https://github.com/facebook/react-native/blob/main/packages/react-native/scripts/react_native_pods.rb#L197-L202
     react_native_post_install(
       installer,
       config[:reactNativePath],
       :mac_catalyst_enabled => false,
       # :ccache_enabled => true
     )
-     installer.pods_project.targets.each do |target|
-       if target.name  == "react-native-here-explore"
-         all_filerefs = installer.pods_project.files
-         all_filerefs.each do |fileref|
-            if fileref.path.end_with? "heresdk.xcframework"
-             build_phase = target.frameworks_build_phase
-             unless build_phase.files_references.include?(fileref)
-               build_phase.add_file_reference(fileref)
-             end
-           end
-         end
-       end
-     end
+
+    # installer.pods_project.targets.each do |target|
+    #   if target.name  == "react-native-here-explore"
+    #     all_filerefs = installer.pods_project.files
+    #     all_filerefs.each do |fileref|
+    #       if fileref.path.end_with? "heresdk.xcframework"
+    #         build_phase = target.frameworks_build_phase
+    #         unless build_phase.files_references.include?(fileref)
+    #           build_phase.add_file_reference(fileref)
+    #         end
+    #       end
+    #     end
+    #   end
+    # end
   end
 end
