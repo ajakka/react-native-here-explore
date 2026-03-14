@@ -65,6 +65,8 @@ android {
 dependencies {
   implementation "com.facebook.react:react-android"
 
+  implementation "com.github.bumptech.glide:glide:4.16.0"
+
   // HERE SDK — provided at compile time; the consuming app must add it with "implementation"
   compileOnly fileTree(dir: file("$rootDir/heresdk"), include: ['*.aar'])
 }

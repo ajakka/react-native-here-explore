@@ -15,7 +15,6 @@
     "@react-navigation/native-stack": "^7.14.4",
     "react": "19.2.0",
     "react-native": "0.83.0",
-    "react-native-config": "^1.6.1",
     "react-native-gesture-handler": "^2.30.0",
     "react-native-linear-gradient": "^2.8.3",
     "react-native-safe-area-context": "^5.7.0",
@@ -34,6 +33,7 @@
     "@react-native/typescript-config": "0.83.0",
     "@types/react": "^19.2.0",
     "react-native-builder-bob": "^0.40.18",
+    "react-native-dotenv": "^3.4.11",
     "react-native-monorepo-config": "^0.3.3"
   },
   "engines": {
