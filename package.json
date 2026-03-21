@@ -40,7 +40,7 @@
     "example-expo": "yarn workspace react-native-here-explore-example-expo",
     "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
     "build:plugin": "tsc --project plugin/tsconfig.json",
-    "prepare": "bob build && yarn build:plugin",
+    "build": "bob build && yarn build:plugin",
     "typecheck": "tsc",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "test": "jest",
