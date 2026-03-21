@@ -19,9 +19,9 @@ class ConfigModule(context: ReactApplicationContext) :
     val options = SDKOptions(authenticationMode)
     try {
       SDKNativeEngine.makeSharedInstance(reactApplicationContext, options)
-      return "SDKNativeEngine started"
+      return "started"
     } catch (e: InstantiationErrorException) {
-      return "SDKNativeEngine errored"
+      return "errored"
     }
   }
 
