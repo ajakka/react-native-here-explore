@@ -25,6 +25,7 @@ export interface NativeProps extends ViewProps {
   tilt?: CodegenTypes.WithDefault<CodegenTypes.Double, 0>;
   zoomValue?: CodegenTypes.WithDefault<CodegenTypes.Double, 8>;
   zoomKind?: CodegenTypes.WithDefault<string, 'ZOOM_LEVEL'>;
+  hasGeoCoordinates?: CodegenTypes.WithDefault<boolean, false>;
   geoCoordinates?: GeoCoord;
   geoBox?: GeoBox;
   onMapTap?: CodegenTypes.DirectEventHandler<MapTapEvent>;

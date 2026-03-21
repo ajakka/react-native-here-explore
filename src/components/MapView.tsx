@@ -10,6 +10,7 @@ import type {
   ZoomKind,
   WatermarkStyle,
 } from '../types';
+import { StyleSheet } from 'react-native';
 
 interface BaseMapProps extends ViewProps {
   /**
@@ -187,7 +188,16 @@ export type MapProps = GeoCoordinatesProps | GeoBoxProps;
  * MapsView is the main view responsible for displaying the Map
  */
 export function Map({ style, ...otherProps }: MapProps) {
+  const hasGeoCoordinates = 'geoCoordinates' in otherProps;
   return (
-    <MapsViewNativeComponent style={[{ flex: 1 }, style]} {...otherProps} />
+    <MapsViewNativeComponent
+      style={[styles.main, style]}
+      hasGeoCoordinates={hasGeoCoordinates}
+      {...otherProps}
+    />
   );
 }
+
+const styles = StyleSheet.create({
+  main: { flex: 1 },
+});

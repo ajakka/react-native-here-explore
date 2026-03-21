@@ -73,7 +73,7 @@ using namespace facebook::react;
   _view.zoomKind = [[NSString alloc] initWithUTF8String:newProps.zoomKind.c_str()];
   
   const auto &gc = newProps.geoCoordinates;
-  if (gc.latitude != 0 || gc.longitude != 0) {
+  if (newProps.hasGeoCoordinates) {
     _view.geoCoordinates = @{
       @"latitude": @(gc.latitude),
       @"longitude": @(gc.longitude),

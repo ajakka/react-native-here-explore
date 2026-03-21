@@ -38,6 +38,8 @@ class MapsView(context: Context?) : MapView(context) {
 
   private var tilt: Double = 0.0
 
+  private var hasGeoCoordinates: Boolean = false
+
   private var geoCoordinates: GeoCoordinates? = null
 
   private var zoomKind: MapMeasure.Kind = MapMeasure.Kind.ZOOM_LEVEL
@@ -105,12 +107,13 @@ class MapsView(context: Context?) : MapView(context) {
     tilt = value
   }
 
+  fun setHasGeoCoordinates(value: Boolean) {
+    hasGeoCoordinates = value
+  }
+
   //  GeoCoordinates
   fun setGeoCoordinates(value: ReadableMap?) {
-    if (value != null) {
-      geoCoordinates = CoordinatesUtils.toCoordinates(value)
-      geoBox = null
-    }
+    geoCoordinates = if (value != null) CoordinatesUtils.toCoordinates(value) else null
   }
 
   fun setZoomKind(value: String) {
@@ -143,11 +146,15 @@ class MapsView(context: Context?) : MapView(context) {
   }
 
   fun updateCameraView() {
-    geoCoordinates?.let {
-      camera.lookAt(it, GeoOrientationUpdate(bearing, tilt), MapMeasure(zoomKind, zoomValue))
-    } ?: geoBox?.let {
-      camera.lookAt(it, GeoOrientationUpdate(bearing, tilt))
-    } ?: Log.d(TAG, "updateCameraView: No coordinates Info was given")
+    if (hasGeoCoordinates) {
+      geoCoordinates?.let {
+        camera.lookAt(it, GeoOrientationUpdate(bearing, tilt), MapMeasure(zoomKind, zoomValue))
+      }
+    } else {
+      geoBox?.let {
+        camera.lookAt(it, GeoOrientationUpdate(bearing, tilt))
+      } ?: Log.d(TAG, "updateCameraView: No coordinates Info was given")
+    }
   }
 
   fun addMapItem(child: ItemView) {

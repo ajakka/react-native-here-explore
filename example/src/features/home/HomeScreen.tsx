@@ -1,7 +1,7 @@
 import { Button, StyleSheet, View } from 'react-native';
 
 import type { ScreenNames, ScreenProps } from '../../navigation';
-import { PolylineScreenName, RoutesScreenName } from '../../features';
+import { GulfOfGuineaScreenName, PolylineScreenName, RoutesScreenName } from '../../features';
 
 export const HomeScreenName: ScreenNames = 'Home';
 
@@ -16,6 +16,11 @@ export default function HomeScreen({ navigation }: ScreenProps<'Home'>) {
       <Button
         title="Polyline screen"
         onPress={() => navigation.navigate(PolylineScreenName)}
+      />
+      <View style={styles.margin} />
+      <Button
+        title="Gulf of Guinea (lat=0, lon=0)"
+        onPress={() => navigation.navigate(GulfOfGuineaScreenName)}
       />
     </View>
   );

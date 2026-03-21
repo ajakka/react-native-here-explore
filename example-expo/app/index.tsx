@@ -14,6 +14,11 @@ export default function HomeScreen() {
         text="Polyline screen"
         onPress={() => router.push('/polyline')}
       />
+      <View style={styles.margin} />
+      <GradientButton
+        text="Gulf of Guinea (lat=0, lon=0)"
+        onPress={() => router.push('/gulf-of-guinea')}
+      />
     </View>
   );
 }

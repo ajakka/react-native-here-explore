@@ -41,6 +41,10 @@ class MapsViewManager : ViewGroupManager<MapsView>(), MapViewManagerInterface<Ma
     view.setTilt(value)
   }
 
+  override fun setHasGeoCoordinates(view: MapsView, value: Boolean) {
+    view.setHasGeoCoordinates(value)
+  }
+
   override fun setGeoCoordinates(view: MapsView, value: ReadableMap?) {
     view.setGeoCoordinates(value)
   }
