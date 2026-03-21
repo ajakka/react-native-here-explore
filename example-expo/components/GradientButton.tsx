@@ -17,7 +17,7 @@ export default function GradientButton(props: GradientButtonProps) {
         colors={['#78A4F5', '#88DEE4']}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
-        style={[props.style, styles.button]}
+        style={styles.button}
       >
         <Text style={styles.buttonText}>{props.text}</Text>
       </LinearGradient>
