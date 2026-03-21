@@ -3,7 +3,10 @@
     <strong>Installation</strong>
 </h1>
 
-Before we can use the HERE SDKs properly, we have to do some manual setup to get it to work.
+Before we can use the HERE SDKs properly, we have to do some setup to get it to work.
+
+- **Expo projects**: Follow steps 1-3, then skip to [Expo Setup](#expo-setup-config-plugin).
+- **Bare React Native projects**: Follow all steps in order.
 
 ## Installing the library
 
@@ -52,7 +55,7 @@ On the page above, you will see a list of SDKs. The ones you need are:
 
 If you signed in and added billing info, you should see a **Get now** button to download each SDK.
 
-## 4. Extract and move the SDKs to your project
+## 4. Extract and move the SDKs to your project (Bare React Native)
 
 - ### Android
 
@@ -130,7 +133,76 @@ add this code block to the Podfile that automatically sets the target membership
 
 Finally, in your terminal, run `pod install`.
 
-## Authenticate using credentials
+## Expo Setup (Config Plugin)
+
+If you're using Expo, you can skip the manual native setup above. The library includes an Expo config plugin that handles everything automatically during `expo prebuild`.
+
+### 1. Place the SDK files in your project
+
+Create a directory (e.g., `here-sdk/`) in your project root and place both platform SDK files inside:
+
+```
+your-project/
+├── here-sdk/
+│   ├── heresdk.xcframework   (iOS)
+│   └── heresdk-explore-android-xxx.aar   (Android)
+├── app.config.ts
+└── ...
+```
+
+### 2. Add the config plugin
+
+In your `app.config.ts` (or `app.config.js`), add the plugin with the path to your SDK directory:
+
+```typescript
+export default {
+  plugins: [
+    [
+      'react-native-here-explore',
+      {
+        sdkPath: './here-sdk',
+      },
+    ],
+  ],
+};
+```
+
+### 3. Run prebuild
+
+```sh
+npx expo prebuild
+```
+
+The config plugin will automatically:
+
+- **iOS**: Copy the `.xcframework` into `ios/Frameworks/`, generate the `heresdk.podspec`, and add the pod to the Podfile.
+- **Android**: Copy the `.aar` into `android/heresdk/` and add the `implementation` dependency to `app/build.gradle`.
+
+You can re-run `expo prebuild --clean` at any time and the SDK will be set up again automatically.
+
+### 4. Initialize the SDK
+
+With Expo, you can use `EXPO_PUBLIC_` environment variables. Create a `.env` file in your project root:
+
+```env
+EXPO_PUBLIC_HERE_ACCESS_KEY_ID=YOUR_ACCESS_KEY_ID
+EXPO_PUBLIC_HERE_ACCESS_KEY_SECRET=YOUR_ACCESS_KEY_SECRET
+```
+
+Then initialize the SDK in your root layout or entry file:
+
+```typescript
+import { HEREConfig } from 'react-native-here-explore';
+
+HEREConfig.initializeHereSDK(
+  process.env.EXPO_PUBLIC_HERE_ACCESS_KEY_ID,
+  process.env.EXPO_PUBLIC_HERE_ACCESS_KEY_SECRET
+);
+```
+
+---
+
+## Authenticate using credentials (Bare React Native)
 
 After setting up the SDKs on both platforms, we should initialize it using the `ACCESS_KEY_ID` and `ACCESS_KEY_SECRET` that we retrieved previously.
 
