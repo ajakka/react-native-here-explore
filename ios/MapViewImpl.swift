@@ -42,13 +42,18 @@ import heresdk
     didSet { updateCameraView() }
   }
 
-  public override func layoutSubviews() {
-    super.layoutSubviews()
-    mapView.frame = self.bounds
+  public override func didMoveToWindow() {
+    super.didMoveToWindow()
+    guard window != nil, mapView.superview == nil else { return }
+    addSubview(mapView)
     mapView.gestures.tapDelegate = self
     mapView.gestures.longPressDelegate = self
     loadCameraView()
-    self.addSubview(mapView)
+  }
+
+  public override func layoutSubviews() {
+    super.layoutSubviews()
+    mapView.frame = self.bounds
   }
 
   // Called by MapView.mm when a child ItemView is mounted
