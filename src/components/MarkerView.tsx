@@ -65,10 +65,8 @@ export interface MarkerProps {
  * Draws a Marker over the given coordinates
  */
 export function Marker({ image, ...otherProps }: MarkerProps) {
-  return (
-    <MarkerViewNativeComponent
-      image={Image.resolveAssetSource(image) as any}
-      {...(otherProps as any)}
-    />
-  );
+  const imageAsset = Image.resolveAssetSource(image);
+  if (!imageAsset) return null;
+
+  return <MarkerViewNativeComponent image={imageAsset} {...otherProps} />;
 }

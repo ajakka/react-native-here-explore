@@ -87,7 +87,7 @@ export function Polygon(props: PolygonProps) {
 
   return (
     <PolygonViewNativeComponent
-      {...(props as any)}
+      {...props}
       color={(processColor(color) as number) || 0}
       outlineColor={(processColor(outlineColor) as number) || 0}
       outlineWidth={outlineWidth}
