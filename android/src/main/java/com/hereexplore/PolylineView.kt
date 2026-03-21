@@ -77,11 +77,11 @@ class PolylineView(context: Context?) : ItemView(context) {
   }
 
   fun setCapShape(value: String) {
-    capShape = LineCap.valueOf(value)
+    capShape = safeLineCap(value)
   }
 
   fun setLineWidthUnit(value: String) {
-    lineWidthUnit = RenderSize.Unit.valueOf(value)
+    lineWidthUnit = safeLineWidthUnit(value)
   }
 
   override fun updateFeature() {

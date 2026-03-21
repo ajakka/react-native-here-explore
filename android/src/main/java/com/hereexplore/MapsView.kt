@@ -89,12 +89,12 @@ class MapsView(context: Context?) : MapView(context) {
   }
 
   fun setMapScheme(value: String) {
-    mapScheme = MapScheme.valueOf(value)
+    mapScheme = safeMapScheme(value)
     loadCameraView()
   }
 
   fun setWatermarkStyle(value: String?) {
-    watermarkStyle = if (value != null) WatermarkStyle.valueOf(value) else null
+    watermarkStyle = if (value != null) safeWatermarkStyle(value) else null
   }
 
   fun setBearing(value: Double) {
@@ -114,7 +114,7 @@ class MapsView(context: Context?) : MapView(context) {
   }
 
   fun setZoomKind(value: String) {
-    zoomKind = MapMeasure.Kind.valueOf(value)
+    zoomKind = safeZoomKind(value)
   }
 
   fun setZoomValue(value: Double) {

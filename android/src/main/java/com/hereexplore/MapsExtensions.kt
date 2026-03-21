@@ -1,23 +1,22 @@
 package com.hereexplore
 
+import com.here.sdk.mapview.LineCap
 import com.here.sdk.mapview.MapMeasure
 import com.here.sdk.mapview.MapScheme
+import com.here.sdk.mapview.RenderSize
+import com.here.sdk.mapview.WatermarkStyle
 
-val mapSchemes = mapOf(
-  "NORMAL_DAY" to MapScheme.NORMAL_DAY,
-  "NORMAL_NIGHT" to MapScheme.NORMAL_NIGHT,
-  "SATELLITE" to MapScheme.SATELLITE,
-  "HYBRID_DAY" to MapScheme.HYBRID_DAY,
-  "HYBRID_NIGHT" to MapScheme.HYBRID_NIGHT,
-  "LITE_DAY" to MapScheme.LITE_DAY,
-  "LITE_NIGHT" to MapScheme.LITE_NIGHT,
-  "LITE_HYBRID_DAY" to MapScheme.LITE_HYBRID_DAY,
-  "LITE_HYBRID_NIGHT" to MapScheme.LITE_HYBRID_NIGHT,
-  "LOGISTICS_DAY" to MapScheme.LOGISTICS_DAY
-)
+fun safeMapScheme(value: String): MapScheme =
+    enumValues<MapScheme>().find { it.name == value } ?: MapScheme.NORMAL_DAY
 
-val zoomKinds = mapOf(
-  "DISTANCE" to MapMeasure.Kind.DISTANCE,
-  "ZOOM_LEVEL" to MapMeasure.Kind.ZOOM_LEVEL,
-  "SCALE" to MapMeasure.Kind.SCALE
-)
+fun safeZoomKind(value: String): MapMeasure.Kind =
+    enumValues<MapMeasure.Kind>().find { it.name == value } ?: MapMeasure.Kind.ZOOM_LEVEL
+
+fun safeLineCap(value: String): LineCap =
+    enumValues<LineCap>().find { it.name == value } ?: LineCap.ROUND
+
+fun safeLineWidthUnit(value: String): RenderSize.Unit =
+    enumValues<RenderSize.Unit>().find { it.name == value } ?: RenderSize.Unit.PIXELS
+
+fun safeWatermarkStyle(value: String): WatermarkStyle? =
+    enumValues<WatermarkStyle>().find { it.name == value }
