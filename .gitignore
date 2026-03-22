@@ -99,5 +99,9 @@ credentials.properties
 # Misc
 android-oldarch/
 
+# Docusaurus
+website/.docusaurus/
+website/build/
+
 # AI
 .claude/

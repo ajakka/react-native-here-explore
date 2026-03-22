@@ -44,7 +44,8 @@
     "typecheck": "tsc",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "test": "jest",
-    "release": "release-it --only-version"
+    "release": "release-it --only-version",
+    "website": "yarn workspace react-native-here-explore-website"
   },
   "keywords": [
     "react-native",
@@ -102,7 +103,8 @@
   },
   "workspaces": [
     "example",
-    "example-expo"
+    "example-expo",
+    "website"
   ],
   "packageManager": "yarn@4.11.0",
   "react-native-builder-bob": {
@@ -162,6 +164,7 @@
     "modulePathIgnorePatterns": [
       "<rootDir>/example/node_modules",
       "<rootDir>/example-expo/node_modules",
+      "<rootDir>/website/node_modules",
       "<rootDir>/lib/"
     ]
   },

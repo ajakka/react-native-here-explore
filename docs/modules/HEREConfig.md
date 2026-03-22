@@ -4,26 +4,73 @@
 
 ## Overview
 
-The `HEREConfig` class is used to initialize the Here SDK in a React Native application. It's crucial for setting up mapping functionalities provided by Here Technologies.
+`HEREConfig` is the initialization module for the HERE SDK. It must be called **once**, before any map component renders.
 
 ## Methods
 
-### HEREConfig.initializeHereSDK()
+### `HEREConfig.initializeHereSDK(accessKeyID, accessKeySecret)`
 
-Initializes the Here SDK using the provided credentials. This is typically the first method you need to call before using any mapping functionalities from the SDK.
+Initializes the HERE SDK using OAuth 2.0 credentials from the HERE Platform.
 
 ```typescript
-function initializeHereSDK(
+HEREConfig.initializeHereSDK(
   accessKeyID: string,
   accessKeySecret: string
-): string;
+): string
 ```
 
 ### Parameters
 
-- **accessKeyID (`string`)**: Your application's Key ID
-- **accessKeySecret (`string`)**: Your application's Key Secret
+- **`accessKeyID`** (`string`): Your app's Access Key ID
+- **`accessKeySecret`** (`string`): Your app's Access Key Secret
 
 ### Returns
 
-- **`string`**: An optional string to either confirm the initialisation or error
+- **`string`**: A message confirming initialization or describing the error.
+
+---
+
+## When to call it
+
+Call it before `AppRegistry.registerComponent` in your entry file (`index.ts`):
+
+```typescript
+import { HEREConfig } from 'react-native-here-explore';
+import { AppRegistry } from 'react-native';
+import App from './App';
+import { name as appName } from './app.json';
+
+HEREConfig.initializeHereSDK(
+  'YOUR_ACCESS_KEY_ID',
+  'YOUR_ACCESS_KEY_SECRET'
+);
+
+AppRegistry.registerComponent(appName, () => App);
+```
+
+### Expo
+
+Use `EXPO_PUBLIC_` environment variables:
+
+```env
+EXPO_PUBLIC_HERE_ACCESS_KEY_ID=YOUR_ACCESS_KEY_ID
+EXPO_PUBLIC_HERE_ACCESS_KEY_SECRET=YOUR_ACCESS_KEY_SECRET
+```
+
+```typescript
+import { HEREConfig } from 'react-native-here-explore';
+
+HEREConfig.initializeHereSDK(
+  process.env.EXPO_PUBLIC_HERE_ACCESS_KEY_ID!,
+  process.env.EXPO_PUBLIC_HERE_ACCESS_KEY_SECRET!
+);
+```
+
+---
+
+## Getting credentials
+
+1. Sign up at [platform.here.com](https://platform.here.com/sign-up)
+2. Register an app at [platform.here.com/admin/apps](https://platform.here.com/admin/apps)
+3. In **Credentials** → **OAuth 2.0** → **Create credentials**
+4. Download the credentials file to get your `ACCESS_KEY_ID` and `ACCESS_KEY_SECRET`
