@@ -44,7 +44,7 @@ npm install react-native-here-explore
 yarn add react-native-here-explore
 ```
 
-See [INSTALLATION.md](docs/INSTALLATION.md) for the full setup guide including HERE SDK downloads and platform configuration.
+See the [Installation Guide](https://ajakka.net/react-native-here-explore/docs/getting-started/installation) for the full setup guide including HERE SDK downloads and platform configuration.
 
 ## Example
 
@@ -70,20 +70,22 @@ export default function App() {
 
 ## Documentation
 
-Full documentation is available at the [docs site](https://ajakka.github.io/react-native-here-explore/).
+Full documentation is available at [ajakka.net/react-native-here-explore](https://ajakka.net/react-native-here-explore/).
 
 ### Components
 
-- [Map](docs/components/MapView.md)
-- [Marker](docs/components/MarkerView.md)
-- [Polyline](docs/components/PolylineView.md)
-- [Polygon](docs/components/PolygonView.md)
-- [Arrow](docs/components/ArrowView.md)
+- [Map](https://ajakka.net/react-native-here-explore/docs/components/map)
+- [Marker](https://ajakka.net/react-native-here-explore/docs/components/marker)
+- [Polyline](https://ajakka.net/react-native-here-explore/docs/components/polyline)
+- [Polygon](https://ajakka.net/react-native-here-explore/docs/components/polygon)
+- [Arrow](https://ajakka.net/react-native-here-explore/docs/components/arrow)
 
-### Modules
+### API
 
-- [HEREConfig](docs/modules/HEREConfig.md)
-- [useRouting](docs/modules/useRouting.md)
+- [HEREConfig](https://ajakka.net/react-native-here-explore/docs/api/here-config)
+- [useRouting](https://ajakka.net/react-native-here-explore/docs/hooks/use-routing)
+- [calculateRoute](https://ajakka.net/react-native-here-explore/docs/api/calculate-route)
+- [Types](https://ajakka.net/react-native-here-explore/docs/api/types)
 
 ## Contributing
 
