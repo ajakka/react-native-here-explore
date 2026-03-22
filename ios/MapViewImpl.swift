@@ -58,13 +58,19 @@ import heresdk
 
   // Called by MapView.mm when a child ItemView is mounted
   @objc public func addItemView(_ itemView: ItemView) {
+    guard let feature = itemView as? ItemFeatureEvents else {
+      preconditionFailure("\(type(of: itemView)) must conform to ItemFeatureEvents")
+    }
     itemView.assignToMap(map: mapView)
-    itemView.updateFeature()
+    feature.updateFeature()
   }
 
   // Called by MapView.mm when a child ItemView is unmounted
   @objc public func removeItemView(_ itemView: ItemView) {
-    itemView.removeFeature()
+    guard let feature = itemView as? ItemFeatureEvents else {
+      preconditionFailure("\(type(of: itemView)) must conform to ItemFeatureEvents")
+    }
+    feature.removeFeature()
   }
 
   public func onTap(origin: Point2D) {

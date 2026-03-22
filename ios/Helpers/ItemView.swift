@@ -8,18 +8,10 @@ public protocol ItemFeatureEvents {
 }
 
 @objc(ItemView)
-public class ItemView: UIView, ItemFeatureEvents {
-  
+public class ItemView: UIView {
+
   weak public var parentMap: MapView?
-  
-  public func updateFeature() {
-    fatalError("updateFeature() must be overridden in subclasses")
-  }
-  
-  public func removeFeature() {
-    fatalError("removeFeature() must be overridden in subclasses")
-  }
-  
+
   public func assignToMap(map: MapView) {
     parentMap = map
   }

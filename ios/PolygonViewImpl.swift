@@ -3,7 +3,7 @@ import Foundation
 
 import heresdk
 
-@objcMembers public class PolygonViewImpl: ItemView {
+@objcMembers public class PolygonViewImpl: ItemView, ItemFeatureEvents {
 
   var currentMapPolygon: MapPolygon?
 
@@ -27,7 +27,7 @@ import heresdk
     didSet { updateFeature() }
   }
 
-  public override func updateFeature() {
+  public func updateFeature() {
     var mapPolygon: MapPolygon?
 
     if geoCoordinates.count > 2 {
@@ -60,7 +60,7 @@ import heresdk
     }
   }
 
-  public override func removeFeature() {
+  public func removeFeature() {
     if let oldMapPolygon = currentMapPolygon {
       parentMap?.mapScene.removeMapPolygon(oldMapPolygon)
     }

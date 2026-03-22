@@ -3,7 +3,7 @@ import Foundation
 
 import heresdk
 
-@objcMembers public class ArrowViewImpl: ItemView {
+@objcMembers public class ArrowViewImpl: ItemView, ItemFeatureEvents {
 
   var mapArrow: MapArrow?
 
@@ -19,7 +19,7 @@ import heresdk
     didSet { updateFeature() }
   }
 
-  public override func updateFeature() {
+  public func updateFeature() {
     guard geoPolyline.count > 1 else { return }
     let coords = toCoordinatesList(raw: geoPolyline)
     guard coords.count > 1 else { return }
@@ -39,7 +39,7 @@ import heresdk
     }
   }
 
-  public override func removeFeature() {
+  public func removeFeature() {
     if let old = mapArrow {
       parentMap?.mapScene.removeMapArrow(old)
     }

@@ -2,7 +2,7 @@ import Foundation
 
 import heresdk
 
-@objcMembers public class MarkerViewImpl: ItemView {
+@objcMembers public class MarkerViewImpl: ItemView, ItemFeatureEvents {
 
   var currentMapMarker: MapMarker?
 
@@ -22,7 +22,7 @@ import heresdk
     didSet { updateFeature() }
   }
 
-  public override func updateFeature() {
+  public func updateFeature() {
     guard let urlString = image["uri"] as? String,
           let url = URL(string: urlString)
     else {
@@ -66,7 +66,7 @@ import heresdk
     }.resume()
   }
 
-  public override func removeFeature() {
+  public func removeFeature() {
     if let oldMapMarker = currentMapMarker {
       parentMap?.mapScene.removeMapMarker(oldMapMarker)
     }
