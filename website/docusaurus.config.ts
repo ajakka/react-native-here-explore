@@ -73,7 +73,7 @@ const config: Config = {
         {
           title: 'Docs',
           items: [
-            { label: 'Getting Started', to: '/docs/intro' },
+            { label: 'Getting Started', to: '/docs/' },
             { label: 'Components', to: '/docs/components/map' },
             { label: 'Hooks', to: '/docs/hooks/use-routing' },
             { label: 'API Reference', to: '/docs/api/here-config' },
