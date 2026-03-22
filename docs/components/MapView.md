@@ -4,133 +4,117 @@
 
 ## Overview
 
-`<Map />` is used to display the maps within your application. The component allows you to specify the location, appearance, and behavior of the map through a series of props.
+`<Map />` is the main component for displaying HERE Maps. It accepts either `geoCoordinates` (center + zoom) or `geoBox` (bounding box) — not both. All other map elements (`Marker`, `Polyline`, `Polygon`, `Arrow`) must be rendered as children of this component.
 
 ## Properties
 
-### `geoCoordinates` (GeoCoordinates) - REQUIRED
+> Use either `geoCoordinates` **or** `geoBox` — they are mutually exclusive.
 
-- **Description:** The geographical coordinates used to center the map. This prop is essential for defining the initial position of the map.
-- **Type:** `GeoCoordinates` (Object with `latitude`, `longitude`, and optionally `altitude` properties)
+### `geoCoordinates` (GeoCoordinates)
+
+- **Description:** The geographical coordinate used to center the map.
+- **Type:** `GeoCoordinates` — `{ latitude: number; longitude: number; altitude?: number }`
 - **Example:**
   ```jsx
-  geoCoordinates={{ latitude: 99.00990, longitude: 9.00990, altitude: 1.07 }}
-  ```
-
-### `geoBox` (GeoBox) - REQUIRED
-
-- **Description:** Two coordinate values used to describe the south west and north east corners of the map view.
-- **Type:** `GeoBox` (Object with `southWestCorner` and `northEastCorner` which are of type `GeoCoordinates`)
-- **Example:**
-  ```jsx
-  geoCoordinates={{
-    southWestCorner: { latitude: 52.5561936, longitude: 13.3432207 },
-    northEastCorner: { latitude: 52.4841669, longitude: 13.3957046 },
-  }}
-  ```
-
-### `mapScheme` (MapScheme)
-
-- **Description:** Determines the visual style of the map. This can range from standard day or night modes to more specialized schemes like satellite or hybrid views.
-- **Type:** `MapScheme` (Enum)
-- **Default value:** `NORMAL_DAY`
-- **Possible values:**
-  - `NORMAL_DAY`
-  - `NORMAL_NIGHT`
-  - `SATELLITE`
-  - `HYBRID_DAY`
-  - `HYBRID_NIGHT`
-  - `LITE_DAY`
-  - `LITE_NIGHT`
-  - `LITE_HYBRID_DAY`
-  - `LITE_HYBRID_NIGHT`
-  - `LOGISTICS_DAY`
-- **Example:**
-  ```jsx
-  mapScheme = 'NORMAL_DAY';
+  geoCoordinates={{ latitude: 48.8566, longitude: 2.3522 }}
   ```
 
 ### `zoomValue` (number)
 
-- **Description:** Defines the zoom level of the map. A higher number indicates a closer view. Adjust this to control how much of the map is visible.
+- **Description:** Zoom level of the map. A higher value means a closer view. Only used with `geoCoordinates`.
 - **Type:** `number`
 - **Default value:** `8.0`
 - **Example:**
   ```jsx
-  zoomValue={8.0}
+  zoomValue={14}
   ```
 
 ### `zoomKind` (ZoomKind)
 
-- **Description:** Specifies the method used to interpret the zoom value. Depending on your application's needs, you might prefer a specific type of zoom control.
-- **Type:** `ZoomKind` (Enum)
+- **Description:** How to interpret `zoomValue`. Leave as default unless you have a specific need.
+- **Type:** `ZoomKind`
 - **Default value:** `ZOOM_LEVEL`
-- **Possible values:**
-  - `DISTANCE`
-  - `ZOOM_LEVEL`
-  - `SCALE`
+- **Possible values:** `DISTANCE` | `ZOOM_LEVEL` | `SCALE`
 - **Example:**
   ```jsx
-  zoomKind = 'ZOOM_LEVEL';
+  zoomKind="ZOOM_LEVEL"
   ```
+
+### `geoBox` (GeoBox)
+
+- **Description:** Two corners defining the visible map area. The map will fit to show both corners.
+- **Type:** `GeoBox` — `{ southWestCorner: GeoCoordinates; northEastCorner: GeoCoordinates }`
+- **Example:**
+  ```jsx
+  geoBox={{
+    southWestCorner: { latitude: 33.819096, longitude: -7.320056 },
+    northEastCorner: { latitude: 34.460004, longitude: -6.121828 },
+  }}
+  ```
+
+### `rectangle2D` (Rectangle2D)
+
+- **Description:** Optional pixel rectangle for the rendering area. Only used with `geoBox`.
+- **Type:** `Rectangle2D` — `{ origin: { x: number; y: number }; size: { width: number; height: number } }`
+
+### `mapScheme` (MapScheme)
+
+- **Description:** The visual style of the map.
+- **Type:** `MapScheme`
+- **Default value:** `NORMAL_DAY`
+- **Possible values:**
+  - `NORMAL_DAY` — Standard street map, light
+  - `NORMAL_NIGHT` — Standard street map, dark
+  - `SATELLITE` — Satellite imagery
+  - `HYBRID_DAY` — Satellite + labels, light
+  - `HYBRID_NIGHT` — Satellite + labels, dark
+  - `LITE_DAY` — Simplified map, light
+  - `LITE_NIGHT` — Simplified map, dark
+  - `LITE_HYBRID_DAY` — Simplified hybrid, light
+  - `LITE_HYBRID_NIGHT` — Simplified hybrid, dark
+  - `LOGISTICS_DAY` — Optimized for logistics/fleet
 
 ### `bearing` (number) | [Official Docs](https://www.here.com/docs/bundle/sdk-for-android-explore-developer-guide/page/topics/camera.html#rotate-the-camera)
 
-- **Description:** Takes a value from 0 to 360 that's used to rotate the map.
-- **Type:** `number`
+- **Description:** Rotates the map. `0` = north up.
+- **Type:** `number` (0–360)
 - **Default value:** `0`
-- **Example:**
-  ```jsx
-  bearing={90}
-  ```
 
 ### `tilt` (number) | [Official Docs](https://www.here.com/docs/bundle/sdk-for-android-explore-developer-guide/page/topics/camera.html#tilt-the-camera)
 
-- **Description:** Takes a value from 0 to 70 that's used to give a tilted view with some 3D Objects when the city is supported.
-- **Type:** `number`
+- **Description:** Tilts the camera for a 3D perspective. Some cities show 3D buildings when supported.
+- **Type:** `number` (0–70)
 - **Default value:** `0`
-- **Example:**
-  ```jsx
-  tilt={30}
-  ```
 
 ### `watermarkStyle` (WatermarkStyle)
 
-- **Description:** Controls the color of the HERE watermark. Useful for custom map schemes.
-- **Type:** `WatermarkStyle` (Enum)
-- **Possible values:**
-  - `DARK`
-  - `LIGHT`
-- **Example:**
-  ```jsx
-  watermarkStyle = 'DARK';
-  ```
+- **Description:** Color of the HERE watermark logo. Useful for custom map schemes.
+- **Type:** `WatermarkStyle`
+- **Possible values:** `DARK` | `LIGHT`
 
 ### `onMapTap` (Function)
 
-- **Description:** Event handler that is called when the user taps on the map.
-- **Type:** `(event: { nativeEvent: { latitude: number; longitude: number } }) => void`
+- **Description:** Called when the user taps the map. Receives coordinates of the tapped point.
+- **Type:** `(event: NativeSyntheticEvent<{ latitude: number; longitude: number; altitude: number }>) => void`
 - **Example:**
   ```jsx
   onMapTap={({ nativeEvent }) => {
-    console.log(`Map clicked at: ${nativeEvent.latitude}, ${nativeEvent.longitude}`);
+    console.log(nativeEvent.latitude, nativeEvent.longitude);
   }}
   ```
 
 ### `onMapLongPress` (Function)
 
-- **Description:** Event handler that is called when the user long presses on the map.
-- **Type:** `(event: { nativeEvent: { latitude: number; longitude: number } }) => void`
+- **Description:** Called when the user long-presses the map.
+- **Type:** `(event: NativeSyntheticEvent<{ latitude: number; longitude: number; altitude: number }>) => void`
 - **Example:**
   ```jsx
   onMapLongPress={({ nativeEvent }) => {
-    console.log(`Map long-pressed at: ${nativeEvent.latitude}, ${nativeEvent.longitude}`);
+    console.log(nativeEvent.latitude, nativeEvent.longitude);
   }}
   ```
 
 ## Example Usage
-
-Here's a simple example of how to use the `MapsHereView` component within your React Native application. This example demonstrates a basic setup with specified coordinates, map scheme, and zoom value.
 
 ```jsx
 import React, { useState } from 'react';
@@ -138,7 +122,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Map } from 'react-native-here-explore';
 
 const MapExample = () => {
-  const [clickedLocation, setClickedLocation] = useState(null);
+  const [tappedLocation, setTappedLocation] = useState(null);
 
   return (
     <View style={styles.container}>
@@ -147,54 +131,35 @@ const MapExample = () => {
         mapScheme="NORMAL_DAY"
         zoomValue={14}
         onMapTap={({ nativeEvent }) => {
-          setClickedLocation({
+          setTappedLocation({
             latitude: nativeEvent.latitude,
             longitude: nativeEvent.longitude,
           });
         }}
-        onMapLongPress={({ nativeEvent }) => {
-          console.log(
-            `Long press at: ${nativeEvent.latitude}, ${nativeEvent.longitude}`
-          );
-        }}
         style={styles.map}
       />
-
-      {clickedLocation && (
-        <View style={styles.coordinatesContainer}>
-          <Text style={styles.coordinatesText}>
-            Clicked at: {clickedLocation.latitude.toFixed(6)},{' '}
-            {clickedLocation.longitude.toFixed(6)}
-          </Text>
-        </View>
+      {tappedLocation && (
+        <Text style={styles.label}>
+          {tappedLocation.latitude.toFixed(5)}, {tappedLocation.longitude.toFixed(5)}
+        </Text>
       )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  map: {
-    flex: 1,
-  },
-  coordinatesContainer: {
+  container: { flex: 1 },
+  map: { flex: 1 },
+  label: {
     position: 'absolute',
     bottom: 20,
-    left: 0,
-    right: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
-    padding: 10,
-    alignItems: 'center',
-  },
-  coordinatesText: {
+    alignSelf: 'center',
+    backgroundColor: 'rgba(0,0,0,0.6)',
     color: 'white',
-    fontWeight: 'bold',
+    padding: 8,
+    borderRadius: 6,
   },
 });
 
 export default MapExample;
 ```
-
-In this example, the Map component is configured to respond to both click and long press events. When the user clicks on the map, the location coordinates are displayed at the bottom of the screen. Long press events are logged to the console.

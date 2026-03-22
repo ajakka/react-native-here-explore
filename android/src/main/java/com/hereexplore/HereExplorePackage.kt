@@ -1,38 +1,52 @@
 package com.hereexplore
 
-import android.view.ViewGroup
-import com.facebook.react.ReactPackage
+import com.facebook.react.BaseReactPackage
 import com.facebook.react.bridge.NativeModule
 import com.facebook.react.bridge.ReactApplicationContext
-import com.facebook.react.uimanager.ViewGroupManager
-import com.hereexplore.features.map.MapsViewManager
-import com.hereexplore.features.arrow.ArrowViewManager
-import com.hereexplore.features.marker.MarkerViewManager
-import com.hereexplore.features.polygon.PolygonViewManager
-import com.hereexplore.features.polyline.PolylineViewManager
-import com.hereexplore.features.config.ConfigModule
-import com.hereexplore.features.pin.PinViewContentManager
-import com.hereexplore.features.pin.PinViewManager
-import com.hereexplore.features.routing.RoutingModule
+import com.facebook.react.module.model.ReactModuleInfo
+import com.facebook.react.module.model.ReactModuleInfoProvider
+import com.facebook.react.uimanager.ViewManager
+import com.hereexplore.modules.HEREConfig
+import com.hereexplore.modules.Routing
 
-class HereExplorePackage : ReactPackage {
+class HereExplorePackage : BaseReactPackage() {
 
-  override fun createViewManagers(reactContext: ReactApplicationContext): ArrayList<ViewGroupManager<out ViewGroup>> {
-    return arrayListOf(
+  override fun getModule(name: String, reactContext: ReactApplicationContext): NativeModule? {
+    return when (name) {
+      HEREConfig.NAME -> HEREConfig(reactContext)
+      Routing.NAME -> Routing(reactContext)
+      else -> null
+    }
+  }
+
+  override fun getReactModuleInfoProvider() = ReactModuleInfoProvider {
+    mapOf(
+      HEREConfig.NAME to ReactModuleInfo(
+        name = HEREConfig.NAME,
+        className = HEREConfig.NAME,
+        canOverrideExistingModule = false,
+        needsEagerInit = false,
+        isCxxModule = false,
+        isTurboModule = true
+      ),
+      Routing.NAME to ReactModuleInfo(
+        name = Routing.NAME,
+        className = Routing.NAME,
+        canOverrideExistingModule = false,
+        needsEagerInit = false,
+        isCxxModule = false,
+        isTurboModule = true
+      )
+    )
+  }
+
+  override fun createViewManagers(reactContext: ReactApplicationContext): List<ViewManager<*, *>> {
+    return listOf(
       MapsViewManager(),
       ArrowViewManager(),
       PolygonViewManager(),
       PolylineViewManager(),
-      MarkerViewManager(),
-      PinViewManager(),
-      PinViewContentManager()
-    )
-  }
-
-  override fun createNativeModules(reactContext: ReactApplicationContext): MutableList<NativeModule> {
-    return arrayListOf(
-      RoutingModule(reactContext),
-      ConfigModule(reactContext)
+      MarkerViewManager()
     )
   }
 }

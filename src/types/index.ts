@@ -16,6 +16,9 @@ export type { MapScheme } from './MapScheme';
 
 export type { RequireOnlyOne } from './RequireOnlyOne';
 
+export type { RouteOption } from './RouteOption';
+export type { RouteResultType, OnRouteCalculated } from './RouteResult';
+
 export type { WatermarkStyle } from './WatermarkStyle';
 
 export type { ZoomKind } from './ZoomKind';

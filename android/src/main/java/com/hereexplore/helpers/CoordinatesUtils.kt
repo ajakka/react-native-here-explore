@@ -9,12 +9,12 @@ import com.here.sdk.core.GeoCoordinates
 
 class CoordinatesUtils {
   companion object {
-    fun toCoordinates(readableMap: ReadableMap): GeoCoordinates {
-      val latitude = readableMap.getDouble("latitude")
-      val longitude = readableMap.getDouble("longitude")
+    fun toCoordinates(readableMap: ReadableMap?): GeoCoordinates {
+      val latitude = readableMap?.getDouble("latitude") ?: 0.0
+      val longitude = readableMap?.getDouble("longitude") ?: 0.0
       val altitude: Double?
 
-      return if (readableMap.hasKey("altitude")){
+      return if (readableMap?.hasKey("altitude") ?: false){
           altitude = readableMap.getDouble("altitude")
         GeoCoordinates(latitude, longitude, altitude)
       } else {

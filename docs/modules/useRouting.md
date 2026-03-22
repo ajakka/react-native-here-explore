@@ -4,70 +4,145 @@
 
 ## Overview
 
-`useRouting` is a React Native hook used for calculating the shortest paths from a point A to point B.
-It accepts many route options such as `RouteOption.car()`, `RouteOption.bicycle()`, `RouteOption.pedestrian()`, etc. that can tell help otimize the best route.
+`useRouting` is a React hook for calculating routes between waypoints. It manages the async lifecycle (pending, result, error) and exposes `calculate` and `cancel` functions. For lower-level access, use [`calculateRoute`](#calculateroute) and [`cancel`](#cancel) directly.
 
-## Functions
+## `useRouting({ waypoints, routeOption })`
 
-### `calculateRoute(waypoints: GeoPolyline, routeOption: RouteOption)`
+```typescript
+import { useRouting } from 'react-native-here-explore';
 
-- **Description:** This function takes a list of waypoints and calculates the route to reach them, the resulting route is determined by the option selected.
+const { route, error, isPending, calculate, cancel } = useRouting({
+  waypoints: GeoPolyline,
+  routeOption: RouteOption,
+});
+```
 
-### `cancel()`
+### Parameters
 
-- **Description:** A function used to cancel current route calculation process, best used in the useEffect cleanup function.
+| Parameter | Type | Description |
+|---|---|---|
+| `waypoints` | `GeoPolyline` | Ordered list of coordinates. First = origin, last = destination |
+| `routeOption` | `RouteOption` | Transport mode |
+
+### Return values
+
+| Field | Type | Description |
+|---|---|---|
+| `route` | `RouteResultType \| null` | The calculated route, or `null` |
+| `error` | `Error \| null` | Error from the last attempt, or `null` |
+| `isPending` | `boolean` | `true` while a calculation is in progress |
+| `calculate` | `() => void` | Trigger a route calculation |
+| `cancel` | `() => void` | Cancel the ongoing calculation |
+
+### RouteResultType
+
+```typescript
+{
+  vertices: GeoPolyline;         // route path coordinates
+  routeHandle?: string;
+  durationInSeconds: number;
+  trafficDelayInSeconds: number;
+  lengthInMeters: number;
+}
+```
+
+---
+
+## RouteOption values
+
+| Value | Transport Mode |
+|---|---|
+| `'CarOptions'` | Private car |
+| `'PedestrianOptions'` | Walking |
+| `'TruckOptions'` | Truck |
+| `'ScooterOptions'` | Scooter / moped |
+| `'BicycleOptions'` | Bicycle |
+| `'TaxiOptions'` | Taxi |
+| `'EVCarOptions'` | Electric car |
+| `'EVTruckOptions'` | Electric truck |
+| `'BusOptions'` | Public bus |
+| `'PrivateBusOptions'` | Private bus / coach |
+
+---
 
 ## Example Usage
 
-Here's how you might use the `useRouting`:
-
 ```jsx
 import React from 'react';
-import { Map, useRouting } from 'react-native-here-explore';
-
-const wayPoints: GeoPolyline = [
-  { latitude: 52.5561936, longitude: 13.3432207 },
-  { latitude: 52.4831559, longitude: 13.3946936 },
-];
+import { Map, Polyline, useRouting } from 'react-native-here-explore';
+import { Button, Text, ActivityIndicator } from 'react-native';
 
 const App = () => {
-  const [vertices, setVertices] = React.useState < GeoPolyline > [];
-
-  const { cancel, calculateRoute } = useRouting();
-
-  React.useEffect(() => {
-    async function runCalculateRoute() {
-      const data = await calculateRoute(wayPoints, RouteOption.bicycle());
-      if (!data.routingError && data.routes[0]) {
-        setVertices(data.routes[0].vertices);
-      }
-    }
-
-    runCalculateRoute();
-
-    return () => void cancel();
-  }, []);
+  const { route, error, isPending, calculate } = useRouting({
+    waypoints: [
+      { latitude: 52.5561936, longitude: 13.3432207 },
+      { latitude: 52.4831559, longitude: 13.3946936 },
+    ],
+    routeOption: 'BicycleOptions',
+  });
 
   return (
-    <Map
-      geoCoordinates={{ latitude: 52.51967475, longitude: 13.36895715 }}
-      style={styles.box}
-      mapScheme="NORMAL_NIGHT"
-      zoomValue={13}
-    >
-      <Polyline
-        lineType="SOLID"
-        lineColor="#6cabae"
-        lineWidth={12}
-        geoPolyline={vertices}
-      />
-    </Map>
+    <>
+      <Map
+        geoCoordinates={{ latitude: 52.5197, longitude: 13.3690 }}
+        mapScheme="NORMAL_NIGHT"
+        zoomValue={13}
+      >
+        {route && (
+          <Polyline
+            lineType="SOLID"
+            lineColor="#6cabae"
+            lineWidth={12}
+            geoPolyline={route.vertices}
+          />
+        )}
+      </Map>
+
+      <Button title="Calculate" onPress={calculate} disabled={isPending} />
+      {isPending && <ActivityIndicator />}
+      {error && <Text>Error: {error.message}</Text>}
+      {route && (
+        <Text>
+          {(route.lengthInMeters / 1000).toFixed(1)} km ·{' '}
+          {Math.round(route.durationInSeconds / 60)} min
+        </Text>
+      )}
+    </>
   );
 };
 
 export default App;
 ```
 
-In this example, `Routing` is used to draw a yellow solid line between two points on the map. You can modify the `originCoordinates`, `destinationCoordinates`, `wayPoints`, `lineColor`, `lineWidth` and `lineType` props to customize the polyline's appearance and path.
+---
 
-Remember to review the prop values and defaults to ensure the paths appears as expected on your map. Happy mapping!
+## `calculateRoute` (standalone function)
+
+For cases where you need all route alternatives or want to manage state yourself:
+
+```typescript
+import { calculateRoute } from 'react-native-here-explore';
+
+const result = await calculateRoute(waypoints, 'CarOptions');
+
+if (result.routingError == null) {
+  console.log(result.routes); // RouteResultType[]
+}
+```
+
+### Returns `Promise<OnRouteCalculated>`
+
+```typescript
+{
+  routingError?: number;      // defined if the calculation failed
+  routes: RouteResultType[];  // all route alternatives
+}
+```
+
+## `cancel` (standalone function)
+
+```typescript
+import { cancel } from 'react-native-here-explore';
+
+await cancel(); // returns Promise<boolean>
+```

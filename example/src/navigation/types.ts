@@ -4,6 +4,7 @@ export type ScreenParams = {
   Home: undefined;
   Routes: undefined;
   Polyline: undefined;
+  GulfOfGuinea: undefined;
 };
 
 export type ScreenNames = keyof ScreenParams;

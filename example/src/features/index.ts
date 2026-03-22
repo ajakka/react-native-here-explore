@@ -12,3 +12,8 @@ export {
   PolylineScreenName,
   default as PolylineScreen,
 } from './polyline/PolylineScreen';
+
+export {
+  GulfOfGuineaScreenName,
+  default as GulfOfGuineaScreen,
+} from './gulf-of-guinea/GulfOfGuineaScreen';
