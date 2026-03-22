@@ -1,24 +1,25 @@
-package com.hereexplore
+package com.hereexplore.modules
 
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReadableArray
-import com.hereexplore.NativeRoutingSpec
 import com.here.sdk.core.threading.TaskHandle
 import com.here.sdk.routing.RoutingEngine
 import com.here.sdk.routing.Waypoint
+import com.hereexplore.NativeRoutingSpec
+import com.hereexplore.helpers.calculateRoute
 import com.hereexplore.helpers.CoordinatesUtils
+import com.hereexplore.helpers.routesToWritableArray
 
-class RoutingModule(context: ReactApplicationContext) : NativeRoutingSpec(context) {
-
+class Routing(context: ReactApplicationContext) : NativeRoutingSpec(context) {
   private var taskHandle: TaskHandle? = null
 
   private val routingEngine: RoutingEngine by lazy { RoutingEngine() }
 
   override fun calculateRoute(waypoints: ReadableArray, routeOption: String, promise: Promise) {
     taskHandle = routingEngine.calculateRoute(
-      CoordinatesUtils.toCoordinatesList(waypoints).map { Waypoint(it) },
+      CoordinatesUtils.Companion.toCoordinatesList(waypoints).map { Waypoint(it) },
       routeOption
     ) { routingError, routes ->
       val result = Arguments.createMap()

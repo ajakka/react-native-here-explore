@@ -1,13 +1,13 @@
-package com.hereexplore
+package com.hereexplore.modules
 
-import android.util.Log
 import com.facebook.react.bridge.ReactApplicationContext
 import com.here.sdk.core.engine.AuthenticationMode
 import com.here.sdk.core.engine.SDKNativeEngine
 import com.here.sdk.core.engine.SDKOptions
 import com.here.sdk.core.errors.InstantiationErrorException
+import com.hereexplore.NativeHEREConfigSpec
 
-class ConfigModule(context: ReactApplicationContext) :
+class HEREConfig(context: ReactApplicationContext) :
     NativeHEREConfigSpec(context) {
 
   override fun initializeHereSDK(accessKeyID: String, accessKeySecret: String): String {

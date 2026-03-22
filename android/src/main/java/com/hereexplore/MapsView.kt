@@ -20,6 +20,9 @@ import com.here.sdk.mapview.MapScheme
 import com.here.sdk.mapview.MapView
 import com.here.sdk.mapview.WatermarkStyle
 import com.hereexplore.helpers.CoordinatesUtils
+import com.hereexplore.helpers.safeMapScheme
+import com.hereexplore.helpers.safeWatermarkStyle
+import com.hereexplore.helpers.safeZoomKind
 
 
 class MapsView(context: Context?) : MapView(context) {

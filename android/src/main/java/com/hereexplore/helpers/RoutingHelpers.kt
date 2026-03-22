@@ -1,4 +1,4 @@
-package com.hereexplore
+package com.hereexplore.helpers
 
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.WritableArray
@@ -17,7 +17,6 @@ import com.here.sdk.routing.ScooterOptions
 import com.here.sdk.routing.TaxiOptions
 import com.here.sdk.routing.TruckOptions
 import com.here.sdk.routing.Waypoint
-import com.hereexplore.helpers.CoordinatesUtils
 
 
 fun RoutingEngine.calculateRoute(

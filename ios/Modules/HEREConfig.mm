@@ -6,6 +6,7 @@
 #import "HereExplore-Swift.h"
 #endif
 
+
 using namespace facebook::react;
 
 @interface HEREConfig : NSObject <NativeHEREConfigSpec>

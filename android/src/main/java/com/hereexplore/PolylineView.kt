@@ -11,6 +11,8 @@ import com.here.sdk.mapview.MapPolyline
 import com.here.sdk.mapview.RenderSize
 import com.hereexplore.helpers.ColorParser
 import com.hereexplore.helpers.CoordinatesUtils
+import com.hereexplore.helpers.safeLineCap
+import com.hereexplore.helpers.safeLineWidthUnit
 
 class PolylineView(context: Context?) : ItemView(context) {
 

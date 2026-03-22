@@ -6,30 +6,32 @@ import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.module.model.ReactModuleInfo
 import com.facebook.react.module.model.ReactModuleInfoProvider
 import com.facebook.react.uimanager.ViewManager
+import com.hereexplore.modules.HEREConfig
+import com.hereexplore.modules.Routing
 
 class HereExplorePackage : BaseReactPackage() {
 
   override fun getModule(name: String, reactContext: ReactApplicationContext): NativeModule? {
     return when (name) {
-      ConfigModule.NAME -> ConfigModule(reactContext)
-      RoutingModule.NAME -> RoutingModule(reactContext)
+      HEREConfig.NAME -> HEREConfig(reactContext)
+      Routing.NAME -> Routing(reactContext)
       else -> null
     }
   }
 
   override fun getReactModuleInfoProvider() = ReactModuleInfoProvider {
     mapOf(
-      ConfigModule.NAME to ReactModuleInfo(
-        name = ConfigModule.NAME,
-        className = ConfigModule.NAME,
+      HEREConfig.NAME to ReactModuleInfo(
+        name = HEREConfig.NAME,
+        className = HEREConfig.NAME,
         canOverrideExistingModule = false,
         needsEagerInit = false,
         isCxxModule = false,
         isTurboModule = true
       ),
-      RoutingModule.NAME to ReactModuleInfo(
-        name = RoutingModule.NAME,
-        className = RoutingModule.NAME,
+      Routing.NAME to ReactModuleInfo(
+        name = Routing.NAME,
+        className = Routing.NAME,
         canOverrideExistingModule = false,
         needsEagerInit = false,
         isCxxModule = false,

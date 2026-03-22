@@ -1,4 +1,4 @@
-package com.hereexplore
+package com.hereexplore.helpers
 
 import com.here.sdk.mapview.LineCap
 import com.here.sdk.mapview.MapMeasure
