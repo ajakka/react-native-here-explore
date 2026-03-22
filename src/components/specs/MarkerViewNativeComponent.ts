@@ -18,7 +18,7 @@ type ImageSource = Readonly<{
 export interface NativeProps extends ViewProps {
   geoCoordinates: GeoCoord;
   image: ImageSource;
-  size: Readonly<{ width: CodegenTypes.Double; height: CodegenTypes.Double }>;
+  size?: Readonly<{ width: CodegenTypes.Double; height: CodegenTypes.Double }>;
   scale?: CodegenTypes.WithDefault<CodegenTypes.Double, 1>;
   anchor?: Readonly<{
     horizontal?: CodegenTypes.Double;

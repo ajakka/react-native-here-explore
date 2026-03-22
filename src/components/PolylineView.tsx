@@ -5,6 +5,7 @@ import PolylineViewNativeComponent from './specs/PolylineViewNativeComponent';
 
 import type { GeoPolyline } from '../types/Coordinates';
 import type { LineCap } from '../types/LineCap';
+import type { LineWidthUnit } from '../types/LineWidthUnit';
 
 interface BasePolylineProps {
   /**
@@ -51,6 +52,18 @@ interface BasePolylineProps {
    * ```
    */
   lineColor?: ColorValue;
+
+  /**
+   * ### Controls the unit used for `lineWidth`
+   *
+   * **Default value:** `PIXELS`
+   *
+   * **Possible values:**
+   * - `PIXELS`
+   * - `DENSITY_INDEPENDENT_PIXELS`
+   * - `METERS`
+   */
+  lineWidthUnit?: LineWidthUnit;
 }
 
 interface SolidLineProps {
@@ -180,6 +193,7 @@ export function Polyline(props: PolylineProps) {
         geoPolyline={geoPolyline}
         lineType={lineType}
         lineWidth={props.lineWidth}
+        lineWidthUnit={props.lineWidthUnit}
         lineColor={(processColor(props.lineColor) as number) || 0}
         lineLength={props.lineLength}
         gapColor={(processColor(props.gapColor) as number) || 0}
@@ -192,6 +206,7 @@ export function Polyline(props: PolylineProps) {
         geoPolyline={geoPolyline}
         lineType={lineType}
         lineWidth={props.lineWidth}
+        lineWidthUnit={props.lineWidthUnit}
         lineColor={(processColor(props.lineColor) as number) || 0}
         outlineWidth={props.outlineWidth}
         outlineColor={(processColor(props.outlineColor) as number) || 0}

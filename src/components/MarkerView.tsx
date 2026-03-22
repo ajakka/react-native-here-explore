@@ -46,7 +46,7 @@ export interface MarkerProps {
    * size={{ width: 40, height: 40 }}
    * ```
    */
-  size: { width: number; height: number };
+  size?: { width: number; height: number };
 
   /**
    * ### Define the anchor point used to define where the image should be placed relative to the coordinates

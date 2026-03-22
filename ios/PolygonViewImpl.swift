@@ -15,7 +15,7 @@ import heresdk
     didSet { updateFeature() }
   }
 
-  public var color: Double = 8.0 {
+  public var color: Double = 0 {
     didSet { updateFeature() }
   }
 

@@ -36,7 +36,7 @@ class Routing(context: ReactApplicationContext) : NativeRoutingSpec(context) {
   override fun cancel(promise: Promise) {
     taskHandle?.let { gTaskHandle ->
       if (gTaskHandle.isCancelled) {
-        promise.resolve(true)
+        promise.resolve(false)
         return
       }
 
