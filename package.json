@@ -1,6 +1,6 @@
 {
   "name": "react-native-here-explore",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "HERE Explore Edition for React Native",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
