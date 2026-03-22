@@ -1,6 +1,6 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { RouteOption } from 'react-native-here-explore';
+import type { RouteOption } from 'react-native-here-explore';
 
 import {
   BicycleSVG,
@@ -13,41 +13,37 @@ import {
 } from './icons';
 import RoundButton from './RoundButton';
 
-const RouteOptions = [
+const RouteOptions: {
+  title: string;
+  image: React.ReactElement;
+  routeOption: RouteOption;
+}[] = [
   {
     title: 'Pedestrian',
     image: <PedestrianSVG color="white" />,
-    routeOption: RouteOption.pedestrian(),
+    routeOption: 'PedestrianOptions',
   },
   {
     title: 'Bicycle',
     image: <BicycleSVG color="white" />,
-    routeOption: RouteOption.bicycle(),
+    routeOption: 'BicycleOptions',
   },
   {
     title: 'Scooter',
     image: <ScooterSVG color="white" />,
-    routeOption: RouteOption.scooter(),
+    routeOption: 'ScooterOptions',
   },
-  {
-    title: 'Car',
-    image: <CarSVG color="white" />,
-    routeOption: RouteOption.car(),
-  },
-  {
-    title: 'Bus',
-    image: <BusSVG color="white" />,
-    routeOption: RouteOption.bus(),
-  },
+  { title: 'Car', image: <CarSVG color="white" />, routeOption: 'CarOptions' },
+  { title: 'Bus', image: <BusSVG color="white" />, routeOption: 'BusOptions' },
   {
     title: 'Taxi',
     image: <TaxiSVG color="white" />,
-    routeOption: RouteOption.taxi(),
+    routeOption: 'TaxiOptions',
   },
   {
     title: 'Truck',
     image: <TruckSVG color="white" />,
-    routeOption: RouteOption.truck(),
+    routeOption: 'TruckOptions',
   },
 ];
 
@@ -76,7 +72,7 @@ export default function RouteOptionsSelector({
             title={title}
             image={image}
             onPress={() => onRouteOptionPress(routeOption)}
-            selected={selectedRoute.equals(routeOption)}
+            selected={selectedRoute === routeOption}
           />
         ))}
       </ScrollView>

@@ -1,13 +1,13 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import type { GeoCoordinates, GeoPolyline } from 'react-native-here-explore';
 import {
   Map,
   Marker,
   Polyline,
-  RouteOption,
   useRouting,
+  type GeoCoordinates,
+  type RouteOption,
 } from 'react-native-here-explore';
 
 import type { ScreenNames, ScreenProps } from '../../navigation';
@@ -26,27 +26,17 @@ const waypoints: GeoCoordinates[] = [
 ];
 
 export default function RoutesScreen(_: ScreenProps<'Routes'>) {
-  const [vertices, setVertices] = React.useState<GeoPolyline>([]);
-  const [routeOption, setRouteOption] = React.useState<RouteOption>(
-    RouteOption.pedestrian()
-  );
+  const [routeOption, setRouteOption] =
+    React.useState<RouteOption>('PedestrianOptions');
 
-  const { cancel, calculateRoute } = useRouting({ waypoints, routeOption });
+  const { route, calculate, cancel } = useRouting({ waypoints, routeOption });
 
   React.useEffect(() => {
-    runCalculateRoute();
+    calculate();
     return () => {
       cancel();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [routeOption]);
-
-  async function runCalculateRoute() {
-    const data = await calculateRoute();
-    if (!data.routingError && data.routes[0]) {
-      setVertices(data.routes[0].vertices);
-    }
-  }
+  }, [calculate, cancel]);
 
   return (
     <View style={{ flex: 1 }}>
@@ -76,7 +66,7 @@ export default function RoutesScreen(_: ScreenProps<'Routes'>) {
           lineType="SOLID"
           lineColor="#72A1F1"
           lineWidth={16}
-          geoPolyline={vertices}
+          geoPolyline={route?.vertices ?? []}
         />
       </Map>
 
