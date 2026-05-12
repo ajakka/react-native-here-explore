@@ -32,7 +32,11 @@ export default function GulfOfGuineaScreen() {
       )}
       <View style={styles.toolbar}>
         <GradientButton
-          text={mode === 'geoCoordinates' ? 'Switch to geoBox' : 'Switch to geoCoordinates'}
+          text={
+            mode === 'geoCoordinates'
+              ? 'Switch to geoBox'
+              : 'Switch to geoCoordinates'
+          }
           onPress={() =>
             setMode(mode === 'geoCoordinates' ? 'geoBox' : 'geoCoordinates')
           }

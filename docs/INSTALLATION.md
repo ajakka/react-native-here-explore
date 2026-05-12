@@ -1,4 +1,3 @@
-
 <h1 align="center">
     <strong>Installation</strong>
 </h1>
@@ -132,6 +131,8 @@ Finally, in your terminal, run `pod install`.
 
 If you're using Expo, you can skip the manual native setup above. The library includes an Expo config plugin that handles everything automatically during `expo prebuild`.
 
+> Note: this library is only tested on Expo SDK 55.
+
 ### 1. Place the SDK files in your project
 
 Create a directory (e.g., `here-sdk/`) in your project root and place both platform SDK files inside:
@@ -209,10 +210,7 @@ import { AppRegistry } from 'react-native';
 import App from './App';
 import { name as appName } from './app.json';
 
-HEREConfig.initializeHereSDK(
-  'YOUR_ACCESS_KEY_ID',
-  'YOUR_ACCESS_KEY_SECRET'
-);
+HEREConfig.initializeHereSDK('YOUR_ACCESS_KEY_ID', 'YOUR_ACCESS_KEY_SECRET');
 
 AppRegistry.registerComponent(appName, () => App);
 ```

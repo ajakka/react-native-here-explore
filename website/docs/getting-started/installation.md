@@ -57,6 +57,8 @@ Go to [platform.here.com/portal/sdk](https://platform.here.com/portal/sdk) and d
 
 If you use Expo, the config plugin handles all native setup automatically during `expo prebuild`.
 
+> Note: this library is only tested on Expo SDK 55.
+
 ### 1. Place SDK files in your project
 
 ```
@@ -92,6 +94,7 @@ npx expo prebuild
 ```
 
 The plugin will automatically:
+
 - **iOS**: Copy the `.xcframework` into `ios/Frameworks/`, generate `heresdk.podspec`, and add the pod to the Podfile.
 - **Android**: Copy the `.aar` into `android/heresdk/` and add the `implementation` dependency to `app/build.gradle`.
 
