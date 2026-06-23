@@ -17,6 +17,7 @@
 <div align="center">
 
 [Introduction](#introduction) •
+[Features](#features) •
 [Installation](#installation) •
 [Example](#example) •
 [Documentation](#documentation) •
@@ -33,6 +34,17 @@ Crafted from scratch utilizing the latest native languages (Kotlin/Swift) and bu
 <div align="center">
   <img src="docs/assets/screenshot.png" alt="Map Screenshot" title="Map Screenshot" width="25%">
 </div>
+
+## Features
+
+- 🗺️  **Map**:              Interactive maps with day, night, and satellite schemes
+- 📍  **Marker**:           Custom image markers placed at any coordinate
+- 〰️  **Polyline**:         Solid or dashed lines drawn between coordinates
+- 〰️  **Polygon**:          Fill areas with coordinate lists or circles
+- ➡️  **Arrow**:            Directional arrows drawn along any path
+- 🛣️  **Routing**:          Route calculation across ten transport modes
+- 🔭  **New Architecture**: TurboModules built in Kotlin and Swift
+- 🧩  **Expo Plugin**:      Config plugin for streamlined SDK setup
 
 ## Installation
 
